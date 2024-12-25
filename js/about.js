@@ -1,0 +1,5 @@
+function load()
+{
+}
+
+onDOMContentLoaded(load);
