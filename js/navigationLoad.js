@@ -1,10 +1,15 @@
 async function loadNavigation()
 {
-	const response = await fetch('/html/navigation.html');
-	
-	const text = await response.text();
-	
 	const nav = getElement('navigation');
+
+	const text = await moFetchText('/html/navigation.html');
+	
+	if (text == null)
+	{
+		nav.innerHTML = '!';
+		
+		return;
+	}
 	
 	nav.innerHTML = text;
 }
