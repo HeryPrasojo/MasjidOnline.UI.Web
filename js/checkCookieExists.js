@@ -1,4 +1,4 @@
-function checkCookieExists(key)
+function moCheckCookieExists(key)
 {
 	const startWith = key + '=';
 	

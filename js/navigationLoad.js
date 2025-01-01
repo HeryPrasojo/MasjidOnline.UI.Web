@@ -1,17 +1,15 @@
-async function loadNavigation()
+onDOMContentLoaded(async function()
 {
-	const nav = getElement('navigation');
+	const holder = moGetElement('navHolder');
 
 	const text = await moFetchText('/html/navigation.html');
 	
 	if (text == null)
 	{
-		nav.innerHTML = '!';
+		holder.innerHTML = '!';
 		
 		return;
 	}
 	
-	nav.innerHTML = text;
-}
-
-onDOMContentLoaded(loadNavigation);
+	holder.innerHTML = text;
+});

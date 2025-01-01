@@ -1,4 +1,4 @@
-function getElement(id)
+function moGetElement(id)
 {
 	var element = document.getElementById(id);
 
