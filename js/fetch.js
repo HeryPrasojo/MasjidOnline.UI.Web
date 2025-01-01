@@ -16,6 +16,8 @@ async function moFetch(url, options)
 
 async function moFetchApi(url, options)
 {
+	options.method = 'POST';
+	
 	return await moFetch(globalThis.moApiUriPrefix + url, options);
 }
 

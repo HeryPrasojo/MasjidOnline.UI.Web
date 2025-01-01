@@ -3,7 +3,7 @@ async function load()
 	const isUserSessionExists = checkUserSessionExists();
 	if (!isUserSessionExists)
 	{
-		await moFetchApi(url, options);
+		await moFetchApi('captcha/createQuestion', options);
 	
 		if (response == null) return;
 	
