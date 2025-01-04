@@ -1,3 +1,14 @@
+globalThis.moHttpHeaderName =
+{
+	resultCode: 'Mo-Result-Code',
+};
+
+globalThis.moApiResultCode =
+{
+	success: 'Success',
+	captchaPassed: 'CaptchaPassed',
+};
+
 async function moFetch(url, options)
 {
 	const response = await fetch(url, options);
@@ -9,7 +20,11 @@ async function moFetch(url, options)
 
 async function moFetchApi(url, options)
 {
+	options ??= {};
+	
 	options.method = 'POST';
+
+	options.credentials = 'include';
 
 	return await moFetch(globalThis.moApiUriPrefix + url, options);
 }

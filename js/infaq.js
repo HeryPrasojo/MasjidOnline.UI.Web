@@ -6,10 +6,10 @@ onDOMContentLoaded(async function()
 	
 	function captchaCatchCallback(error)
 	{
+		console.error(error);
+
 		const captchaHolder = getElement('captchaHolder');
 
 		captchaHolder.innerHTML = '!';
-
-		console.error(error);
 	}
 });

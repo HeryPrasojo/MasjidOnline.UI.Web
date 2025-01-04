@@ -7,25 +7,25 @@ async function moCreateCaptchaQuestion()
 
 	const response = await moFetchApi('captcha/createQuestion');
 
-	var resultCode = response.headers.get('Mo-Captcha-Result-Code');
+	var resultCode = response.headers.get(moHttpHeaderName.resultCode);
 
 	if (resultCode == null) throw new Error(response.headers);
 
-	if (resultCode == '11') return 1;
+	if (resultCode == moApiResultCode.captchaPassed) return 1;
 
-	if (resultCode != '0') throw new Error('Mo-Captcha-Result-Code: ' + resultCode);
+	if (resultCode != moApiResultCode.success) throw new Error('Mo-Captcha-Result-Code: ' + resultCode);
 
 	const blob = await response.blob();
 
 
-	const holder = getElement('captchaHolder');
+	const holder = moGetElement('captchaHolder');
 
 	const text = await moFetchText('/html/captcha.html');
 
 	holder.innerHTML = text;
 
 
-	const imageElement = getElement('captchaImage');
+	const imageElement = moGetElement('captchaImage');
 
 	const objectURL = URL.createObjectURL(blob);
 
@@ -34,17 +34,17 @@ async function moCreateCaptchaQuestion()
 	imageElement.dataset.degree = 0;
 
 
-	const decreaseDegreeElement = getElement('captchaDecreaseDegree');
+	const decreaseDegreeElement = moGetElement('captchaDecreaseDegree');
 
 	decreaseDegreeElement.addEventListener('click', decreaseDegree);
 
 
-	const increaseDegreeElement = getElement('captchaIncreaseDegree');
+	const increaseDegreeElement = moGetElement('captchaIncreaseDegree');
 
 	increaseDegreeElement.addEventListener('click', increaseDegree);
 
 
-	const submitElement = getElement('captchaSubmit');
+	const submitElement = moGetElement('captchaSubmit');
 
 	submitElement.addEventListener('click', submitCaptcha);
 
@@ -73,7 +73,8 @@ async function moCreateCaptchaQuestion()
 		decreaseDegreeElement.style.transform = 'rotate(' + (degree - 180) + 'deg)';
 	}
 
-	function submitCaptcha()
+	// todo disable submit element
+	async function submitCaptcha()
 	{
 		const response = await moFetchApi(
 			'captcha/answerQuestion',
