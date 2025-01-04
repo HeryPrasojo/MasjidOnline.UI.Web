@@ -53,24 +53,24 @@ async function moCreateCaptchaQuestion()
 
 	function decreaseDegree()
 	{
-		var degree = imageElement.dataset.degree - 45;
+		var degree = +imageElement.dataset.degree - 45;
 
 		if (degree < 0) degree = 315;
 
 		imageElement.dataset.degree = degree;
 
-		decreaseDegreeElement.style.transform = 'rotate(' + (degree - 180) + 'deg)';
+		imageElement.style.transform = 'rotate(' + degree + 'deg)';
 	}
 
 	function increaseDegree()
 	{
-		var degree = imageElement.dataset.degree + 45;
+		var degree = +imageElement.dataset.degree + 45;
 
 		if (degree > 315) degree = 0;
 
 		imageElement.dataset.degree = degree;
 
-		decreaseDegreeElement.style.transform = 'rotate(' + (degree - 180) + 'deg)';
+		imageElement.style.transform = 'rotate(' + degree + 'deg)';
 	}
 
 	// todo disable submit element
