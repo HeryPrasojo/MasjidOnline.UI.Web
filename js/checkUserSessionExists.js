@@ -1,4 +1,4 @@
 function moCheckUserSessionExists()
 {
-	return moCheckCookieExists('userSessId');
+	return moCheckCookieExists('SessId');
 }

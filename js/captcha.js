@@ -5,19 +5,6 @@ async function moCreateCaptchaQuestion()
 	if (isUserSessionExists) return 1;
 
 
-	const response = await moFetchApi('captcha/createQuestion');
-
-	var resultCode = response.headers.get(moHttpHeaderName.resultCode);
-
-	if (resultCode == null) throw new Error(response.headers);
-
-	if (resultCode == moApiResultCode.captchaPassed) return 1;
-
-	if (resultCode != moApiResultCode.success) throw new Error('Mo-Captcha-Result-Code: ' + resultCode);
-
-	const blob = await response.blob();
-
-
 	const holder = moGetElement('captchaHolder');
 
 	const text = await moFetchText('/html/captcha.html');
@@ -27,11 +14,13 @@ async function moCreateCaptchaQuestion()
 
 	const imageElement = moGetElement('captchaImage');
 
-	const objectURL = URL.createObjectURL(blob);
+	const loadingElement = moGetElement('captchaLoading');
 
-	imageElement.src = objectURL;
+	const wrongMessageElement = moGetElement('captchaWrongMessage');
 
-	imageElement.dataset.degree = 0;
+	const result = await fetchCaptcha();
+
+	if (result == 1) return 1;
 
 
 	const decreaseDegreeElement = moGetElement('captchaDecreaseDegree');
@@ -47,8 +36,6 @@ async function moCreateCaptchaQuestion()
 	const submitElement = moGetElement('captchaSubmit');
 
 	submitElement.addEventListener('click', submitCaptcha);
-
-	return 0;
 
 
 	function decreaseDegree()
@@ -73,10 +60,11 @@ async function moCreateCaptchaQuestion()
 		imageElement.style.transform = 'rotate(' + degree + 'deg)';
 	}
 
-	// todo disable submit element
 	async function submitCaptcha()
 	{
-		const response = await moFetchApi(
+		submitElement.disabled = true;
+
+		const json = await moFetchApiJson(
 			'captcha/answerQuestion',
 			{
 				body: JSON.stringify(
@@ -84,5 +72,47 @@ async function moCreateCaptchaQuestion()
 					degree: imageElement.dataset.degree,
 				}),
 			});
+
+		if (json.resultCode == moApiResultCode.captchaWrong)
+		{
+			loadingElement.style.visibility = 'visible';
+
+			const result = await fetchCaptcha();
+
+			if (result == 1) return;
+
+			wrongMessageElement.style.visibility = 'visible';
+
+			submitElement.disabled = false;
+		}
+		else if (json.resultCode == moApiResultCode.success)
+		{
+			holder.remove();
+		}
+	}
+
+	async function fetchCaptcha()
+	{
+		const response = await moFetchApi('captcha/createQuestion');
+
+		var resultCode = response.headers.get(moHttpHeaderName.resultCode);
+
+		if (resultCode == null) throw new Error(response.headers);
+
+		if (resultCode == moApiHeaderResultCode.captchaPassed) return 1;
+
+		if (resultCode != moApiHeaderResultCode.success) throw new Error('Mo-Captcha-Result-Code: ' + resultCode);
+
+
+		const blob = await response.blob();
+
+		const objectURL = URL.createObjectURL(blob);
+
+		imageElement.src = objectURL;
+
+		imageElement.dataset.degree = 0;
+
+
+		loadingElement.style.visibility = 'hidden';
 	}
 }

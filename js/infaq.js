@@ -6,9 +6,9 @@ onDOMContentLoaded(async function()
 	
 	function captchaCatchCallback(error)
 	{
-		console.error(error);
+		console.log(error);
 
-		const captchaHolder = getElement('captchaHolder');
+		const captchaHolder = moGetElement('captchaHolder');
 
 		captchaHolder.innerHTML = '!';
 	}
