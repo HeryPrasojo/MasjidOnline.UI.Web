@@ -89,6 +89,10 @@ async function moCreateCaptchaQuestion()
 		{
 			holder.remove();
 		}
+		else
+		{
+			throw new Error(json);
+		}
 	}
 
 	async function fetchCaptcha()
@@ -99,7 +103,12 @@ async function moCreateCaptchaQuestion()
 
 		if (resultCode == null) throw new Error(response.headers);
 
-		if (resultCode == moApiHeaderResultCode.captchaPassed) return 1;
+		if (resultCode == moApiHeaderResultCode.captchaPassed)
+		{
+			holder.remove();
+			
+			return 1;
+		}
 
 		if (resultCode != moApiHeaderResultCode.success) throw new Error('Mo-Captcha-Result-Code: ' + resultCode);
 
@@ -111,6 +120,8 @@ async function moCreateCaptchaQuestion()
 		imageElement.src = objectURL;
 
 		imageElement.dataset.degree = 0;
+		
+		imageElement.style.transform = 'rotate(0deg)';
 
 
 		loadingElement.style.visibility = 'hidden';
