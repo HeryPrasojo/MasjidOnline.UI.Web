@@ -27,14 +27,29 @@
 		<div id='method'>
 			<h2>Payment Method</h2>
 			<ul id='methodList'>
-				<li id='methodManualTransfer'>
+				<li id='methodManualBankTransfer'>
 					<h3>Manual Transfer</h3>
-					<div id='manualTransferInput'>
-						<div id='manualTransferName'>
-							<div><span id='manualTransferNameLabel'>Name</span></div>
-							<div id='manualTransferNameInput'>
-								<input type='text' id='manualTransferNameInput' />
+					<div id='manualBankTransferForm'>
+						<div id='manualBankTransferMunfiqName'>
+							<div><label id='manualBankTransferMunfiqNameLabel' for='manualBankTransferMunfiqNameInput'>Munfiq Name</label></div>
+							<div id='manualBankTransferMunfiqNameInputHolder'>
+								<input type='text' id='manualBankTransferMunfiqNameInput' maxlength='255'/>
 							</div>
+						</div>
+						<div id='manualBankTransferAmount'>
+							<div><label id='manualBankTransferAmountLabel' for='manualBankTransferAmountInput'>Amount</label></div>
+							<div id='manualBankTransferAmountInputHolder'>
+								<input type='number' id='manualBankTransferAmountInput' min='1' />
+							</div>
+						</div>
+						<div id='manualBankTransferNotes'>
+							<div><label id='manualBankTransferAmountLabel' for='manualBankTransferAmountInput'>Amount</label></div>
+							<div id='manualBankTransferAmountInputHolder'>
+								<input type='number' id='manualBankTransferAmountInput' min='1' />
+							</div>
+						</div>
+						<div id='manualBankTransferSubmit'>
+							<button id='manualBankTransferSubmitButton'>Submit</button>
 						</div>
 					</div>
 				</li>
