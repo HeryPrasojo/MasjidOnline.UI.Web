@@ -6,6 +6,7 @@ globalThis.moHttpHeaderName =
 globalThis.moApiResultCode =
 {
 	success: 0,
+	inputInvalid: 11,
 	captchaPassed: 111,
 	captchaWrong: 112
 };
@@ -17,6 +18,8 @@ globalThis.moApiHeaderResultCode =
 
 async function moFetch(url, options)
 {
+	url = url.replace(/^\|+|\|+$/g, '');
+	
 	const response = await fetch(url, options);
 
 	if (!response.ok) throw new Error(response);
