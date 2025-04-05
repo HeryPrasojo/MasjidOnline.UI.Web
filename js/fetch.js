@@ -1,22 +1,13 @@
-globalThis.moHttpHeaderName =
-{
-	resultCode: 'Mo-Result-Code',
-};
-
-globalThis.moApiResultCode =
+mo.apiResultCode =
 {
 	success: 0,
 	inputInvalid: 11,
-	captchaPassed: 111,
-	captchaWrong: 112
-};
-globalThis.moApiHeaderResultCode =
-{
-	success: 'Success',
-	captchaPassed: 'CaptchaPassed'
+	captchaPass: 111,
+	captchaUnneed: 114,
+	captchaUnpass: 115,
 };
 
-async function moFetch(url, options)
+mo.fetch = async function (url, options)
 {
 	url = url.replace(/^\|+|\|+$/g, '');
 	
@@ -27,28 +18,47 @@ async function moFetch(url, options)
 	return response;
 }
 
-async function moFetchText(url, options)
+mo.fetchText = async function (url, options)
 {
-	const response = await moFetch(url, options);
+	const response = await mo.fetch(url, options);
 
 	return await response.text();
 }
 
-async function moFetchApi(url, options)
+mo.fetchApi = async function (url, options)
 {
 	options ??= {};
 	options.method = 'POST';
-	options.credentials = 'include';
-	
-	options.headers ??= new Headers();
-	options.headers.append("Content-Type", "application/json");
 
-	return await moFetch(globalThis.moApiUriPrefix + url, options);
+	options.headers ??= new Headers();
+
+	if (typeof options.body != 'undefined' && !(options.body instanceof FormData))
+		options.headers.append("Content-Type", "application/json");
+
+
+	const sessionId = await mo.getSession();
+
+	if (sessionId)
+		options.headers.append(mo.sessionIdHeaderName, sessionId);
+
+
+	const response = await mo.fetch(mo.apiUriPrefix + url, options);
+
+
+	if (!sessionId)
+	{
+		console.log(response.headers);
+		const sessionId = response.headers.get(mo.sessionIdHeaderName);
+		console.log(sessionId);
+		mo.setSession(sessionId);
+	}
+
+	return response;
 }
 
-async function moFetchApiJson(url, options)
+mo.fetchApiJson = async function (url, options)
 {
-	const response = await moFetchApi(url, options);
+	const response = await mo.fetchApi(url, options);
 	
 	return await response.json();
 }

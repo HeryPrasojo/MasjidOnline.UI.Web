@@ -1,2 +1,2 @@
-globalThis.paymentType = {};
-globalThis.paymentType.manualBankTransfer = 22;
+mo.paymentType = {};
+mo.paymentType.manualBankTransfer = 22;

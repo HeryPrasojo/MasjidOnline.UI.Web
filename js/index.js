@@ -1,3 +1,3 @@
-onDOMContentLoaded(function()
+mo.onDOMContentLoaded(function ()
 {
 });

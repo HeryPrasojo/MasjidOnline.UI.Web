@@ -2,16 +2,17 @@
 <html>
 	<head>
 		<title>MasjidOnline Infaq</title>
+		<script src='/js/mo.js'></script>
 		<script src='/js/envConfig.js'></script>
-		<script src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
-		<script src='/js/checkCookieExists.js'></script>
-		<script src='/js/checkUserSessionExists.js'></script>
-		<script src='/js/DOMContentLoaded.js'></script>
-		<script src='/js/elementGet.js'></script>
-		<script src='/js/fetch.js'></script>
-		<script src='/js/try.js'></script>
-		<script src='/js/navigationLoad.js'></script>
 		<script src='/js/paymentType.js'></script>
+		<script src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
+		<script src='/js/captcha.js'></script>
+		<script src='/js/DOMContentLoaded.js'></script>
+		<script src='/js/element.js'></script>
+		<script src='/js/session.js'></script>
+		<script src='/js/fetch.js'></script>
+		<script src='/js/error.js'></script>
+		<script src='/js/navigation.js'></script>
 		<script src='/js/infaq.js'></script>
 	</head>
 	<body>
@@ -51,6 +52,12 @@
 								<textarea id='manualBankTransferNotesInput' maxlength='255'></textarea>
 							</div>
 						</div>
+						<div id='manualBankTransferFiles'>
+							<div><label id='manualBankTransferFilesLabel' for='manualBankTransferFilesInput'>Files</label></div>
+							<div id='manualBankTransferFilesInputHolder'>
+								<input id='manualBankTransferFilesInput' type='file' accept='image/*' multiple max />
+							</div>
+						</div>
 						<div id='manualBankTransferSubmit'>
 							<button id='manualBankTransferSubmitButton'>Submit</button>
 						</div>
@@ -65,5 +72,6 @@
 				<button>Close</button>
 			</form>
 		</dialog>
+		<div id='errorHolder'></div>
 	</body>
 </html>
