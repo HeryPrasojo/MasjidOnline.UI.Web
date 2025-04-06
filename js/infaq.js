@@ -129,7 +129,7 @@ mo.onDOMContentLoaded(function ()
 								});
 
 							if (json.resultCode != mo.apiResultCode.success)
-								return mo.showError(JSON.stringify(json));
+								mo.showError(JSON.stringify(json));
 
 							if (isCaptchaNeeded && (typeof captchaToken == 'string'))
 								mo.setCaptchaPassed();
@@ -151,7 +151,7 @@ mo.onDOMContentLoaded(function ()
 							{
 								filesInput.value = null;
 
-								return mo.showError('File size too large: ' + file.name);
+								mo.showError('File size too large: ' + file.name);
 							}
 						}
 					}

@@ -1,7 +1,5 @@
 mo.showError = async function (message)
 {
-    console.error(message);
-
     const dialogId = 'errorDialog';
 
     var errorDialog = mo.getElement(dialogId);
@@ -30,4 +28,6 @@ mo.showError = async function (message)
     errorMessage.innerHTML = message;
 
     errorDialog.showModal();
+
+    throw new Error(message);
 }

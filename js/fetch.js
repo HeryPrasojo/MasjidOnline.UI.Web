@@ -1,6 +1,8 @@
 mo.apiResultCode =
 {
 	success: 0,
+	sessionMismatch: 3,
+	sessionExpire: 5,
 	inputInvalid: 11,
 	captchaPass: 111,
 	captchaUnneed: 114,
@@ -10,10 +12,10 @@ mo.apiResultCode =
 mo.fetch = async function (url, options)
 {
 	url = url.replace(/^\|+|\|+$/g, '');
-	
+
 	const response = await fetch(url, options);
 
-	if (!response.ok) throw new Error(response);
+	if (!response.ok) mo.showError(response);
 
 	return response;
 }
@@ -38,12 +40,26 @@ mo.fetchApi = async function (url, options)
 
 	const sessionId = await mo.getSession();
 
-	if (sessionId)
-		options.headers.append(mo.sessionIdHeaderName, sessionId);
+	if (sessionId) options.headers.append(mo.sessionIdHeaderName, sessionId);
 
 
 	const response = await mo.fetch(mo.apiUriPrefix + url, options);
 
+
+	const contentType = response.headers.get('Content-Type');
+
+	if (contentType.indexOf('application/json') > -1)
+	{
+		const json = await response.clone().json();
+
+		if (json.resultCode != mo.apiResultCode.success)
+		{
+			if (json.resultCode == mo.apiResultCode.sessionExpire)
+				mo.showError('Session expired. Please reload/refresh this page.');
+
+			mo.showError(json);
+		}
+	}
 
 	if (!sessionId)
 	{
@@ -59,6 +75,6 @@ mo.fetchApi = async function (url, options)
 mo.fetchApiJson = async function (url, options)
 {
 	const response = await mo.fetchApi(url, options);
-	
+
 	return await response.json();
 }
