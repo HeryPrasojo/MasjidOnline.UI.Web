@@ -1,0 +1,44 @@
+<dialog id="manualBankTransferConfirmationDialog">
+    <h4>Manual Bank Transfer Confirmation</h4>
+    <form id='manualBankTransferForm'>
+        <div id='manualBankTransferMunfiqName'>
+            <div><label id='manualBankTransferMunfiqNameLabel' for='manualBankTransferMunfiqNameInput'>Munfiq
+                    Name</label>
+            </div>
+            <div id='manualBankTransferMunfiqNameInputHolder'>
+                <input type='text' id='manualBankTransferMunfiqNameInput' maxlength='255' required autofocus />
+            </div>
+        </div>
+        <div id='manualBankTransferAmount'>
+            <div><label id='manualBankTransferAmountLabel' for='manualBankTransferAmountInput'>Amount</label></div>
+            <div id='manualBankTransferAmountInputHolder'>
+                <input type='number' id='manualBankTransferAmountInput' min='1' required />
+            </div>
+        </div>
+        <div id='manualBankTransferDateTime'>
+            <div><label id='manualBankTransferDateTimeLabel' for='manualBankTransferDateTimeInput'>Transfer
+                    Date Time (GMT) (as close as possible)</label></div>
+            <div id='manualBankTransferDateTimeInputHolder'>
+                <input type='datetime-local' id='manualBankTransferDateTimeInput' required />
+            </div>
+        </div>
+        <div id='manualBankTransferNotes'>
+            <div><label id='manualBankTransferNotesLabel' for='manualBankTransferNotesInput'>Notes (e.g.
+                    source account)</label></div>
+            <div id='manualBankTransferNotesInputHolder'>
+                <textarea id='manualBankTransferNotesInput' maxlength='255'></textarea>
+            </div>
+        </div>
+        <div id='manualBankTransferFiles'>
+            <div><label id='manualBankTransferFilesLabel' for='manualBankTransferFilesInput'>Files</label>
+            </div>
+            <div id='manualBankTransferFilesInputHolder'>
+                <input id='manualBankTransferFilesInput' type='file' accept='image/*' multiple max />
+            </div>
+        </div>
+        <div id='manualBankTransferSubmit'>
+            <button id='manualBankTransferSubmitButton'>Submit</button>
+            <button type="button" id='manualBankTransferConfirmationCloseButton'>Close</button>
+        </div>
+    </form>
+</dialog>

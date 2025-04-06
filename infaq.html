@@ -1,77 +1,53 @@
 <!doctype html>
 <html>
-	<head>
-		<title>MasjidOnline Infaq</title>
-		<script src='/js/mo.js'></script>
-		<script src='/js/envConfig.js'></script>
-		<script src='/js/paymentType.js'></script>
-		<script src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
-		<script src='/js/captcha.js'></script>
-		<script src='/js/DOMContentLoaded.js'></script>
-		<script src='/js/element.js'></script>
-		<script src='/js/session.js'></script>
-		<script src='/js/fetch.js'></script>
-		<script src='/js/error.js'></script>
-		<script src='/js/navigation.js'></script>
-		<script src='/js/infaq.js'></script>
-	</head>
-	<body>
-		<div id='navHolder'>
-			<img alt='loading...' width='14' height='6' src='/img/loading.gif' />
-		</div>
-		<div id='introduction' class='content'>
-			<h1>MasjidOnline Infaq</h1>
-		</div>
-		<div id='method'>
-			<h2>Payment Method</h2>
-			<ul id='methodList'>
-				<li id='methodManualBankTransfer'>
-					<h3>Manual Transfer</h3>
-					<form id='manualBankTransferForm'>
-						<div id='manualBankTransferMunfiqName'>
-							<div><label id='manualBankTransferMunfiqNameLabel' for='manualBankTransferMunfiqNameInput'>Munfiq Name</label></div>
-							<div id='manualBankTransferMunfiqNameInputHolder'>
-								<input type='text' id='manualBankTransferMunfiqNameInput' maxlength='255' required autofocus />
-							</div>
-						</div>
-						<div id='manualBankTransferAmount'>
-							<div><label id='manualBankTransferAmountLabel' for='manualBankTransferAmountInput'>Amount</label></div>
-							<div id='manualBankTransferAmountInputHolder'>
-								<input type='number' id='manualBankTransferAmountInput' min='1' required />
-							</div>
-						</div>
-						<div id='manualBankTransferDateTime'>
-							<div><label id='manualBankTransferDateTimeLabel' for='manualBankTransferDateTimeInput'>Transfer Date Time (GMT) (as close as possible)</label></div>
-							<div id='manualBankTransferDateTimeInputHolder'>
-								<input type='datetime-local' id='manualBankTransferDateTimeInput' required />
-							</div>
-						</div>
-						<div id='manualBankTransferNotes'>
-							<div><label id='manualBankTransferNotesLabel' for='manualBankTransferNotesInput'>Notes (e.g. source account)</label></div>
-							<div id='manualBankTransferNotesInputHolder'>
-								<textarea id='manualBankTransferNotesInput' maxlength='255'></textarea>
-							</div>
-						</div>
-						<div id='manualBankTransferFiles'>
-							<div><label id='manualBankTransferFilesLabel' for='manualBankTransferFilesInput'>Files</label></div>
-							<div id='manualBankTransferFilesInputHolder'>
-								<input id='manualBankTransferFilesInput' type='file' accept='image/*' multiple max />
-							</div>
-						</div>
-						<div id='manualBankTransferSubmit'>
-							<button id='manualBankTransferSubmitButton'>Submit</button>
-						</div>
-					</form>
-				</li>
-			</ul>
-		</div>
-		<dialog id='successDialog'>
-			<p>Data submitted</p>
-			<p>Thank you!</p>
-			<form method='dialog'>
-				<button>Close</button>
-			</form>
-		</dialog>
-		<div id='errorHolder'></div>
-	</body>
+
+<head>
+	<title>MasjidOnline Infaq</title>
+	<script src='/js/mo.js'></script>
+	<script src='/js/envConfig.js'></script>
+	<script src='/js/paymentType.js'></script>
+	<script
+		src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
+	<script src='/js/captcha.js'></script>
+	<script src='/js/DOMContentLoaded.js'></script>
+	<script src='/js/element.js'></script>
+	<script src='/js/session.js'></script>
+	<script src='/js/fetch.js'></script>
+	<script src='/js/error.js'></script>
+	<script src='/js/navigation.js'></script>
+	<script src='/js/infaq.js'></script>
+</head>
+
+<body>
+	<div id='navHolder'>
+		<img alt='loading...' width='14' height='6' src='/img/loading.gif' />
+	</div>
+	<div id='introduction' class='content'>
+		<h1>MasjidOnline Infaq</h1>
+		<p>Currently, we only support infaq using manual bank transfer.</p>
+	</div>
+	<div id='method'>
+		<h2>Payment Method</h2>
+		<ul id='methodList'>
+			<li id='methodManualBankTransfer'>
+				<h3>Manual Bank Transfer</h3>
+				<div>
+					<button type="button" id="manualBankTransferInstructionButton">Instruction</button>
+				</div>
+				<div id="manualBankTransferInstructionHolder"></div>
+				<div id="manualBankTransferConfirmationHolder"></div>
+			</li>
+		</ul>
+	</div>
+	<!-- move to file -->
+	<dialog id='successDialog'>
+		<p>Data submitted</p>
+		<p>Thank you!</p>
+		<form method='dialog'>
+			<button>Close</button>
+		</form>
+	</dialog>
+	<div id='errorHolder'></div>
+</body>
+
 </html>

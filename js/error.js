@@ -2,7 +2,9 @@ mo.showError = async function (message)
 {
     console.error(message);
 
-    var errorDialog = mo.getElement('errorDialog');
+    const dialogId = 'errorDialog';
+
+    var errorDialog = mo.getElement(dialogId);
 
     if (!errorDialog)
     {
@@ -19,13 +21,13 @@ mo.showError = async function (message)
 
         holder.innerHTML = text;
 
-        errorDialog = mo.getElement('errorDialog');
+        errorDialog = mo.getElement(dialogId);
     }
 
 
-    const errorMessageElement = mo.getElement('errorMessage');
+    const errorMessage = mo.getElement('errorMessage');
 
-    errorMessageElement.innerHTML = message;
+    errorMessage.innerHTML = message;
 
     errorDialog.showModal();
 }
