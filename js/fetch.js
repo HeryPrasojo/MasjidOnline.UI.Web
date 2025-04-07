@@ -13,7 +13,13 @@ mo.fetch = async function (url, options)
 {
 	url = url.replace(/^\|+|\|+$/g, '');
 
+	const loadingDialogOpened = loadingDialog.open;
+
+	if (!loadingDialogOpened) loadingDialog.showModal();
+
 	const response = await fetch(url, options);
+
+	if (!loadingDialogOpened) loadingDialog.close();
 
 	if (!response.ok) mo.showError(response);
 

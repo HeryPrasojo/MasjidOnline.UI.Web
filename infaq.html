@@ -5,11 +5,12 @@
 		<title>MasjidOnline Infaq</title>
 		<link rel="stylesheet" href="/css/all.css" />
 		<script src='/js/mo.js'></script>
+		<script src='/js/DOMContentLoaded.js'></script>
+		<script src='/js/loading.js'></script>
 		<script src='/js/envConfig.js'></script>
 		<script src='/js/paymentType.js'></script>
 		<script src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
 		<script src='/js/captcha.js'></script>
-		<script src='/js/DOMContentLoaded.js'></script>
 		<script src='/js/element.js'></script>
 		<script src='/js/session.js'></script>
 		<script src='/js/fetch.js'></script>
@@ -39,6 +40,10 @@
 				</li>
 			</ul>
 		</div>
+		<dialog id='loadingDialog'>
+			<p>Loading <img width='14' height='6' src='/img/loading.gif' /></p>
+		</dialog>
+
 		<!-- move to file -->
 		<dialog id='successDialog'>
 			<p>Data submitted</p>

@@ -167,5 +167,7 @@ mo.onDOMContentLoaded(function ()
 		}
 	}
 
+	loadingDialog.close();
+
 	console.log('load infaq');
 });
