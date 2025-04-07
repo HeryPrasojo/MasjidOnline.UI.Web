@@ -16,6 +16,7 @@
 		<script src='/js/fetch.js'></script>
 		<script src='/js/error.js'></script>
 		<script src='/js/navigation.js'></script>
+		<script src='/js/dialog.js'></script>
 		<script src='/js/infaq.js'></script>
 	</head>
 
@@ -43,15 +44,7 @@
 		<dialog id='loadingDialog'>
 			<p>Loading <img width='14' height='6' src='/img/loading.gif' /></p>
 		</dialog>
-
-		<!-- move to file -->
-		<dialog id='successDialog'>
-			<p>Data submitted</p>
-			<p>Thank you!</p>
-			<form method='dialog'>
-				<button>Close</button>
-			</form>
-		</dialog>
+		<div id='dialogHolder'></div>
 		<div id='errorHolder'></div>
 	</body>
 

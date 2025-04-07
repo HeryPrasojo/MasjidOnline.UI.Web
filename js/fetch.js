@@ -61,17 +61,16 @@ mo.fetchApi = async function (url, options)
 		if (json.resultCode != mo.apiResultCode.success)
 		{
 			if (json.resultCode == mo.apiResultCode.sessionExpire)
-				mo.showError('Session expired. Please reload/refresh this page.');
+				await mo.showError('Session expired. Please reload/refresh this page.');
 
-			mo.showError(json);
+			await mo.showError(json);
 		}
 	}
 
 	if (!sessionId)
 	{
-		console.log(response.headers);
 		const sessionId = response.headers.get(mo.sessionIdHeaderName);
-		console.log(sessionId);
+
 		mo.setSession(sessionId);
 	}
 

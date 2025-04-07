@@ -1,7 +1,5 @@
 mo.onDOMContentLoaded(function ()
 {
-	const successDialog = mo.getElement('successDialog');
-
 	loadManualBankTransfer();
 
 	function loadManualBankTransfer()
@@ -129,7 +127,7 @@ mo.onDOMContentLoaded(function ()
 								});
 
 							if (json.resultCode != mo.apiResultCode.success)
-								mo.showError(JSON.stringify(json));
+								await mo.showError(JSON.stringify(json));
 
 							if (isCaptchaNeeded && (typeof captchaToken == 'string'))
 								mo.setCaptchaPassed();
@@ -139,11 +137,11 @@ mo.onDOMContentLoaded(function ()
 							confirmationDialog.close();
 							instructionDialog.close();
 
-							successDialog.show();
+							mo.showDialog('Confirmation submitted. Thank you!');
 						});
 					}
 
-					function validateFiles()
+					async function validateFiles()
 					{
 						for (const file of filesInput.files)
 						{
@@ -151,7 +149,7 @@ mo.onDOMContentLoaded(function ()
 							{
 								filesInput.value = null;
 
-								mo.showError('File size too large: ' + file.name);
+								await mo.showError('File size too large: ' + file.name);
 							}
 						}
 					}
@@ -169,5 +167,5 @@ mo.onDOMContentLoaded(function ()
 
 	loadingDialog.close();
 
-	console.log('load infaq');
+	console.log((new Date()).toISOString() + ' load infaq');
 });
