@@ -165,7 +165,5 @@ mo.onDOMContentLoaded(function ()
 		}
 	}
 
-	loadingDialog.close();
-
 	console.log((new Date()).toISOString() + ' load infaq');
 });

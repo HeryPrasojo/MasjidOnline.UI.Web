@@ -13,25 +13,23 @@ mo.fetch = async function (url, options)
 {
 	url = url.replace(/^\|+|\|+$/g, '');
 
-	const loadingDialogOpened = loadingDialog.open;
-
-	if (!loadingDialogOpened) loadingDialog.showModal();
+	const loadingShown = mo.showLoading('Sending data');
 
 	const response = await fetch(url, options);
 
-	if (!loadingDialogOpened) loadingDialog.close();
+	if (loadingShown) mo.closeLoading();
 
 	if (!response.ok) mo.showError(response);
 
 	return response;
-}
+};
 
 mo.fetchText = async function (url, options)
 {
 	const response = await mo.fetch(url, options);
 
 	return await response.text();
-}
+};
 
 mo.fetchApi = async function (url, options)
 {
@@ -75,11 +73,11 @@ mo.fetchApi = async function (url, options)
 	}
 
 	return response;
-}
+};
 
 mo.fetchApiJson = async function (url, options)
 {
 	const response = await mo.fetchApi(url, options);
 
 	return await response.json();
-}
+};

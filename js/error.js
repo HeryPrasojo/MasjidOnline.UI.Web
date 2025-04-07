@@ -30,4 +30,4 @@ mo.showError = async function (message)
     errorDialog.showModal();
 
     throw new Error(message);
-}
+};
