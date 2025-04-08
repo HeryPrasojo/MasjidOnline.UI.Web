@@ -1,5 +1,7 @@
 {
     "css.format.braceStyle": "expand",
+    "html.completion.attributeDefaultValue": "singlequotes",
+    "html.format.extraLiners": "",
     "html.format.indentInnerHtml": true,
     "html.format.wrapAttributes": "preserve",
     "html.format.wrapLineLength": 0,
