@@ -165,5 +165,5 @@ mo.onDOMContentLoaded(function ()
 		}
 	}
 
-	console.log((new Date()).toISOString() + ' load infaq');
+	console.log((new Date()).toISOString() + ' load pay');
 });
