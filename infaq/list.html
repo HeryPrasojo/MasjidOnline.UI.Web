@@ -26,7 +26,7 @@
             <thead>
                 <tr>
                     <th>Infaq ID</th>
-                    <th>Date</th>
+                    <th>Date Time</th>
                     <th>Munfiq Name</th>
                     <th>Amount</th>
                     <th>Status</th>
@@ -36,7 +36,21 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5"></td>
+                    <td>Page <span id='infaqPageCurrent'></span> of <span id='infaqPageTotal'></span></td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <form id='formInfaqPage'>
+                            <button type='button' id='infaqFirstButton'>First</button>
+                            <button type='button' id='infaqPrevButton'>Previous</button>
+
+                            <input type='number' id='infaqPageInput' value='1' min='1' />
+                            <button type='button' id='infaqGoButton'>Go</button>
+
+                            <button type='button' id='infaqNextButton'>Next</button>
+                            <button type='button' id='infaqLastButton'>Last</button>
+                        </form>
+                    </td>
                 </tr>
             </tfoot>
         </table>
