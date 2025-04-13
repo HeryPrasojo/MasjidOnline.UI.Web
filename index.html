@@ -2,9 +2,13 @@
 <html>
 	<head>
 		<title>MasjidOnline</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/all.css" />
+		<link rel="stylesheet" href="/css/layout.css" />
 		<script src='/js/mo.js'></script>
 		<script src='/js/DOMContentLoaded.js'></script>
+		<script src='/js/windowLoaded.js'></script>
+		<script src='/js/loading.js'></script>
 		<script src='/js/element.js'></script>
 		<script src='/js/fetch.js'></script>
 		<script src='/js/error.js'></script>
@@ -12,13 +16,88 @@
 		<script src='/js/index.js'></script>
 	</head>
 	<body>
-		<div id='navHolder'>
-			<img alt='loading...' width='14' height='6' src='/img/loading.gif' />
+		<div id='pageLoading' class='loading'>Loading...</div>
+		<div id='layout'>
+			<div id='headerLayout'>
+				<div id='title'>MasjidOnline</div>
+			</div>
+			<div id='flexLayout'>
+				<nav id='navigationLandscapeLayout'>
+					<div id='navigationLoading' class='loading'>Loading...</div>
+				</nav>
+				<div id='contentLayout'>
+					<h1>Masjid Online</h1>
+					<p>Please read <a href='/about'>About MasjidOnline</a></p>
+					<div>content first</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content</div>
+					<div>content last</div>
+				</div>
+			</div>
+			<nav id='navigationPortraitLayout'>
+				<ul id='navigationPortrait'>
+					<li class='navigationPortraitItem'>
+						<a href='/a'>aa</a>
+					</li>
+					<li class='navigationPortraitItem'>
+						<a href='/b'>bb</a>
+					</li>
+					<li class='navigationPortraitItem'>
+						<a href='/c'>cc</a>
+					</li>
+					<li class='navigationPortraitItem'>
+						<a href='/d'>dd</a>
+					</li>
+					<li class='navigationPortraitItem' id='navigationPortraitTheRestHolder'>
+						<button type='button' id='navigationPortraitTheRestButton'>de</button>
+						<ul class='display-none' id='navigationPortraitTheRest'>
+							<li class='navigationPortraitTheRestItem'>
+								<a href='/e'>ee</a>
+							</li>
+							<li class='navigationPortraitTheRestItem'>
+								<a href='/f'>ff</a>
+							</li>
+							<li class='navigationPortraitTheRestItem'>
+								<a href='/g'>gg</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			<div id='footerLayout'>
+				<div>
+					<p>footer</p>
+				</div>
+			</div>
 		</div>
-		<div id='introduction' class='content'>
-			<h1>Masjid Online</h1>
-			<p>Please read <a href='/about'>About MasjidOnline</a></p>
-		</div>
-		<div id='errorHolder'></div>
 	</body>
 </html>

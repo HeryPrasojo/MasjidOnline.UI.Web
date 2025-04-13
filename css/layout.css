@@ -3,6 +3,28 @@ body
     margin: 0;
 }
 
+#pageLoading
+{
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    width: 100%;
+    text-align: center;
+}
+
+.loading
+{
+    animation: loading 1s infinite;
+}
+
+@keyframes loading
+{
+    50%
+    {
+        opacity: 0.1;
+    }
+}
+
 #layout
 {}
 
@@ -22,6 +44,12 @@ body
     width: 100%;
 }
 
+#title
+{
+    flex: 1 1 auto;
+    text-align: center;
+}
+
 @media (orientation: landscape)
 {
     #flexLayout
@@ -32,6 +60,12 @@ body
     #navigationLandscapeLayout
     {
         flex: 1 1 auto;
+    }
+
+    #navigationLoading
+    {
+        text-align: center;
+        line-height: 4em;
     }
 
     #contentLayout

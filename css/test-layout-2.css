@@ -53,7 +53,6 @@ body
         font-size: 1.1em;
     }
 
-    /* 
     #navigationLayout
     {
         position: fixed;
@@ -63,7 +62,7 @@ body
     #footerLayout
     {
         display: none;
-    } */
+    }
 }
 
 

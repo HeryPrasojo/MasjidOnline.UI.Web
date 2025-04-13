@@ -13,13 +13,9 @@ mo.fetch = async function (url, options)
 {
 	url = url.replace(/^\|+|\|+$/g, '');
 
-	const loadingShown = mo.showLoading('Sending data');
-
 	const response = await fetch(url, options);
 
-	if (loadingShown) mo.closeLoading();
-
-	if (!response.ok) mo.showError(response);
+	if (!response.ok) throw Error(response.status + ' ' + response.statusText);
 
 	return response;
 };
@@ -56,12 +52,12 @@ mo.fetchApi = async function (url, options)
 	{
 		const json = await response.clone().json();
 
-		if (json.resultCode != mo.apiResultCode.success)
+		const resultCode = json.resultCode;
+		if (resultCode != mo.apiResultCode.success)
 		{
-			if (json.resultCode == mo.apiResultCode.sessionExpire)
-				await mo.showError('Session expired. Please reload/refresh this page.');
+			if (resultCode == mo.apiResultCode.sessionExpire) throw Error(resultCode);
 
-			await mo.showError(json);
+			throw Error(resultCode + ' ' + json.resultMessage);
 		}
 	}
 
