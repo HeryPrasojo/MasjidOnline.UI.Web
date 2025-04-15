@@ -3,6 +3,9 @@
 	var navigationLandscapeLayout;
 	var navigationPortraitLayout;
 
+	var isNavigationLandscapeLayoutLoaded = false;
+	var isNavigationPortraitLayoutLoaded = false;
+
 	mo.onDOMContentLoaded(onDOMContentLoaded);
 
 	screen.orientation.addEventListener("change", loadNavigation);
@@ -23,6 +26,12 @@
 		{
 			if (isPortrait)
 			{
+				const text = await mo.fetchText('/html/navigationPortrait.html');
+
+				navigationPortraitLayout.innerHTML = text;
+
+				navigationLandscapeLayout.classList.add("display-none");
+				navigationPortraitLayout.classList.remove("display-none");
 			}
 			else
 			{
@@ -30,7 +39,8 @@
 
 				navigationLandscapeLayout.innerHTML = text;
 
-				navigationPortraitLayout.remove();
+				navigationPortraitLayout.classList.add("display-none");
+				navigationLandscapeLayout.classList.remove("display-none");
 			}
 		}
 		catch (error)
@@ -41,6 +51,7 @@
 
 			if (isPortrait)
 			{
+				navigationPortraitLayout.innerHTML = errorString;
 			}
 			else
 			{
