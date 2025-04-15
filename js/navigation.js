@@ -26,18 +26,28 @@
 		{
 			if (isPortrait)
 			{
-				const text = await mo.fetchText('/html/navigationPortrait.html');
+				if (!isNavigationPortraitLayoutLoaded)
+				{
+					const text = await mo.fetchText('/html/navigationPortrait.html');
 
-				navigationPortraitLayout.innerHTML = text;
+					navigationPortraitLayout.innerHTML = text;
+
+					isNavigationPortraitLayoutLoaded = true;
+				}
 
 				navigationLandscapeLayout.classList.add("display-none");
 				navigationPortraitLayout.classList.remove("display-none");
 			}
 			else
 			{
-				const text = await mo.fetchText('/html/navigationLandscape.html');
+				if (!isNavigationLandscapeLayoutLoaded)
+				{
+					const text = await mo.fetchText('/html/navigationLandscape.html');
 
-				navigationLandscapeLayout.innerHTML = text;
+					navigationLandscapeLayout.innerHTML = text;
+
+					isNavigationLandscapeLayoutLoaded = true;
+				}
 
 				navigationPortraitLayout.classList.add("display-none");
 				navigationLandscapeLayout.classList.remove("display-none");

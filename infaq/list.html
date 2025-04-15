@@ -36,19 +36,24 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td>Page <span id='infaqPageCurrent'></span> of <span id='infaqPageTotal'></span></td>
+                    <td colspan="5">Page <span id='infaqPageCurrent'></span> of <span id='infaqPageTotal'></span></td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <p id='infaqErrorMessage'></p>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="5">
                         <form id='formInfaqPage'>
-                            <button type='button' id='infaqFirstButton'>First</button>
-                            <button type='button' id='infaqPrevButton'>Previous</button>
+                            <button type='button' id='infaqFirstButton' disabled>First</button>
+                            <button type='button' id='infaqPrevButton' disabled>Previous</button>
 
-                            <input type='number' id='infaqPageInput' value='1' min='1' />
+                            <input type='number' id='infaqPageInput' value='1' min='1' required />
                             <button type='button' id='infaqGoButton'>Go</button>
 
-                            <button type='button' id='infaqNextButton'>Next</button>
-                            <button type='button' id='infaqLastButton'>Last</button>
+                            <button type='button' id='infaqNextButton' disabled>Next</button>
+                            <button type='button' id='infaqLastButton' disabled>Last</button>
                         </form>
                     </td>
                 </tr>
