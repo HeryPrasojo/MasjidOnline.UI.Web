@@ -12,4 +12,3 @@
 
     console.log((new Date()).toISOString() + ' index loaded');
 })();
-
