@@ -6,21 +6,35 @@
 	var isNavigationLandscapeLayoutLoaded = false;
 	var isNavigationPortraitLayoutLoaded = false;
 
-	mo.onDOMContentLoaded(onDOMContentLoaded);
+	if (document.readyState == 'loading')
+		document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+	else
+		onDOMContentLoaded();
 
 	screen.orientation.addEventListener("change", loadNavigation);
 
 	async function onDOMContentLoaded()
 	{
-		navigationLandscapeLayout = mo.getElement('navigationLandscapeLayout');
-		navigationPortraitLayout = mo.getElement('navigationPortraitLayout');
+		navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
+		navigationPortraitLayout = getElementById('navigationPortraitLayout');
 
 		await loadNavigation();
+
+		console.log((new Date()).toISOString() + ' navigation DOM content loaded');
 	}
 
-	async function loadNavigation()
+	async function loadNavigation(event)
 	{
-		const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+		var isPortrait;
+
+		if (event)
+		{
+			isPortrait = 'portrait-primary' === event.target.type || 'portrait-secondary' === event.target.type;
+		}
+		else
+		{
+			isPortrait = window.matchMedia("(orientation: portrait)").matches;
+		}
 
 		try
 		{
@@ -28,9 +42,29 @@
 			{
 				if (!isNavigationPortraitLayoutLoaded)
 				{
-					const text = await mo.fetchText('/html/navigationPortrait.html');
+					const text = await fetchText('/html/navigationPortrait.html');
 
 					navigationPortraitLayout.innerHTML = text;
+
+					const navigationPortraitTheRestButton = document.getElementById('navigationPortraitTheRestButton');
+					const navigationPortraitTheRest = document.getElementById('navigationPortraitTheRest');
+
+					navigationPortraitTheRestButton.addEventListener("click", onClick);
+
+					window.addEventListener('click', onWindowClick);
+
+					function onClick()
+					{
+						navigationPortraitTheRest.classList.toggle("display-none");
+					}
+
+					function onWindowClick(event)
+					{
+						if (event.target != navigationPortraitTheRestButton)
+						{
+							navigationPortraitTheRest.classList.add("display-none");
+						}
+					}
 
 					isNavigationPortraitLayoutLoaded = true;
 				}
@@ -42,7 +76,7 @@
 			{
 				if (!isNavigationLandscapeLayoutLoaded)
 				{
-					const text = await mo.fetchText('/html/navigationLandscape.html');
+					const text = await fetchText('/html/navigationLandscape.html');
 
 					navigationLandscapeLayout.innerHTML = text;
 
@@ -68,5 +102,23 @@
 				navigationLandscapeLayout.innerHTML = errorString;
 			}
 		}
+
+		console.log((new Date()).toISOString() + ' navigation navigation finish');
 	}
+
+	async function fetchText(url)
+	{
+		const response = await fetch(url);
+
+		if (!response.ok) throw Error(response.status + ' ' + response.statusText);
+
+		return response.text();
+	}
+
+	function getElementById(id)
+	{
+		return document.getElementById(id);
+	}
+
+	console.log((new Date()).toISOString() + ' navigation loaded');
 })();

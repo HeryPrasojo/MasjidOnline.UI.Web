@@ -1,6 +1,15 @@
-mo.onWindowLoaded(function ()
+(function ()
 {
-    const pageLoading = mo.getElement('pageLoading');
+    window.addEventListener('load', onLoaded);
 
-    pageLoading.remove();
-});
+    function onLoaded()
+    {
+        const pageLoading = document.getElementById('pageLoading');
+
+        pageLoading.remove();
+
+        console.log((new Date()).toISOString() + ' loading window loaded');
+    }
+
+    console.log((new Date()).toISOString() + ' loading loaded');
+})();

@@ -1,3 +1,5 @@
+globalThis.mo ??= {};
+
 mo.apiResultCode =
 {
 	success: 0,

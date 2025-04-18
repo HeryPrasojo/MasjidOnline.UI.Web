@@ -48,6 +48,8 @@ body
 {
     flex: 1 1 auto;
     text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 @media (orientation: landscape)
@@ -87,6 +89,14 @@ body
         bottom: 0;
         height: 2em;
         width: 100%;
+
+        text-align: center;
+        font-size: 0.8em;
+    }
+
+    #footerTitle
+    {
+        flex: 1 1 auto;
     }
 }
 
@@ -102,6 +112,12 @@ body
         position: fixed;
         bottom: 0;
         width: 100%;
+    }
+
+    #navigationPortraitLoading
+    {
+        text-align: center;
+        background-color: #888;
     }
 
     #navigationPortrait
