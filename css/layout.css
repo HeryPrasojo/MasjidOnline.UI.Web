@@ -91,12 +91,12 @@ body
         width: 100%;
 
         text-align: center;
-        font-size: 0.8em;
     }
 
     #footerTitle
     {
         flex: 1 1 auto;
+        font-size: 0.8em;
     }
 }
 
