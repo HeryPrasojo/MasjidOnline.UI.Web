@@ -46,8 +46,9 @@
 
 					navigationPortraitLayout.innerHTML = text;
 
-					const navigationPortraitTheRestButton = document.getElementById('navigationPortraitTheRestButton');
-					const navigationPortraitTheRest = document.getElementById('navigationPortraitTheRest');
+					const navigationPortraitTheRestButton = getElementById('navigationPortraitTheRestButton');
+					const navigationPortraitTheRest = getElementById('navigationPortraitTheRest');
+					const navigationPortraitTheRestSubItemParentInfaqButton = getElementById('navigationPortraitTheRestSubItemParentInfaqButton');
 
 					navigationPortraitTheRestButton.addEventListener("click", onClick);
 
@@ -60,7 +61,7 @@
 
 					function onWindowClick(event)
 					{
-						if (event.target != navigationPortraitTheRestButton)
+						if ((event.target != navigationPortraitTheRestButton) && (event.target != navigationPortraitTheRestSubItemParentInfaqButton))
 						{
 							navigationPortraitTheRest.classList.add("display-none");
 						}

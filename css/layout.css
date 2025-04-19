@@ -61,13 +61,18 @@ body
 
     #navigationLandscapeLayout
     {
-        flex: 1 1 auto;
+        flex: 1 0 0;
     }
 
     #navigationLandscapeLoading
     {
         text-align: center;
         line-height: 4em;
+    }
+
+    #navLandscape
+    {
+        padding: 0;
     }
 
     #contentLayout
@@ -148,7 +153,7 @@ body
         margin-right: 1em;
     }
 
-    .navigationPortraitItem>a
+    .navigationPortraitItem > a
     {
         display: block;
         background-color: #0ff;
@@ -181,8 +186,25 @@ body
         text-align: start;
     }
 
-    .navigationPortraitTheRestItem
-    {}
+    .navigationPortraitTheRestItem > a
+    {
+        display: block;
+    }
+
+    #navigationPortraitTheRestSubItemParent
+    {
+        display: flex;
+    }
+
+    #navigationPortraitTheRestSubItemParentInfaqText
+    {
+        flex: 1 1 auto;
+    }
+
+    #navigationPortraitTheRestSubItemParentInfaqButtonHolder
+    {
+        flex: 0 0 1.5em;
+    }
 
     #footerLayout
     {
