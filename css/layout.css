@@ -148,7 +148,7 @@ body
         margin-right: 1em;
     }
 
-    .navigationPortraitItem a
+    .navigationPortraitItem>a
     {
         display: block;
         background-color: #0ff;
@@ -172,18 +172,17 @@ body
 
     #navigationPortraitTheRest
     {
+        background-color: #ff0;
         list-style: none;
         position: fixed;
         bottom: 2em;
         right: 0;
         padding: 0;
+        text-align: start;
     }
 
     .navigationPortraitTheRestItem
-    {
-        display: block;
-        min-width: 3em;
-    }
+    {}
 
     #footerLayout
     {
