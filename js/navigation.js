@@ -1,5 +1,7 @@
 (function ()
 {
+	console.log((new Date()).toISOString() + ' navigation start');
+
 	var navigationLandscapeLayout;
 	var navigationPortraitLayout;
 
@@ -15,16 +17,20 @@
 
 	async function onDOMContentLoaded()
 	{
+		console.log((new Date()).toISOString() + ' navigation DOM content start');
+
 		navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
 		navigationPortraitLayout = getElementById('navigationPortraitLayout');
 
 		await loadNavigation();
 
-		console.log((new Date()).toISOString() + ' navigation DOM content loaded');
+		console.log((new Date()).toISOString() + ' navigation DOM content finish');
 	}
 
 	async function loadNavigation(event)
 	{
+		console.log((new Date()).toISOString() + ' navigation navigation start');
+
 		var isPortrait;
 
 		if (event)
@@ -104,16 +110,16 @@
 			}
 		}
 
+		async function fetchText(url)
+		{
+			const response = await fetch(url);
+
+			if (!response.ok) throw Error(response.status + ' ' + response.statusText);
+
+			return response.text();
+		}
+
 		console.log((new Date()).toISOString() + ' navigation navigation finish');
-	}
-
-	async function fetchText(url)
-	{
-		const response = await fetch(url);
-
-		if (!response.ok) throw Error(response.status + ' ' + response.statusText);
-
-		return response.text();
 	}
 
 	function getElementById(id)
@@ -121,5 +127,5 @@
 		return document.getElementById(id);
 	}
 
-	console.log((new Date()).toISOString() + ' navigation loaded');
+	console.log((new Date()).toISOString() + ' navigation finish');
 })();

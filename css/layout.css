@@ -217,6 +217,11 @@ body
     display: none;
 }
 
+.grecaptcha-badge
+{
+    visibility: hidden;
+}
+
 #layout
 {
     background-color: #faa;

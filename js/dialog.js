@@ -1,34 +1,51 @@
-mo.onDOMContentLoaded(async function ()
+(function ()
 {
-    const dialogId = 'generalDialog';
+    console.log((new Date()).toISOString() + ' dialog start');
 
-    var dialogElement = mo.getElement(dialogId);
+    if (document.readyState == 'loading')
+        document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+    else
+        onDOMContentLoaded();
 
-    if (!dialogElement)
+    async function onDOMContentLoaded()
     {
-        const holder = mo.getElement('dialogHolder');
+        console.log((new Date()).toISOString() + ' dialog DOM content start');
 
-        const text = await mo.fetchText('/html/dialog.html');
-
-        if (!text)
+        try
         {
-            holder.innerHTML = '!';
+            const dialogId = 'generalDialog';
 
-            return;
+            const dialogElement = getElementById(dialogId);
+            var messageElement = getElementById('generalDialogMessage');
+
+            if (!messageElement)
+            {
+                const text = await mo.fetchText('/html/dialog.html');
+
+                holder.innerHTML = text;
+
+                messageElement = getElementById(dialogId);
+            }
+
+            mo.showDialog = function (message)
+            {
+                messageElement.innerHTML = message;
+
+                dialogElement.showModal();
+            };
+        }
+        catch (error)
+        {
+            console.error((new Date()).toISOString() + 'Error loading dialog: ', error);
         }
 
-        holder.innerHTML = text;
+        function getElementById(id)
+        {
+            return document.getElementById(id);
+        }
 
-        dialogElement = mo.getElement(dialogId);
+        console.log((new Date()).toISOString() + ' dialog DOM content finish');
     }
 
-
-    const messageElement = mo.getElement('dialogMessage');
-
-    mo.showDialog = function (message)
-    {
-        messageElement.innerHTML = message;
-
-        dialogElement.showModal();
-    }
-});
+    console.log((new Date()).toISOString() + ' dialog finish');
+})();
