@@ -24,26 +24,35 @@
 
 		async function showInstruction()
 		{
+			var instructionDialog;
+			var confirmationButton;
+
 			try
 			{
-				const dialog = getElementById('manualBankTransferInstructionDialog');
+				instructionButton.disabled = true;
+				instructionButton.classList.toggle("loading");
+
+				instructionDialog = getElementById('manualBankTransferInstructionDialog');
 
 				const confirmationButtonId = 'manualBankTransferConfirmationButton';
-				var confirmationButton = getElementById(confirmationButtonId);
+				confirmationButton = getElementById(confirmationButtonId);
 
 				if (!confirmationButton)
 				{
 
 					const text = await mo.fetchText('/html/infaq/manualBankTransferInstruction.html');
 
-					dialog.innerHTML = text;
+					instructionDialog.innerHTML = text;
 
-					const confirmationButton = getElementById(confirmationButtonId);
+					confirmationButton = getElementById(confirmationButtonId);
 
 					confirmationButton.addEventListener('click', showConfirmation);
 				}
 
-				dialog.showModal();
+				instructionDialog.showModal();
+
+				instructionButton.disabled = false;
+				instructionButton.classList.toggle("loading");
 			}
 			catch (error)
 			{
@@ -54,6 +63,9 @@
 			{
 				try
 				{
+					confirmationButton.disabled = true;
+					confirmationButton.classList.toggle("loading");
+
 					const confirmationDialog = getElementById('manualBankTransferConfirmationDialog');
 
 					const manualBankTransferFormId = 'manualBankTransferForm';
@@ -107,16 +119,16 @@
 								e.preventDefault();
 
 								submitButton.disabled = true;
+								submitButton.classList.toggle("loading");
 
 								const isCaptchaNeeded = mo.isCaptchaNeeded();
 
 								// grecaptcha.enterprise.ready(async () => 
 								// {
-								const captchaAction = 'infaq';
 								var captchaToken;
 
 								if (isCaptchaNeeded)
-									captchaToken = await grecaptcha.enterprise.execute('6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R', { action: captchaAction });
+									captchaToken = await grecaptcha.enterprise.execute('6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R', { action: mo.recaptchaActionPrefix + 'infaq' });
 
 								const formData = new FormData();
 
@@ -142,6 +154,9 @@
 
 								resetForm();
 
+								submitButton.classList.toggle("loading");
+								submitButton.disabled = false;
+
 								confirmationDialog.close();
 								instructionDialog.close();
 
@@ -150,7 +165,7 @@
 							}
 							catch (error)
 							{
-								console.error((new Date()).toISOString() + 'Error submitting manual bank transfer confirmation: ', error);
+								console.error((new Date()).toISOString() + ' Error submitting manual bank transfer confirmation: ', error);
 							}
 						}
 
@@ -171,6 +186,9 @@
 							}
 						}
 					}
+
+					confirmationButton.disabled = false;
+					confirmationButton.classList.toggle("loading");
 
 					confirmationDialog.showModal();
 				}

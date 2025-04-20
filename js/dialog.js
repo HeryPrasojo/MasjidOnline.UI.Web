@@ -22,7 +22,7 @@
             {
                 const text = await mo.fetchText('/html/dialog.html');
 
-                holder.innerHTML = text;
+                dialogElement.innerHTML = text;
 
                 messageElement = getElementById(dialogId);
             }
