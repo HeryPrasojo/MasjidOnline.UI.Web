@@ -132,7 +132,6 @@
 
 								const formData = new FormData();
 
-								formData.append('captchaAction', captchaAction);
 								formData.append('captchaToken', captchaToken);
 								formData.append('munfiqName', munfiqNameInput.value.trim());
 								formData.append('amount', amountInput.value);

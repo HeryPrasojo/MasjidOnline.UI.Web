@@ -60,7 +60,7 @@
 		{
 			const sessionId = response.headers.get(sessionIdHeaderName);
 
-			mo.setSession(sessionId);
+			if (sessionId) mo.setSession(sessionId);
 		}
 
 		return response;

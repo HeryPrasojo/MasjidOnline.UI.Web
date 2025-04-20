@@ -13,10 +13,10 @@
 
         try
         {
-            const dialogId = 'generalDialog';
+            const messageElementId = 'generalDialogMessage';
 
-            const dialogElement = getElementById(dialogId);
-            var messageElement = getElementById('generalDialogMessage');
+            const dialogElement = getElementById('generalDialog');
+            var messageElement = getElementById(messageElementId);
 
             if (!messageElement)
             {
@@ -24,7 +24,7 @@
 
                 dialogElement.innerHTML = text;
 
-                messageElement = getElementById(dialogId);
+                messageElement = getElementById(messageElementId);
             }
 
             mo.showDialog = function (message)
