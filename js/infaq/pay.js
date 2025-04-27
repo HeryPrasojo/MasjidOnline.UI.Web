@@ -26,6 +26,9 @@
 		{
 			var instructionDialog;
 			var confirmationButton;
+			var notesInput;
+
+			const recommendationNoteStorageKey = 'recommendationNote';
 
 			try
 			{
@@ -34,20 +37,39 @@
 
 				instructionDialog = getElementById('manualBankTransferInstructionDialog');
 
+				var recommendationNoteElement;
+
 				const confirmationButtonId = 'manualBankTransferConfirmationButton';
 				confirmationButton = getElementById(confirmationButtonId);
 
 				if (!confirmationButton)
 				{
-
 					const text = await mo.fetchText('/html/infaq/manualBankTransferInstruction.html');
 
 					instructionDialog.innerHTML = text;
+
 
 					confirmationButton = getElementById(confirmationButtonId);
 
 					confirmationButton.addEventListener('click', showConfirmation);
 				}
+
+
+				var recommendationNote = localStorage.getItem(recommendationNoteStorageKey);
+
+				if (!recommendationNote)
+				{
+					const json = await mo.fetchApiJson('payment/manual/getRecommendationNote');
+
+					recommendationNote = json.note;
+
+					localStorage.setItem(recommendationNoteStorageKey, recommendationNote);
+				}
+
+				recommendationNoteElement = getElementById('recommendationNote');
+
+				recommendationNoteElement.innerHTML = recommendationNote;
+
 
 				instructionDialog.showModal();
 
@@ -83,7 +105,7 @@
 						const munfiqNameInput = getElementById('manualBankTransferMunfiqNameInput');
 						const amountInput = getElementById('manualBankTransferAmountInput');
 						const dateTimeInput = getElementById('manualBankTransferDateTimeInput');
-						const notesInput = getElementById('manualBankTransferNotesInput');
+						notesInput = getElementById('manualBankTransferNotesInput');
 						const filesInput = getElementById('manualBankTransferFilesInput');
 						const submitButton = getElementById('manualBankTransferSubmitButton');
 						const closeButton = getElementById('manualBankTransferConfirmationCloseButton');
@@ -123,8 +145,6 @@
 
 								const isCaptchaNeeded = mo.isCaptchaNeeded();
 
-								// grecaptcha.enterprise.ready(async () => 
-								// {
 								var captchaToken;
 
 								if (isCaptchaNeeded)
@@ -142,11 +162,13 @@
 								for (const file of filesInput.files)
 									formData.append('files[]', file);
 
-								const json = await mo.fetchApiJson(
+								await mo.fetchApiJson(
 									'infaq/infaq/add/anonym',
 									{
 										body: formData,
 									});
+
+								localStorage.removeItem(recommendationNoteStorageKey);
 
 								if (isCaptchaNeeded && (typeof captchaToken == 'string'))
 									mo.setCaptchaPassed();
@@ -160,7 +182,6 @@
 								instructionDialog.close();
 
 								mo.showDialog('Confirmation submitted. Thank you!');
-								// });
 							}
 							catch (error)
 							{
@@ -185,6 +206,8 @@
 							}
 						}
 					}
+
+					notesInput.value = localStorage.getItem(recommendationNoteStorageKey);
 
 					confirmationButton.disabled = false;
 					confirmationButton.classList.toggle("loading");
