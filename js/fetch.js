@@ -30,7 +30,11 @@
 		options.headers ??= new Headers();
 
 		if (typeof options.body != 'undefined' && !(options.body instanceof FormData))
+		{
 			options.headers.append("Content-Type", "application/json");
+
+			options.body = JSON.stringify(options.body);
+		}
 
 
 		const sessionId = mo.getSession();

@@ -1,130 +1,149 @@
-mo.onDOMContentLoaded(function ()
+(function ()
 {
-    const infaqRowHolder = mo.getElement('infaqRowHolder');
-    const infaqPageCurrent = mo.getElement('infaqPageCurrent');
-    const infaqPageTotal = mo.getElement('infaqPageTotal');
-    const infaqErrorMessage = mo.getElement('infaqErrorMessage');
-    // const formInfaqPage = mo.getElement('formInfaqPage');
-    const infaqFirstButton = mo.getElement('infaqFirstButton');
-    const infaqPrevButton = mo.getElement('infaqPrevButton');
-    const infaqPageInput = mo.getElement('infaqPageInput');
-    const infaqGoButton = mo.getElement('infaqGoButton');
-    const infaqNextButton = mo.getElement('infaqNextButton');
-    const infaqLastButton = mo.getElement('infaqLastButton');
+    console.log((new Date()).toISOString() + ' list start');
 
-    var currentPage = 1;
-    var totalPage = 0;
+    if (document.readyState == 'loading')
+        document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+    else
+        onDOMContentLoaded();
 
-    infaqFirstButton.addEventListener('click', submitFirst);
-    infaqPrevButton.addEventListener('click', submitPrev);
-    infaqGoButton.addEventListener('click', submitNumber);
-    infaqNextButton.addEventListener('click', submitNext);
-    infaqLastButton.addEventListener('click', submitLast);
-
-    submitForm();
-
-    async function submitFirst()
+    async function onDOMContentLoaded()
     {
-        await submitForm(1);
-    }
+        console.log((new Date()).toISOString() + ' list DOM content start');
 
-    async function submitPrev()
-    {
-        await submitForm(currentPage - 1);
-    }
+        const infaqRowHolder = getElementById('infaqRowHolder');
+        const infaqPageCurrent = getElementById('infaqPageCurrent');
+        const infaqPageTotal = getElementById('infaqPageTotal');
+        const infaqErrorMessage = getElementById('infaqErrorMessage');
+        // const formInfaqPage = getElementById('formInfaqPage');
+        const infaqFirstButton = getElementById('infaqFirstButton');
+        const infaqPrevButton = getElementById('infaqPrevButton');
+        const infaqPageInput = getElementById('infaqPageInput');
+        const infaqGoButton = getElementById('infaqGoButton');
+        const infaqNextButton = getElementById('infaqNextButton');
+        const infaqLastButton = getElementById('infaqLastButton');
 
-    async function submitNumber()
-    {
-        const pageNumber = parseInt(infaqPageInput.value, 10);
+        var currentPage = 1;
+        var totalPage = 0;
 
-        if (isNaN(pageNumber) || pageNumber < 1)
+        infaqFirstButton.addEventListener('click', submitFirst);
+        infaqPrevButton.addEventListener('click', submitPrev);
+        infaqGoButton.addEventListener('click', submitNumber);
+        infaqNextButton.addEventListener('click', submitNext);
+        infaqLastButton.addEventListener('click', submitLast);
+
+        await submitFirst();
+
+        async function submitFirst()
         {
-            const text = 'Invalid page number. Page number must be a positive integer.';
-
-            infaqErrorMessage.innerHTML = text;
-
-            throw Error(text);
+            await submitForm(1);
         }
 
-        await submitForm(pageNumber);
-    }
-
-    async function submitNext()
-    {
-        await submitForm(currentPage + 1);
-    }
-
-    async function submitLast()
-    {
-        await submitForm(totalPage);
-    }
-
-    async function submitForm(pageNumber)
-    {
-        if (isNaN(pageNumber) || pageNumber < 1)
+        async function submitPrev()
         {
-            infaqErrorMessage.innerHTML = 'Invalid page number. Page number must be a positive integer.';
-
-            return;
+            await submitForm(currentPage - 1);
         }
 
-        infaqRowHolder.innerHTML = '';
-        infaqErrorMessage.innerHTML = '';
+        async function submitNumber()
+        {
+            const pageNumber = parseInt(infaqPageInput.value, 10);
 
-        infaqFirstButton.disabled = true;
-        infaqPrevButton.disabled = true;
-        infaqGoButton.disabled = true;
-        infaqNextButton.disabled = true;
-        infaqLastButton.disabled = true;
-
-        var json = await mo.fetchApiJson(
-            'infaq/infaq/getMany',
+            if (isNaN(pageNumber) || pageNumber < 1)
             {
-                body:
+                const text = 'Invalid page number. Page number must be a positive integer.';
+
+                infaqErrorMessage.innerHTML = text;
+
+                throw Error(text);
+            }
+
+            await submitForm(pageNumber);
+        }
+
+        async function submitNext()
+        {
+            await submitForm(currentPage + 1);
+        }
+
+        async function submitLast()
+        {
+            await submitForm(totalPage);
+        }
+
+        async function submitForm(pageNumber)
+        {
+            if (isNaN(pageNumber) || pageNumber < 1)
+            {
+                infaqErrorMessage.innerHTML = 'Invalid page number. Page number must be a positive integer.';
+
+                return;
+            }
+
+            infaqRowHolder.innerHTML = '';
+            infaqErrorMessage.innerHTML = '';
+
+            infaqFirstButton.disabled = true;
+            infaqPrevButton.disabled = true;
+            infaqGoButton.disabled = true;
+            infaqNextButton.disabled = true;
+            infaqLastButton.disabled = true;
+
+            var json = await mo.fetchApiJson(
+                'infaq/infaq/getMany',
                 {
-                    page: pageNumber,
-                },
-            });
+                    body:
+                    {
+                        page: pageNumber,
+                    },
+                });
 
 
-        currentPage = pageNumber;
-        totalPage = json.total;
+            currentPage = pageNumber;
+            totalPage = json.pageCount;
 
 
-        for (const record of json.records)
-        {
-            const tr = document.createElement('tr');
+            for (const record of json.records)
+            {
+                const tr = document.createElement('tr');
 
-            tr.append(
-                document.createElement('td').append(document.createTextNode(record.id)),
-                document.createElement('td').append(document.createTextNode(record.dateTime)),
-                document.createElement('td').append(document.createTextNode(record.munfiqName)),
-                document.createElement('td').append(document.createTextNode(record.amount)),
-                document.createElement('td').append(document.createTextNode(record.status)),
-            );
+                tr.append(
+                    document.createElement('td').append(document.createTextNode(record.id)),
+                    document.createElement('td').append(document.createTextNode(record.dateTime)),
+                    document.createElement('td').append(document.createTextNode(record.munfiqName)),
+                    document.createElement('td').append(document.createTextNode(record.amount)),
+                    document.createElement('td').append(document.createTextNode(record.status)),
+                );
 
-            infaqRowHolder.append(tr);
+                infaqRowHolder.append(tr);
+            }
+
+
+            infaqPageCurrent.innerText = currentPage;
+            infaqPageTotal.innerText = totalPage;
+
+            if (currentPage > 1)
+            {
+                infaqFirstButton.disabled = false;
+                infaqPrevButton.disabled = false;
+            }
+
+            infaqPageInput.value = currentPage;
+            infaqGoButton.disabled = false;
+
+            if (currentPage < json.pageCount)
+            {
+                infaqNextButton.disabled = false;
+                infaqLastButton.disabled = false;
+            }
         }
 
-
-        infaqPageCurrent.innerText = currentPage;
-        infaqPageTotal.innerText = totalPage;
-
-        if (currentPage > 1)
-        {
-            infaqFirstButton.disabled = false;
-            infaqPrevButton.disabled = false;
-        }
-
-        infaqPageInput.value = currentPage;
-        infaqGoButton.disabled = false;
-
-        if (currentPage < json.total)
-        {
-            infaqNextButton.disabled = false;
-            infaqLastButton.disabled = false;
-        }
+        console.log((new Date()).toISOString() + ' list DOM content finish');
     }
 
-    console.log((new Date()).toISOString() + ' load list');
-});
+    function getElementById(id)
+    {
+        return document.getElementById(id);
+    }
+
+    console.log((new Date()).toISOString() + ' list finish');
+})();

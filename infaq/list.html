@@ -2,62 +2,80 @@
 <html lang="en">
     <head>
         <title>Infaq List</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="/css/all.css" />
-        <script src='/js/mo.js'></script>
-        <script src='/js/DOMContentLoaded.js'></script>
+        <link rel="stylesheet" href="/css/layout.css" />
         <script src='/js/envConfig.js'></script>
-        <script src='/js/element.js'></script>
-        <script src='/js/session.js'></script>
         <script src='/js/fetch.js'></script>
-        <script src='/js/error.js'></script>
-        <script src='/js/navigation.js'></script>
+        <script src='/js/loading.js' async></script>
+        <script src='/js/navigation.js' async></script>
         <script src='/js/infaq/list.js'></script>
     </head>
     <body>
-        <table id='infaqTable'>
-            <caption>Infaq List</caption>
-            <colgroup>
-                <col class='infaqId' />
-                <col class='date' />
-                <col class='munfiqName' />
-                <col class='amount' />
-                <col class='status' />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Infaq ID</th>
-                    <th>Date Time</th>
-                    <th>Munfiq Name</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="infaqRowHolder">
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="5">Page <span id='infaqPageCurrent'></span> of <span id='infaqPageTotal'></span></td>
-                </tr>
-                <tr>
-                    <td colspan="5">
-                        <p id='infaqErrorMessage'></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="5">
-                        <form id='formInfaqPage'>
-                            <button type='button' id='infaqFirstButton' disabled>First</button>
-                            <button type='button' id='infaqPrevButton' disabled>Previous</button>
+        <div id='pageLoading' class='loading'>Loading...</div>
+        <div id='layout'>
+            <div id='headerLayout'>
+                <div id='title'>MasjidOnline</div>
+            </div>
+            <div id='flexLayout'>
+                <nav id='navigationLandscapeLayout'>
+                    <div id='navigationLandscapeLoading' class='loading'>Loading...</div>
+                </nav>
+                <div id='contentLayout'>
+                    <h1>Masjid Online Infaq List</h1>
+                    <table id='infaqTable'>
+                        <caption>Infaq List</caption>
+                        <colgroup>
+                            <col class='infaqId' />
+                            <col class='date' />
+                            <col class='munfiqName' />
+                            <col class='amount' />
+                            <col class='status' />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Infaq ID</th>
+                                <th>Date Time</th>
+                                <th>Munfiq Name</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="infaqRowHolder">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">Page <span id='infaqPageCurrent'></span> of <span id='infaqPageTotal'></span></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <p id='infaqErrorMessage'></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5">
+                                    <form id='formInfaqPage'>
+                                        <button type='button' id='infaqFirstButton' disabled>First</button>
+                                        <button type='button' id='infaqPrevButton' disabled>Previous</button>
 
-                            <input type='number' id='infaqPageInput' value='1' min='1' required />
-                            <button type='button' id='infaqGoButton'>Go</button>
+                                        <input type='number' id='infaqPageInput' value='1' min='1' required />
+                                        <button type='button' id='infaqGoButton'>Go</button>
 
-                            <button type='button' id='infaqNextButton' disabled>Next</button>
-                            <button type='button' id='infaqLastButton' disabled>Last</button>
-                        </form>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                                        <button type='button' id='infaqNextButton' disabled>Next</button>
+                                        <button type='button' id='infaqLastButton' disabled>Last</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <nav id='navigationPortraitLayout'>
+                <div id='navigationPortraitLoading' class='loading'>Loading...</div>
+            </nav>
+            <div id='footerLayout'>
+                <div id='footerTitle'>MasjidOnline</div>
+            </div>
+        </div>
     </body>
 </html>
