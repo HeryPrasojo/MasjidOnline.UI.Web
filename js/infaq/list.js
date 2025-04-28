@@ -106,13 +106,21 @@
             {
                 const tr = document.createElement('tr');
 
-                tr.append(
-                    document.createElement('td').append(document.createTextNode(record.id)),
-                    document.createElement('td').append(document.createTextNode(record.dateTime)),
-                    document.createElement('td').append(document.createTextNode(record.munfiqName)),
-                    document.createElement('td').append(document.createTextNode(record.amount)),
-                    document.createElement('td').append(document.createTextNode(record.status)),
-                );
+                const idTd = document.createElement('td');
+                const dateTimeTd = document.createElement('td');
+                const munfiqNameTd = document.createElement('td');
+                const amountTd = document.createElement('td');
+                const paymentTypeTd = document.createElement('td');
+                const paymentStatusTd = document.createElement('td');
+
+                idTd.append(document.createTextNode(record.id));
+                dateTimeTd.append(document.createTextNode(record.dateTime));
+                munfiqNameTd.append(document.createTextNode(record.munfiqName));
+                amountTd.append(document.createTextNode(record.amount));
+                paymentTypeTd.append(document.createTextNode(record.paymentType));
+                paymentStatusTd.append(document.createTextNode(record.paymentStatus));
+
+                tr.append(idTd, dateTimeTd, munfiqNameTd, amountTd, paymentTypeTd, paymentStatusTd);
 
                 infaqRowHolder.append(tr);
             }
