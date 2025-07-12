@@ -113,6 +113,11 @@ body
         display: none;
     }
 
+    #contentLayout
+    {
+        min-height: 100vh;
+    }
+
     #navigationPortraitLayout
     {
         position: fixed;

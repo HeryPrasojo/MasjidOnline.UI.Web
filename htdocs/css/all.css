@@ -7,3 +7,8 @@ button
 {
     cursor: pointer;
 }
+
+.textAlign-end
+{
+    text-align: end;
+}
