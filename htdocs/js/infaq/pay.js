@@ -148,7 +148,7 @@
 								var captchaToken;
 
 								if (isCaptchaNeeded)
-									captchaToken = await grecaptcha.enterprise.execute('6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R', { action: mo.recaptchaActionPrefix + 'infaq' });
+									captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix });
 
 								const formData = new FormData();
 
