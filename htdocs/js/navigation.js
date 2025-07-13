@@ -1,7 +1,5 @@
 (function ()
 {
-	console.log((new Date()).toISOString() + ' navigation start');
-
 	var navigationLandscapeLayout;
 	var navigationPortraitLayout;
 
@@ -17,20 +15,14 @@
 
 	async function onDOMContentLoaded()
 	{
-		console.log((new Date()).toISOString() + ' navigation DOM content start');
-
 		navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
 		navigationPortraitLayout = getElementById('navigationPortraitLayout');
 
 		await loadNavigation();
-
-		console.log((new Date()).toISOString() + ' navigation DOM content finish');
 	}
 
 	async function loadNavigation(event)
 	{
-		console.log((new Date()).toISOString() + ' navigation navigation start');
-
 		var isPortrait;
 
 		if (event)
@@ -118,14 +110,10 @@
 
 			return response.text();
 		}
-
-		console.log((new Date()).toISOString() + ' navigation navigation finish');
 	}
 
 	function getElementById(id)
 	{
 		return document.getElementById(id);
 	}
-
-	console.log((new Date()).toISOString() + ' navigation finish');
 })();

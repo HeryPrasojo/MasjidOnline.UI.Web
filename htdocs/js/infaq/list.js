@@ -1,7 +1,5 @@
 (function ()
 {
-    console.log((new Date()).toISOString() + ' list start');
-
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
     else
@@ -9,8 +7,6 @@
 
     async function onDOMContentLoaded()
     {
-        console.log((new Date()).toISOString() + ' list DOM content start');
-
         const infaqRowHolder = getElementById('infaqRowHolder');
         const infaqPageCurrent = getElementById('infaqPageCurrent');
         const infaqPageTotal = getElementById('infaqPageTotal');
@@ -104,7 +100,16 @@
 
             for (const record of json.records)
             {
-                const tr = document.createElement('tr');
+                const idTextNode = document.createTextNode(record.id);
+                const dateTimeTextNode = record.dateTime;
+                const munfiqName = record.munfiqName;
+                const paymentType = record.paymentType;
+                const amountTextNode = record.amount;
+                const paymentStatusTextNode = record.paymentStatus;
+
+                const itemA = document.createElement('a');
+                itemA.href = 'infaq?id=' + record.id;
+                itemA.append(idTextNode);
 
                 const idTd = document.createElement('td');
                 const dateTimeTd = document.createElement('td');
@@ -115,12 +120,14 @@
 
                 amountTd.className = 'textAlign-end';
 
-                idTd.append(document.createTextNode(record.id));
-                dateTimeTd.append(document.createTextNode(record.dateTime));
-                munfiqNameTd.append(document.createTextNode(record.munfiqName));
-                paymentTypeTd.append(document.createTextNode(record.paymentType));
-                amountTd.append(document.createTextNode(record.amount));
-                paymentStatusTd.append(document.createTextNode(record.paymentStatus));
+                idTd.append(itemA);
+                dateTimeTd.append(document.createTextNode(dateTimeTextNode));
+                munfiqNameTd.append(document.createTextNode(munfiqName));
+                paymentTypeTd.append(document.createTextNode(paymentType));
+                amountTd.append(document.createTextNode(amountTextNode));
+                paymentStatusTd.append(document.createTextNode(paymentStatusTextNode));
+
+                const tr = document.createElement('tr');
 
                 tr.append(idTd, dateTimeTd, munfiqNameTd, paymentTypeTd, amountTd, paymentStatusTd);
 
@@ -146,14 +153,10 @@
                 infaqLastButton.disabled = false;
             }
         }
-
-        console.log((new Date()).toISOString() + ' list DOM content finish');
     }
 
     function getElementById(id)
     {
         return document.getElementById(id);
     }
-
-    console.log((new Date()).toISOString() + ' list finish');
 })();

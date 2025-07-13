@@ -1,0 +1,29 @@
+.infaqId
+{
+    min-width: 6em;
+}
+
+.date
+{
+    min-width: 10em;
+}
+
+.munfiqName
+{
+    min-width: 11em;
+}
+
+.payment
+{
+    min-width: 11em;
+}
+
+.amount
+{
+    min-width: 6em;
+}
+
+.status
+{
+    min-width: 5em;
+}

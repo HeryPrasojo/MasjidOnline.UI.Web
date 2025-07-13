@@ -3,7 +3,9 @@ html
     font-family: Arial, Verdana, sans-serif;
 }
 
-button
+button,
+input[type='file'],
+input[type='file']::file-selector-button
 {
     cursor: pointer;
 }

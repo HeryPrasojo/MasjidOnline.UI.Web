@@ -78,7 +78,7 @@ body
 
     #contentLayout
     {
-        flex: 2 1 auto;
+        flex: 3 0 0;
     }
 
     #navigationPortraitLayout

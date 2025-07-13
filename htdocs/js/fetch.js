@@ -10,7 +10,7 @@
 
 		const response = await fetch(url, options);
 
-		if (!response.ok) throw Error(response.status + ' ' + response.statusText);
+		// if (!response.ok) throw Error(response.status + ' ' + response.statusText);
 
 		return response;
 	};
@@ -51,13 +51,13 @@
 		{
 			const json = await response.clone().json();
 
-			if (json.resultCode != 0) throw Error(json.resultCode + ' ' + json.resultMessage);
+			// if (json.resultCode != 0) throw Error(json.resultCode + ' ' + json.resultMessage);
 		}
 		else
 		{
 			const resultCode = response.headers.get("Mo-Result-Code");
 
-			if (resultCode != 0) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
+			// if (resultCode != 0) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
 		}
 
 		if (!sessionId)
