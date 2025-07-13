@@ -1,7 +1,5 @@
 (function ()
 {
-	console.log((new Date()).toISOString() + ' pay start');
-
 	if (document.readyState == 'loading')
 		document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
 	else
@@ -9,11 +7,7 @@
 
 	async function onDOMContentLoaded()
 	{
-		console.log((new Date()).toISOString() + ' pay DOM content start');
-
 		loadManualBankTransfer();
-
-		console.log((new Date()).toISOString() + ' pay DOM content finish');
 	}
 
 	function loadManualBankTransfer()
@@ -216,7 +210,7 @@
 				}
 				catch (error)
 				{
-					console.error((new Date()).toISOString() + 'Error loading manual bank transfer confirmation: ', error);
+					console.error((new Date()).toISOString() + ' Error loading manual bank transfer confirmation: ', error);
 				}
 			}
 		}
@@ -226,6 +220,4 @@
 	{
 		return document.getElementById(id);
 	}
-
-	console.log((new Date()).toISOString() + ' pay finish');
 })();

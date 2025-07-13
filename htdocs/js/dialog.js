@@ -1,7 +1,5 @@
 (function ()
 {
-    console.log((new Date()).toISOString() + ' dialog start');
-
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
     else
@@ -9,8 +7,6 @@
 
     async function onDOMContentLoaded()
     {
-        console.log((new Date()).toISOString() + ' dialog DOM content start');
-
         try
         {
             const messageElementId = 'generalDialogMessage';
@@ -36,16 +32,12 @@
         }
         catch (error)
         {
-            console.error((new Date()).toISOString() + 'Error loading dialog: ', error);
+            console.error((new Date()).toISOString() + ' Error loading dialog: ', error);
         }
 
         function getElementById(id)
         {
             return document.getElementById(id);
         }
-
-        console.log((new Date()).toISOString() + ' dialog DOM content finish');
     }
-
-    console.log((new Date()).toISOString() + ' dialog finish');
 })();
