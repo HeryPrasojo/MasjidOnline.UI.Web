@@ -7,22 +7,55 @@
 
     async function onDOMContentLoaded()
     {
-        const dateTimeElement = getElementById('dateTime');
-
         const urlSearchParams = new URLSearchParams(window.location.search);
-        const idString = urlSearchParams.get('id');
-        const id = parseInt(idString, 10);
+        const code = urlSearchParams.get('c');
 
-        var json = await mo.fetchApiJson(
-            'infaq/infaq/getOne',
-            {
-                body:
+        const formElement = getElementById('passwordForm');
+        const passwordElement = getElementById('passwordInput');
+        const password2Element = getElementById('password2Input');
+        const messageElement = getElementById('messageElement');
+        const submitElement = getElementById('submitButton');
+
+        formElement.addEventListener('submit', submitForm);
+
+        async function submitForm(event)
+        {
+            event.preventDefault();
+
+            const password = passwordElement.value;
+            const password2 = password2Element.value;
+
+            if (password == '')
+                return messageElement.textContent = 'Passwords should not empty.';
+
+            if (password != password2)
+                return messageElement.textContent = 'Passwords should match.';
+
+
+            submitElement.disabled = true;
+            submitElement.classList.toggle("loading");
+
+            var json = await mo.fetchApiJson(
+                'user/setPassword',
                 {
-                    id: id,
-                },
-            });
+                    body:
+                    {
+                        code,
+                        password,
+                        password2,
+                    },
+                });
 
-        dateTimeElement.innerHTML = json.dateTime;
+            if (json.resultCode != 0)
+            {
+                submitElement.classList.toggle("loading");
+                submitElement.disabled = false;
+
+                return messageElement.textContent = json.resultMessage;
+            }
+
+            messageElement.textContent = 'Success, redirecting...';
+        }
 
         function getElementById(id)
         {
