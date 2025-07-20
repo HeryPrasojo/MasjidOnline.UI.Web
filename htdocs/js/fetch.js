@@ -45,20 +45,20 @@
 		const response = await mo.fetch(mo.apiUriPrefix + url, options);
 
 
-		const contentType = response.headers.get('Content-Type');
+		// const contentType = response.headers.get('Content-Type');
 
-		if (contentType.indexOf('application/json') > -1)
-		{
-			const json = await response.clone().json();
+		// if (contentType.indexOf('application/json') > -1)
+		// {
+		// 	const json = await response.clone().json();
 
-			// if (json.resultCode != 0) throw Error(json.resultCode + ' ' + json.resultMessage);
-		}
-		else
-		{
-			const resultCode = response.headers.get("Mo-Result-Code");
+		// 	if (json.resultCode != 0) throw Error(json.resultCode + ' ' + json.resultMessage);
+		// }
+		// else
+		// {
+		// 	const resultCode = response.headers.get("Mo-Result-Code");
 
-			// if (resultCode != 0) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
-		}
+		// 	if (resultCode != 0) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
+		// }
 
 		if (!sessionId)
 		{
