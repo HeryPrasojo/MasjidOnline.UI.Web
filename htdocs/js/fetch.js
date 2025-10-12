@@ -1,114 +1,129 @@
-(function ()
+const sessionIdHeaderName = 'Mo-Sess';
+const sessionIdStorageKey = 'sessionId';
+const captchaPassedStorageKey = 'isCaptchaPassed';
+
+await import('/js/envConfig.js');
+
+mo.fetch = async function (url, options)
 {
-	const sessionIdHeaderName = 'Mo-Sess';
-	const sessionIdStorageKey = 'sessionId';
-	const captchaPassedStorageKey = 'isCaptchaPassed';
+	url = url.replace(/^\|+|\|+$/g, '');
 
-	mo.fetch = async function (url, options)
+	const response = await fetch(url, options);
+
+	// if (!response.ok) throw Error(response.status + ' ' + response.statusText);
+
+	return response;
+};
+
+mo.fetchText = async function (url, options)
+{
+	const response = await mo.fetch(url, options);
+
+	return await response.text();
+};
+
+mo.fetchApi = async function (url, options)
+{
+	options ??= {};
+	options.method = 'POST';
+
+	options.headers ??= new Headers();
+
+	if (typeof options.body != 'undefined' && !(options.body instanceof FormData))
 	{
-		url = url.replace(/^\|+|\|+$/g, '');
+		options.headers.append("Content-Type", "application/json");
 
-		const response = await fetch(url, options);
-
-		// if (!response.ok) throw Error(response.status + ' ' + response.statusText);
-
-		return response;
-	};
-
-	mo.fetchText = async function (url, options)
-	{
-		const response = await mo.fetch(url, options);
-
-		return await response.text();
-	};
-
-	mo.fetchApi = async function (url, options)
-	{
-		options ??= {};
-		options.method = 'POST';
-
-		options.headers ??= new Headers();
-
-		if (typeof options.body != 'undefined' && !(options.body instanceof FormData))
-		{
-			options.headers.append("Content-Type", "application/json");
-
-			options.body = JSON.stringify(options.body);
-		}
-
-
-		const sessionId = mo.getSession();
-
-		if (sessionId) options.headers.append(sessionIdHeaderName, sessionId);
-
-
-		const response = await mo.fetch(mo.apiUriPrefix + url, options);
-
-
-		// const contentType = response.headers.get('Content-Type');
-
-		// if (contentType.indexOf('application/json') > -1)
-		// {
-		// 	const json = await response.clone().json();
-
-		// 	if (json.resultCode != 0) throw Error(json.resultCode + ' ' + json.resultMessage);
-		// }
-		// else
-		// {
-		// 	const resultCode = response.headers.get("Mo-Result-Code");
-
-		// 	if (resultCode != 0) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
-		// }
-
-		if (!sessionId)
-		{
-			const sessionId = response.headers.get(sessionIdHeaderName);
-
-			if (sessionId) mo.setSession(sessionId);
-		}
-
-		return response;
-	};
-
-	mo.fetchApiJson = async function (url, options)
-	{
-		const response = await mo.fetchApi(url, options);
-
-		return await response.json();
-	};
-
-	mo.getSession = function ()
-	{
-		return localStorage.getItem(sessionIdStorageKey);
-	};
-
-	mo.setSession = function (sessionId)
-	{
-		localStorage.setItem(sessionIdStorageKey, sessionId);
-	};
-
-	mo.isCaptchaNeeded = function ()
-	{
-		const sessionId = mo.getSession();
-
-		if (!sessionId) return true;
-
-
-		const isLogin = localStorage.getItem('isLogin');
-
-		if (isLogin != null) return false;
-
-
-		const isCaptchaPassed = localStorage.getItem(captchaPassedStorageKey);
-
-		if (isCaptchaPassed != null) return false;
-
-
-		return true;
+		options.body = JSON.stringify(options.body);
 	}
 
-	mo.setCaptchaPassed = function ()
+
+	const sessionId = mo.getSession();
+
+	if (sessionId) options.headers.append(sessionIdHeaderName, sessionId);
+
+
+	const response = await mo.fetch(mo.apiUriPrefix + url, options);
+
+
+	let resultCode;
+
+	const contentType = response.headers.get('Content-Type');
+
+	if (contentType.indexOf('application/json') > -1)
 	{
-		localStorage.setItem(captchaPassedStorageKey, true);
+		const json = await response.clone().json();
+
+		resultCode = json.resultCode;
+
+		// if (json.resultCode != 0) throw Error(json.resultCode + ' ' + json.resultMessage);
 	}
-})();
+	else
+	{
+		resultCode = response.headers.get("Mo-Result-Code");
+
+		// if (resultCode != 0) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
+	}
+
+	if (resultCode == "SessionExpire")
+	{
+		mo.removeSession();
+
+		location.href = '/captcha?r=' + encodeURIComponent(location.href);
+	}
+
+	// if (!sessionId)
+	// {
+	// 	const sessionId = response.headers.get(sessionIdHeaderName);
+
+	// 	if (sessionId) mo.setSession(sessionId);
+	// }
+
+	return response;
+};
+
+mo.fetchApiJson = async function (url, options)
+{
+	const response = await mo.fetchApi(url, options);
+
+	return await response.json();
+};
+
+mo.getSession = function ()
+{
+	return localStorage.getItem(sessionIdStorageKey);
+};
+
+mo.removeSession = function ()
+{
+	localStorage.removeItem(sessionIdStorageKey);
+};
+
+mo.setSession = function (sessionId)
+{
+	localStorage.setItem(sessionIdStorageKey, sessionId);
+};
+
+mo.isCaptchaNeeded = function ()
+{
+	const sessionId = mo.getSession();
+
+	if (!sessionId) return true;
+
+
+	const isLogin = localStorage.getItem('isLogin');
+
+	if (isLogin != null) return false;
+
+
+	const isCaptchaPassed = localStorage.getItem(captchaPassedStorageKey);
+
+	if (isCaptchaPassed != null) return false;
+
+
+	return true;
+}
+
+mo.setCaptchaPassed = function ()
+{
+	localStorage.setItem(captchaPassedStorageKey, true);
+}

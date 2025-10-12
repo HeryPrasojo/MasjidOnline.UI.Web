@@ -1,27 +1,53 @@
-const moCaptchaPassedStorageKey = 'isCaptchaPassed';
+const fetchPremise = import('/js/fetch.js');
 
-mo.isCaptchaNeeded = async function ()
+window.addEventListener('load', onWindowLoaded);
+
+if (document.readyState == 'loading')
+	document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+else
+	onDOMContentLoaded();
+
+let captchaCheckbox;
+
+async function onDOMContentLoaded()
 {
-	const sessionId = await mo.isSessionExists();
+	await fetchPremise;
 
-	if (!sessionId)
-		return true;
+	captchaCheckbox = getElementById('captchaCheckbox');
 
+	captchaCheckbox.addEventListener('click', submitForm);
 
-	const isLogin = localStorage.getItem('isLogin');
+	async function submitForm()
+	{
+		captchaCheckbox.disabled = true;
 
-	if (isLogin != null)
-		return false;
+		captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix });
 
+		var json = await mo.fetchApiJson(
+			'session/create',
+			{
+				body:
+				{
+					captchaToken: captchaToken,
+				},
+			});
 
-	const isCaptchaPassed = localStorage.getItem(moCaptchaPassedStorageKey);
+		if (json.resultCode != "Success") location.reload();
 
-	if (isCaptchaPassed != null)
-		return false;
+		mo.setSession(json.data);
 
-	return true;
+		const params = new URLSearchParams(window.location.search);
+
+		location.href = params.get('r');
+	}
 }
-mo.setCaptchaPassed = function ()
+
+function onWindowLoaded()
 {
-	localStorage.setItem(moCaptchaPassedStorageKey, true);
+	captchaCheckbox.disabled = false;
+}
+
+function getElementById(id)
+{
+	return document.getElementById(id);
 }
