@@ -44,24 +44,31 @@ mo.fetchApi = async function (url, options)
 
 	const response = await mo.fetch(mo.apiUriPrefix + url, options);
 
+	if (response.status != 200)
+	{
+		return {
+			resultMessage: 'Network error',
+		}
+	}
+
 
 	let resultCode;
 
 	const contentType = response.headers.get('Content-Type');
 
-	if (contentType.indexOf('application/json') > -1)
+	if (contentType && contentType.indexOf('application/json') > -1)
 	{
 		const json = await response.clone().json();
 
 		resultCode = json.resultCode;
 
-		// if (json.resultCode != 0) throw Error(json.resultCode + ' ' + json.resultMessage);
+		// if (json.resultCode) throw Error(json.resultCode + ' ' + json.resultMessage);
 	}
 	else
 	{
 		resultCode = response.headers.get("Mo-Result-Code");
 
-		// if (resultCode != 0) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
+		// if (resultCode) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
 	}
 
 	if (resultCode == "SessionExpire")
@@ -69,14 +76,11 @@ mo.fetchApi = async function (url, options)
 		mo.removeSession();
 
 		location.href = '/captcha?r=' + encodeURIComponent(location.href);
+
+		return {
+			resultMessage: 'SessionExpire',
+		}
 	}
-
-	// if (!sessionId)
-	// {
-	// 	const sessionId = response.headers.get(sessionIdHeaderName);
-
-	// 	if (sessionId) mo.setSession(sessionId);
-	// }
 
 	return response;
 };

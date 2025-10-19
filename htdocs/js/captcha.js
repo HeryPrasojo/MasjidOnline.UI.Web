@@ -17,8 +17,10 @@ async function onDOMContentLoaded()
 
 	captchaCheckbox.addEventListener('click', submitForm);
 
-	async function submitForm()
+	async function submitForm(e)
 	{
+		e.preventDefault();
+
 		captchaCheckbox.disabled = true;
 
 		captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix });
@@ -32,7 +34,7 @@ async function onDOMContentLoaded()
 				},
 			});
 
-		if (json.resultCode != "Success") location.reload();
+		// if (json.resultCode) location.reload();
 
 		mo.setSession(json.data);
 
