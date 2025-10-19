@@ -1,119 +1,130 @@
-(function ()
+const fetchPremise = import('/js/fetch.js');
+
+var navigationLandscapeLayout;
+var navigationPortraitLayout;
+
+var isNavigationLandscapeLayoutLoaded = false;
+var isNavigationPortraitLayoutLoaded = false;
+
+var isLoggedIn = false;
+
+if (document.readyState == 'loading')
+	document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+else
+	onDOMContentLoaded();
+
+screen.orientation.addEventListener("change", loadNavigation);
+
+async function onDOMContentLoaded()
 {
-	var navigationLandscapeLayout;
-	var navigationPortraitLayout;
+	await fetchPremise;
 
-	var isNavigationLandscapeLayoutLoaded = false;
-	var isNavigationPortraitLayoutLoaded = false;
+	navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
+	navigationPortraitLayout = getElementById('navigationPortraitLayout');
 
-	if (document.readyState == 'loading')
-		document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+	isLoggedIn = mo.getIsLoggedIn();
+
+	await loadNavigation();
+}
+
+async function loadNavigation(event)
+{
+	var isPortrait;
+
+	if (event)
+	{
+		isPortrait = 'portrait-primary' === event.target.type || 'portrait-secondary' === event.target.type;
+	}
 	else
-		onDOMContentLoaded();
-
-	screen.orientation.addEventListener("change", loadNavigation);
-
-	async function onDOMContentLoaded()
 	{
-		navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
-		navigationPortraitLayout = getElementById('navigationPortraitLayout');
-
-		await loadNavigation();
+		isPortrait = window.matchMedia("(orientation: portrait)").matches;
 	}
 
-	async function loadNavigation(event)
+	if (isPortrait)
 	{
-		var isPortrait;
+		if (!isNavigationPortraitLayoutLoaded)
+		{
+			const text = await mo.fetchText('/html/navigationPortrait.html');
 
-		if (event)
-		{
-			isPortrait = 'portrait-primary' === event.target.type || 'portrait-secondary' === event.target.type;
-		}
-		else
-		{
-			isPortrait = window.matchMedia("(orientation: portrait)").matches;
-		}
+			navigationPortraitLayout.innerHTML = text;
 
-		try
-		{
-			if (isPortrait)
+			removeLoggedInClass(navigationPortraitLayout);
+
+			addLogoutListener('navPortraitLogout');
+
+			const navigationPortraitTheRestButton = getElementById('navigationPortraitTheRestButton');
+			const navigationPortraitTheRest = getElementById('navigationPortraitTheRest');
+			const navigationPortraitTheRestSubItemParentInfaqButton = getElementById('navigationPortraitTheRestSubItemParentInfaqButton');
+
+			navigationPortraitTheRestButton.addEventListener("click", onClick);
+
+			window.addEventListener('click', onWindowClick);
+
+			function onClick()
 			{
-				if (!isNavigationPortraitLayoutLoaded)
+				navigationPortraitTheRest.classList.toggle("display-none");
+			}
+
+			function onWindowClick(event)
+			{
+				if ((event.target != navigationPortraitTheRestButton) && (event.target != navigationPortraitTheRestSubItemParentInfaqButton))
 				{
-					const text = await fetchText('/html/navigationPortrait.html');
-
-					navigationPortraitLayout.innerHTML = text;
-
-					const navigationPortraitTheRestButton = getElementById('navigationPortraitTheRestButton');
-					const navigationPortraitTheRest = getElementById('navigationPortraitTheRest');
-					const navigationPortraitTheRestSubItemParentInfaqButton = getElementById('navigationPortraitTheRestSubItemParentInfaqButton');
-
-					navigationPortraitTheRestButton.addEventListener("click", onClick);
-
-					window.addEventListener('click', onWindowClick);
-
-					function onClick()
-					{
-						navigationPortraitTheRest.classList.toggle("display-none");
-					}
-
-					function onWindowClick(event)
-					{
-						if ((event.target != navigationPortraitTheRestButton) && (event.target != navigationPortraitTheRestSubItemParentInfaqButton))
-						{
-							navigationPortraitTheRest.classList.add("display-none");
-						}
-					}
-
-					isNavigationPortraitLayoutLoaded = true;
+					navigationPortraitTheRest.classList.add("display-none");
 				}
-
-				navigationLandscapeLayout.classList.add("display-none");
-				navigationPortraitLayout.classList.remove("display-none");
 			}
-			else
-			{
-				if (!isNavigationLandscapeLayoutLoaded)
-				{
-					const text = await fetchText('/html/navigationLandscape.html');
 
-					navigationLandscapeLayout.innerHTML = text;
-
-					isNavigationLandscapeLayoutLoaded = true;
-				}
-
-				navigationPortraitLayout.classList.add("display-none");
-				navigationLandscapeLayout.classList.remove("display-none");
-			}
-		}
-		catch (error)
-		{
-			const errorString = error.toString();
-
-			console.error(errorString);
-
-			if (isPortrait)
-			{
-				navigationPortraitLayout.innerHTML = errorString;
-			}
-			else
-			{
-				navigationLandscapeLayout.innerHTML = errorString;
-			}
+			isNavigationPortraitLayoutLoaded = true;
 		}
 
-		async function fetchText(url)
-		{
-			const response = await fetch(url);
-
-			if (!response.ok) throw Error(response.status + ' ' + response.statusText);
-
-			return response.text();
-		}
+		navigationLandscapeLayout.classList.add("display-none");
+		navigationPortraitLayout.classList.remove("display-none");
 	}
-
-	function getElementById(id)
+	else
 	{
-		return document.getElementById(id);
+		if (!isNavigationLandscapeLayoutLoaded)
+		{
+			const text = await mo.fetchText('/html/navigationLandscape.html');
+
+			navigationLandscapeLayout.innerHTML = text;
+
+			removeLoggedInClass(navigationLandscapeLayout);
+
+			addLogoutListener('navLandscapeLogout');
+
+			isNavigationLandscapeLayoutLoaded = true;
+		}
+
+		navigationPortraitLayout.classList.add("display-none");
+		navigationLandscapeLayout.classList.remove("display-none");
 	}
-})();
+
+	function addLogoutListener(selector)
+	{
+		const navLogout = getElementById(selector);
+
+		navLogout.addEventListener('click', function ()
+		{
+			mo.fetchApiJson('user/logout');
+
+			mo.removeIsLoggedIn();
+
+			location.href = '/';
+		});
+	}
+
+	function removeLoggedInClass(element)
+	{
+		if (isLoggedIn)
+		{
+			element.querySelectorAll('.loggedIn').forEach(function (element2)
+			{
+				element2.classList.remove('loggedIn');
+			});
+		}
+	}
+}
+
+function getElementById(id)
+{
+	return document.getElementById(id);
+}

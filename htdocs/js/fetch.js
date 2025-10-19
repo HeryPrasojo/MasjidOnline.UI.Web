@@ -1,12 +1,12 @@
 const sessionIdHeaderName = 'Mo-Sess';
 const sessionIdStorageKey = 'sessionId';
-const captchaPassedStorageKey = 'isCaptchaPassed';
+const isLoggedInStorageKey = 'isLoggedIn';
 
 await import('/js/envConfig.js');
 
 mo.fetch = async function (url, options)
 {
-	url = url.replace(/^\|+|\|+$/g, '');
+	// url = url.replace(/^\|+|\|+$/g, '');
 
 	const response = await fetch(url, options);
 
@@ -92,6 +92,7 @@ mo.fetchApiJson = async function (url, options)
 	return await response.json();
 };
 
+
 mo.getSession = function ()
 {
 	return localStorage.getItem(sessionIdStorageKey);
@@ -100,6 +101,8 @@ mo.getSession = function ()
 mo.removeSession = function ()
 {
 	localStorage.removeItem(sessionIdStorageKey);
+
+	mo.removeIsLoggedIn();
 };
 
 mo.setSession = function (sessionId)
@@ -107,27 +110,18 @@ mo.setSession = function (sessionId)
 	localStorage.setItem(sessionIdStorageKey, sessionId);
 };
 
-mo.isCaptchaNeeded = function ()
+
+mo.removeIsLoggedIn = function ()
 {
-	const sessionId = mo.getSession();
+	localStorage.removeItem(isLoggedInStorageKey);
+};
 
-	if (!sessionId) return true;
-
-
-	const isLogin = localStorage.getItem('isLogin');
-
-	if (isLogin != null) return false;
-
-
-	const isCaptchaPassed = localStorage.getItem(captchaPassedStorageKey);
-
-	if (isCaptchaPassed != null) return false;
-
-
-	return true;
+mo.getIsLoggedIn = function ()
+{
+	return localStorage.getItem(isLoggedInStorageKey);
 }
 
-mo.setCaptchaPassed = function ()
+mo.setLoggedIn = function ()
 {
-	localStorage.setItem(captchaPassedStorageKey, true);
+	localStorage.setItem(isLoggedInStorageKey, true);
 }

@@ -22,6 +22,18 @@ input[type='file']::file-selector-button
     cursor: pointer;
 }
 
+
+.display-none
+{
+    display: none;
+}
+
+.linkStyle
+{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .textAlign-end
 {
     text-align: end;

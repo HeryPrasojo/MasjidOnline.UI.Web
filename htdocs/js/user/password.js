@@ -103,6 +103,8 @@ async function onDOMContentLoaded()
         if (!sessionId)
             mo.setSession(json.data);
 
+        mo.setLoggedIn();
+
         messageElement.textContent = 'Success, redirecting...';
 
         location.href = '/';

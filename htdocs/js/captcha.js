@@ -42,14 +42,14 @@ async function onDOMContentLoaded()
 
 		location.href = params.get('r');
 	}
+
+	function getElementById(id)
+	{
+		return document.getElementById(id);
+	}
 }
 
 function onWindowLoaded()
 {
 	captchaCheckbox.disabled = false;
-}
-
-function getElementById(id)
-{
-	return document.getElementById(id);
 }
