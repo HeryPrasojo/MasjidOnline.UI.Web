@@ -1,37 +1,40 @@
-const fetchPremise = import('/js/fetch.js');
-
-if (document.readyState == 'loading')
-    document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
-else
-    onDOMContentLoaded();
-
-async function onDOMContentLoaded()
+(async function ()
 {
-    await fetchPremise;
+    const fetchPremise = import('/js/fetch.js');
 
-    const messageElementId = 'generalDialogMessage';
+    if (document.readyState == 'loading')
+        document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+    else
+        onDOMContentLoaded();
 
-    const dialogElement = getElementById('generalDialog');
-    var messageElement = getElementById(messageElementId);
-
-    if (!messageElement)
+    async function onDOMContentLoaded()
     {
-        const text = await mo.fetchText('/html/dialog.html');
+        await fetchPremise;
 
-        dialogElement.innerHTML = text;
+        const messageElementId = 'generalDialogMessage';
 
-        messageElement = getElementById(messageElementId);
+        const dialogElement = getElementById('generalDialog');
+        var messageElement = getElementById(messageElementId);
+
+        if (!messageElement)
+        {
+            const text = await mo.fetchText('/html/dialog.html');
+
+            dialogElement.innerHTML = text;
+
+            messageElement = getElementById(messageElementId);
+        }
+
+        mo.showDialog = function (message)
+        {
+            messageElement.innerHTML = message;
+
+            dialogElement.showModal();
+        };
+
+        function getElementById(id)
+        {
+            return document.getElementById(id);
+        }
     }
-
-    mo.showDialog = function (message)
-    {
-        messageElement.innerHTML = message;
-
-        dialogElement.showModal();
-    };
-
-    function getElementById(id)
-    {
-        return document.getElementById(id);
-    }
-}
+})();

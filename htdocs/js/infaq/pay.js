@@ -55,7 +55,14 @@ async function loadManualBankTransfer()
 
 			if (!recommendationNote)
 			{
-				const json = await mo.fetchApiJson('payment/manual/getRecommendationNote');
+				const json = await mo.fetchApiJson(
+					'payment/manual/getRecommendationNote',
+					{
+						body:
+						{
+							captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
+						},
+					});
 
 				recommendationNote = json.data;
 
@@ -135,12 +142,7 @@ async function loadManualBankTransfer()
 					submitButton.disabled = true;
 					submitButton.classList.toggle("loading");
 
-					const isCaptchaNeeded = mo.isCaptchaNeeded();
-
-					var captchaToken;
-
-					if (isCaptchaNeeded)
-						captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix });
+					var captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix });
 
 					const formData = new FormData();
 
@@ -161,9 +163,6 @@ async function loadManualBankTransfer()
 						});
 
 					localStorage.removeItem(recommendationNoteStorageKey);
-
-					if (isCaptchaNeeded && (typeof captchaToken == 'string'))
-						mo.setCaptchaPassed();
 
 					resetForm();
 

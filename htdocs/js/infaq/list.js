@@ -9,9 +9,6 @@ async function onDOMContentLoaded()
 {
     await fetchPremise;
 
-    const session = mo.getSession();
-    if (!session) return location.href = '/captcha?r=' + encodeURIComponent(location.href);
-
     const infaqRowHolder = getElementById('infaqRowHolder');
     const infaqPageCurrent = getElementById('infaqPageCurrent');
     const infaqPageTotal = getElementById('infaqPageTotal');
