@@ -85,6 +85,8 @@ await import('/js/envConfig.js');
 		{
 			mo.removeSession();
 
+			options.headers.delete(sessionIdHeaderName);
+
 			return mo.fetchApi(url, options);
 		}
 
