@@ -64,6 +64,9 @@ async function loadManualBankTransfer()
 						},
 					});
 
+				if (json.resultCode)
+					return mo.showDialog('Error: ' + json.resultMessage);
+
 				recommendationNote = json.data;
 
 				setLocalStorage(recommendationNoteStorageKey, recommendationNote);
@@ -129,6 +132,7 @@ async function loadManualBankTransfer()
 					manualBankTransferForm.reset();
 
 					const now = new Date();
+					now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
 					const nowString = now.toISOString().split('Z')[0];
 
 					dateTimeInput.setAttribute("max", nowString);
@@ -146,21 +150,26 @@ async function loadManualBankTransfer()
 
 					const formData = new FormData();
 
+					const date = new Date(dateTimeInput.value);
+
 					formData.append('captchaToken', captchaToken);
 					formData.append('munfiqName', munfiqNameInput.value.trim());
 					formData.append('amount', amountInput.value);
-					formData.append('manualDateTime', dateTimeInput.value);
+					formData.append('manualDateTime', date.toISOString());
 					formData.append('manualNotes', notesInput.value);
 					formData.append('paymentType', 22);
 
 					for (const file of filesInput.files)
 						formData.append('files[]', file);
 
-					await mo.fetchApiJson(
+					const json = await mo.fetchApiJson(
 						'infaq/infaq/add/anonym',
 						{
 							body: formData,
 						});
+
+					if (json.resultCode)
+						return mo.showDialog('Error: ' + json.resultMessage);
 
 					localStorage.removeItem(recommendationNoteStorageKey);
 
