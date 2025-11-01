@@ -123,6 +123,13 @@
 					element2.classList.remove('loggedIn');
 				});
 			}
+			else
+			{
+				element.querySelectorAll('.anonymous').forEach(function (element2)
+				{
+					element2.classList.remove('anonymous');
+				});
+			}
 		}
 	}
 

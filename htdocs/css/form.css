@@ -1,6 +1,8 @@
+/* TODO portrait */
+
 @media (orientation: landscape)
 {
-    #passwordForm
+    .form
     {
         display: flex;
         flex-direction: column;
@@ -35,7 +37,7 @@ label.required::after
     margin-top: 1em;
 }
 
-#messageElement
+.formMessage
 {
     margin-top: 0;
     margin-bottom: 0;

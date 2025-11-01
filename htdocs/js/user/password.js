@@ -23,9 +23,6 @@
         passwordElement.addEventListener('input', validatePasswordInput);
         password2Element.addEventListener('input', validatePasswordInput);
 
-        // passwordElement.addEventListener('paste', validatePasswordInput);
-        // password2Element.addEventListener('paste', validatePasswordInput);
-
         formElement.addEventListener('submit', submitForm);
 
         function validatePasswordInput()
@@ -58,8 +55,8 @@
             const password = passwordElement.value;
             const password2 = password2Element.value;
 
-            if (password == '')
-                return messageElement.textContent = 'Passwords should not empty.';
+            // if (password == '')
+            //     return messageElement.textContent = 'Passwords should not empty.';
 
             const passwordValidationResult = validatePassword(password);
             if (passwordValidationResult)

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Masjid Online</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/css/all.css" />
+		<link rel="stylesheet" href="/css/layout.css" />
+		<link rel="stylesheet" href="/css/form.css" />
+		<script src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
+		<script src='/js/loading.js' async></script>
+		<script src='/js/user/login.js' async></script>
+	</head>
+	<body>
+		<div id='pageLoading' class='loading'>Loading...</div>
+		<div id='layout'>
+			<div id='headerLayout'>
+				<div id='title'>MasjidOnline</div>
+			</div>
+			<div id='flexLayout'>
+				<div id='contentLayout'>
+					<h1>Login</h1>
+					<form id='loginForm' class='form'>
+						<div class='field'>
+							<div class='label'><label class='required' for='emailInput'>Email:</label></div>
+							<div>
+								<input type='email' id='emailInput' placeholder='Email' required autofocus />
+							</div>
+						</div>
+						<div class='field spacer-top'>
+							<div class='label'><label class='required' for='passwordInput'>password:</label></div>
+							<div>
+								<input type='password' id='passwordInput' placeholder='Password' required />
+							</div>
+						</div>
+						<div class='spacer-top'>
+							<p class='inputMargin formMessage' id='loginMessage'>&nbsp;</p>
+						</div>
+						<div class='spacer-top'>
+							<button class='inputMargin' type='submit' id='submitButton'>Login</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div id='footerLayout'>
+				<div id='footerTitle'>MasjidOnline</div>
+			</div>
+		</div>
+	</body>
+</html>

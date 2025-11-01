@@ -17,6 +17,11 @@ body
     animation: loading 1s infinite;
 }
 
+.anonymous
+{
+    display: none;
+}
+
 .loggedIn
 {
     display: none;

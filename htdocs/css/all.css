@@ -1,6 +1,7 @@
 button,
 html,
 input[type='datetime-local'],
+input[type='email'],
 input[type='file'],
 input[type='password'],
 input[type='text'],
