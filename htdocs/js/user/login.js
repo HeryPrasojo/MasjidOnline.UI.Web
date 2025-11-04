@@ -37,6 +37,8 @@
                         captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix }),
                         email,
                         password,
+                        userAgent: navigator.userAgent,
+
                     },
                 });
 

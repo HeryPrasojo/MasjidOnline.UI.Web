@@ -1,224 +1,227 @@
-const fetchPremise = import('/js/fetch.js');
-
-if (document.readyState == 'loading')
-	document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
-else
-	onDOMContentLoaded();
-
-async function onDOMContentLoaded()
+(function ()
 {
-	await fetchPremise;
+	const fetchPremise = import('/js/fetch.js');
 
-	loadManualBankTransfer();
-}
+	if (document.readyState == 'loading')
+		document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
+	else
+		onDOMContentLoaded();
 
-async function loadManualBankTransfer()
-{
-	const instructionButton = getElementById('manualBankTransferInstructionButton');
-
-	instructionButton.addEventListener('click', showInstruction);
-
-	async function showInstruction()
+	async function onDOMContentLoaded()
 	{
-		var instructionDialog;
-		var confirmationButton;
-		var notesInput;
+		await fetchPremise;
 
-		const recommendationNoteStorageKey = 'recommendationNote';
+		loadManualBankTransfer();
+	}
 
-		try
+	async function loadManualBankTransfer()
+	{
+		const instructionButton = getElementById('manualBankTransferInstructionButton');
+
+		instructionButton.addEventListener('click', showInstruction);
+
+		async function showInstruction()
 		{
-			instructionButton.disabled = true;
-			instructionButton.classList.toggle("loading");
+			var instructionDialog;
+			var confirmationButton;
+			var notesInput;
 
-			instructionDialog = getElementById('manualBankTransferInstructionDialog');
+			const recommendationNoteStorageKey = 'recommendationNote';
 
-			var recommendationNoteElement;
-
-			const confirmationButtonId = 'manualBankTransferConfirmationButton';
-			confirmationButton = getElementById(confirmationButtonId);
-
-			if (!confirmationButton)
+			try
 			{
-				const text = await mo.fetchText('/html/infaq/manualBankTransferInstruction.html');
+				instructionButton.disabled = true;
+				instructionButton.classList.toggle("loading");
 
-				instructionDialog.innerHTML = text;
+				instructionDialog = getElementById('manualBankTransferInstructionDialog');
 
+				var recommendationNoteElement;
 
+				const confirmationButtonId = 'manualBankTransferConfirmationButton';
 				confirmationButton = getElementById(confirmationButtonId);
 
-				confirmationButton.addEventListener('click', showConfirmation);
-			}
-
-
-			var recommendationNote = localStorage.getItem(recommendationNoteStorageKey);
-
-			if (!recommendationNote)
-			{
-				const json = await mo.fetchApiJson(
-					'payment/manual/getRecommendationNote',
-					{
-						body:
-						{
-							captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
-						},
-					});
-
-				if (json.resultCode)
-					return mo.showDialog('Error: ' + json.resultMessage);
-
-				recommendationNote = json.data;
-
-				setLocalStorage(recommendationNoteStorageKey, recommendationNote);
-			}
-
-			recommendationNoteElement = getElementById('recommendationNote');
-
-			recommendationNoteElement.innerHTML = recommendationNote;
-
-
-			instructionDialog.showModal();
-
-			instructionButton.disabled = false;
-			instructionButton.classList.toggle("loading");
-		}
-		catch (error)
-		{
-			console.error((new Date()).toISOString() + ' Error loading manual bank transfer instruction: ', error);
-		}
-
-		async function showConfirmation()
-		{
-			confirmationButton.disabled = true;
-			confirmationButton.classList.toggle("loading");
-
-			const confirmationDialog = getElementById('manualBankTransferConfirmationDialog');
-
-			const manualBankTransferFormId = 'manualBankTransferForm';
-
-			var manualBankTransferForm = getElementById(manualBankTransferFormId);
-
-			if (!manualBankTransferForm)
-			{
-				const text = await mo.fetchText('/html/infaq/manualBankTransferConfirmation.html');
-
-				confirmationDialog.innerHTML = text;
-
-				manualBankTransferForm = getElementById(manualBankTransferFormId);
-
-				const munfiqNameInput = getElementById('manualBankTransferMunfiqNameInput');
-				const amountInput = getElementById('manualBankTransferAmountInput');
-				const dateTimeInput = getElementById('manualBankTransferDateTimeInput');
-				notesInput = getElementById('manualBankTransferNotesInput');
-				const filesInput = getElementById('manualBankTransferFilesInput');
-				const submitButton = getElementById('manualBankTransferSubmitButton');
-				const closeButton = getElementById('manualBankTransferConfirmationCloseButton');
-
-				resetForm();
-
-				filesInput.addEventListener('change', validateFiles);
-
-				manualBankTransferForm.addEventListener('submit', submitForm);
-
-				closeButton.addEventListener('click', closeConfirmation);
-
-				function closeConfirmation()
+				if (!confirmationButton)
 				{
-					confirmationDialog.close();
+					const text = await mo.fetchText('/html/infaq/manualBankTransferInstruction.html');
+
+					instructionDialog.innerHTML = text;
+
+
+					confirmationButton = getElementById(confirmationButtonId);
+
+					confirmationButton.addEventListener('click', showConfirmation);
 				}
 
-				function resetForm()
+
+				var recommendationNote = localStorage.getItem(recommendationNoteStorageKey);
+
+				if (!recommendationNote)
 				{
-					manualBankTransferForm.reset();
-
-					const now = new Date();
-					now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-					const nowString = now.toISOString().split('Z')[0];
-
-					dateTimeInput.setAttribute("max", nowString);
-					dateTimeInput.setAttribute("value", nowString);
-				}
-
-				async function submitForm(e)
-				{
-					e.preventDefault();
-
-					submitButton.disabled = true;
-					submitButton.classList.toggle("loading");
-
-					var captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix });
-
-					const formData = new FormData();
-
-					const date = new Date(dateTimeInput.value);
-
-					formData.append('captchaToken', captchaToken);
-					formData.append('munfiqName', munfiqNameInput.value.trim());
-					formData.append('amount', amountInput.value);
-					formData.append('manualDateTime', date.toISOString());
-					formData.append('manualNotes', notesInput.value);
-					formData.append('paymentType', 22);
-
-					for (const file of filesInput.files)
-						formData.append('files[]', file);
-
 					const json = await mo.fetchApiJson(
-						'infaq/infaq/add/anonym',
+						'payment/manual/getRecommendationNote',
 						{
-							body: formData,
+							body:
+							{
+								captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
+							},
 						});
 
 					if (json.resultCode)
 						return mo.showDialog('Error: ' + json.resultMessage);
 
-					localStorage.removeItem(recommendationNoteStorageKey);
+					recommendationNote = json.data;
+
+					setLocalStorage(recommendationNoteStorageKey, recommendationNote);
+				}
+
+				recommendationNoteElement = getElementById('recommendationNote');
+
+				recommendationNoteElement.innerHTML = recommendationNote;
+
+
+				instructionDialog.showModal();
+
+				instructionButton.disabled = false;
+				instructionButton.classList.toggle("loading");
+			}
+			catch (error)
+			{
+				console.error((new Date()).toISOString() + ' Error loading manual bank transfer instruction: ', error);
+			}
+
+			async function showConfirmation()
+			{
+				confirmationButton.disabled = true;
+				confirmationButton.classList.toggle("loading");
+
+				const confirmationDialog = getElementById('manualBankTransferConfirmationDialog');
+
+				const manualBankTransferFormId = 'manualBankTransferForm';
+
+				var manualBankTransferForm = getElementById(manualBankTransferFormId);
+
+				if (!manualBankTransferForm)
+				{
+					const text = await mo.fetchText('/html/infaq/manualBankTransferConfirmation.html');
+
+					confirmationDialog.innerHTML = text;
+
+					manualBankTransferForm = getElementById(manualBankTransferFormId);
+
+					const munfiqNameInput = getElementById('manualBankTransferMunfiqNameInput');
+					const amountInput = getElementById('manualBankTransferAmountInput');
+					const dateTimeInput = getElementById('manualBankTransferDateTimeInput');
+					notesInput = getElementById('manualBankTransferNotesInput');
+					const filesInput = getElementById('manualBankTransferFilesInput');
+					const submitButton = getElementById('manualBankTransferSubmitButton');
+					const closeButton = getElementById('manualBankTransferConfirmationCloseButton');
 
 					resetForm();
 
-					submitButton.classList.toggle("loading");
-					submitButton.disabled = false;
+					filesInput.addEventListener('change', validateFiles);
 
-					confirmationDialog.close();
-					instructionDialog.close();
+					manualBankTransferForm.addEventListener('submit', submitForm);
 
-					mo.showDialog('Confirmation submitted. Thank you!');
-				}
+					closeButton.addEventListener('click', closeConfirmation);
 
-				async function validateFiles()
-				{
-					for (const file of filesInput.files)
+					function closeConfirmation()
 					{
-						if (file.size > 1048576)
+						confirmationDialog.close();
+					}
+
+					function resetForm()
+					{
+						manualBankTransferForm.reset();
+
+						const now = new Date();
+						now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+						const nowString = now.toISOString().split('Z')[0];
+
+						dateTimeInput.setAttribute("max", nowString);
+						dateTimeInput.setAttribute("value", nowString);
+					}
+
+					async function submitForm(e)
+					{
+						e.preventDefault();
+
+						submitButton.disabled = true;
+						submitButton.classList.toggle("loading");
+
+						var captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix });
+
+						const formData = new FormData();
+
+						const date = new Date(dateTimeInput.value);
+
+						formData.append('captchaToken', captchaToken);
+						formData.append('munfiqName', munfiqNameInput.value.trim());
+						formData.append('amount', amountInput.value);
+						formData.append('manualDateTime', date.toISOString());
+						formData.append('manualNotes', notesInput.value);
+						formData.append('paymentType', 22);
+
+						for (const file of filesInput.files)
+							formData.append('files[]', file);
+
+						const json = await mo.fetchApiJson(
+							'infaq/infaq/add/anonym',
+							{
+								body: formData,
+							});
+
+						if (json.resultCode)
+							return mo.showDialog('Error: ' + json.resultMessage);
+
+						localStorage.removeItem(recommendationNoteStorageKey);
+
+						resetForm();
+
+						submitButton.classList.toggle("loading");
+						submitButton.disabled = false;
+
+						confirmationDialog.close();
+						instructionDialog.close();
+
+						mo.showDialog('Confirmation submitted. Thank you!');
+					}
+
+					async function validateFiles()
+					{
+						for (const file of filesInput.files)
 						{
-							filesInput.value = null;
+							if (file.size > 1048576)
+							{
+								filesInput.value = null;
 
-							const manualBankTransferFilesDesccription = getElementById('manualBankTransferFilesDesccription');
+								const manualBankTransferFilesDesccription = getElementById('manualBankTransferFilesDesccription');
 
-							manualBankTransferFilesDesccription.innerHTML = 'File size too large: ' + file.name;
+								manualBankTransferFilesDesccription.innerHTML = 'File size too large: ' + file.name;
 
-							break;
+								break;
+							}
 						}
 					}
 				}
+
+				notesInput.value = localStorage.getItem(recommendationNoteStorageKey);
+
+				confirmationButton.disabled = false;
+				confirmationButton.classList.toggle("loading");
+
+				confirmationDialog.showModal();
 			}
-
-			notesInput.value = localStorage.getItem(recommendationNoteStorageKey);
-
-			confirmationButton.disabled = false;
-			confirmationButton.classList.toggle("loading");
-
-			confirmationDialog.showModal();
 		}
 	}
-}
 
-function getElementById(id)
-{
-	return document.getElementById(id);
-}
+	function getElementById(id)
+	{
+		return document.getElementById(id);
+	}
 
-function setLocalStorage(key, value)
-{
-	if ((typeof value != 'undefined') || (value != null))
-		localStorage.setItem(key, value);
-}
+	function setLocalStorage(key, value)
+	{
+		if ((typeof value != 'undefined') || (value != null))
+			localStorage.setItem(key, value);
+	}
+})();
