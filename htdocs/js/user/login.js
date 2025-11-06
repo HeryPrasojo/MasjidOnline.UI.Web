@@ -35,10 +35,15 @@
                     body:
                     {
                         captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix }),
-                        email,
+                        emailAddress: email,
                         password,
                         userAgent: navigator.userAgent,
-
+                        client: 'Web',
+                        locationLatitude: mo.locationLatitude,
+                        locationLongitude: mo.locationLongitude,
+                        locationPrecision: mo.locationPrecision,
+                        locationAltitude: mo.locationAltitude,
+                        locationAltitudePrecision: mo.locationAltitudePrecision,
                     },
                 });
 
