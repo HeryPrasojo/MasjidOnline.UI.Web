@@ -1,6 +1,9 @@
-(function ()
+(() =>
 {
-    window.addEventListener('load', onLoaded);
+    if (document.readyState === "complete")
+        onLoaded();
+    else
+        window.addEventListener('load', onLoaded);
 
     function onLoaded()
     {

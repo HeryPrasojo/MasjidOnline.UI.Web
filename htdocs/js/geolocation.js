@@ -1,7 +1,5 @@
-(async function ()
+(() =>
 {
-    await import('/js/envConfig.js');
-
     mo.locationLatitude = null;
     mo.locationLongitude = null;
     mo.locationPrecision = null;
@@ -11,18 +9,18 @@
     if (navigator.geolocation)
     {
         navigator.geolocation.getCurrentPosition(onGetCurrentPositionSuccess, onGetCurrentPositionError, { enableHighAccuracy: false, });
+    }
 
-        function onGetCurrentPositionSuccess(position)
-        {
-            mo.locationLatitude = position.coords.latitude;
-            mo.locationLongitude = position.coords.longitude;
-            mo.locationPrecision = position.coords.accuracy;
-            mo.locationAltitude = position.coords.altitude;
-            mo.locationAltitudePrecision = position.coords.altitudeAccuracy;
-        }
+    function onGetCurrentPositionSuccess(position)
+    {
+        mo.locationLatitude = position.coords.latitude;
+        mo.locationLongitude = position.coords.longitude;
+        mo.locationPrecision = position.coords.accuracy;
+        mo.locationAltitude = position.coords.altitude;
+        mo.locationAltitudePrecision = position.coords.altitudeAccuracy;
+    }
 
-        function onGetCurrentPositionError(error)
-        {
-        }
+    function onGetCurrentPositionError(error)
+    {
     }
 })();

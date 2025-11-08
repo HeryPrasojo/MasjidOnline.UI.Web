@@ -1,7 +1,5 @@
-(async function ()
+(() =>
 {
-	const fetchPremise = import('/js/fetch.js');
-
 	var navigationLandscapeLayout;
 	var navigationPortraitLayout;
 
@@ -19,8 +17,6 @@
 
 	async function onDOMContentLoaded()
 	{
-		await fetchPremise;
-
 		navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
 		navigationPortraitLayout = getElementById('navigationPortraitLayout');
 

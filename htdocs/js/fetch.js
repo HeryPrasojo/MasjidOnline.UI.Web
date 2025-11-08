@@ -1,10 +1,6 @@
-await import('/js/envConfig.js');
-
 (async function ()
 {
 	const sessionIdHeaderName = 'Mo-Sess';
-	const sessionIdStorageKey = 'sessionId';
-	const isLoggedInStorageKey = 'isLoggedIn';
 
 	mo.fetch = async function (url, options)
 	{
@@ -103,7 +99,7 @@ await import('/js/envConfig.js');
 
 	async function getSession()
 	{
-		let sessionId = localStorage.getItem(sessionIdStorageKey);
+		let sessionId = mo.getSession();
 
 		if (!sessionId)
 		{
@@ -120,32 +116,9 @@ await import('/js/envConfig.js');
 
 			sessionId = json.data;
 
-			localStorage.setItem(sessionIdStorageKey, sessionId);
+			mo.setSession(sessionId);
 		}
 
 		return sessionId;
 	};
-
-	mo.removeSession = function ()
-	{
-		localStorage.removeItem(sessionIdStorageKey);
-
-		mo.removeIsLoggedIn();
-	};
-
-
-	mo.removeIsLoggedIn = function ()
-	{
-		localStorage.removeItem(isLoggedInStorageKey);
-	};
-
-	mo.getIsLoggedIn = function ()
-	{
-		return localStorage.getItem(isLoggedInStorageKey);
-	}
-
-	mo.setLoggedIn = function ()
-	{
-		localStorage.setItem(isLoggedInStorageKey, true);
-	}
 })();

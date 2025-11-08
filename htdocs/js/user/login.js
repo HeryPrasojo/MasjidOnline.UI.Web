@@ -1,16 +1,21 @@
-(function ()
+(async () =>
 {
-    const fetchPremise = import('/js/fetch.js');
+    import('/js/loading.js');
+
+    await import('/js/envConfig.js');
+
+    await import('/js/storage.js');
+
+    import('/js/fetch.js');
+    import('/js/geolocation.js');
 
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
     else
         onDOMContentLoaded();
 
-    async function onDOMContentLoaded()
+    function onDOMContentLoaded()
     {
-        await fetchPremise;
-
         const formElement = getElementById('loginForm');
         const emailElement = getElementById('emailInput');
         const passwordElement = getElementById('passwordInput');
