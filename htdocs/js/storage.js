@@ -15,9 +15,9 @@
         mo.removeIsLoggedIn();
     };
 
-    mo.setSession = function ()
+    mo.setSession = function (id)
     {
-        localStorage.setItem(sessionIdStorageKey, true);
+        localStorage.setItem(sessionIdStorageKey, id);
     }
 
 

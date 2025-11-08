@@ -9,7 +9,7 @@
 
     await import('/js/storage.js');
 
-    import('/js/connection.js');
+    import('/js/hub.js');
 
     await import('/js/fetch.js');
 

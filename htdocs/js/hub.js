@@ -2,11 +2,33 @@
 {
     if (!mo.getIsLoggedIn()) return;
 
+    var lockResolver;
+    if (navigator && navigator.locks && navigator.locks.request)
+    {
+        const promise = new Promise(
+            (res) =>
+            {
+                lockResolver = res;
+            }
+        );
+
+        navigator.locks.request(
+            'moAntiSleepLock',
+            { mode: "shared" },
+            () =>
+            {
+                return promise;
+            }
+        );
+    }
+
+
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(
-            "//api.local.masjidonline.org:7271/hub",
+            mo.hubUri,
             {
-                headers: {
+                headers:
+                {
                     "Mo-Sess": mo.getSession(),
                 },
                 withCredentials: false,
@@ -24,8 +46,8 @@
         try
         {
             await connection.start();
-            console.log("connected");
-        } catch (err)
+        }
+        catch (err)
         {
             console.log(err);
             //setTimeout(start, 5000);
