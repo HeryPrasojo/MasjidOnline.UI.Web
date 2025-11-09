@@ -1,5 +1,8 @@
 (() =>
 {
+    if (!mo.getIsLoggedIn()) return;
+
+
     var lockResolver;
 
     if (navigator && navigator.locks && navigator.locks.request)
@@ -22,7 +25,6 @@
     }
 
 
-    let isWindowUnloaded = false;
     const sessionId = mo.getSession();
 
     const connection = new signalR.HubConnectionBuilder()
@@ -42,8 +44,6 @@
     connection.onclose(async () =>
     {
         console.log('Hub connection closed');
-        if (isWindowUnloaded) return;
-
         if (mo.getIsLoggedIn()) startConnection();
     });
 
@@ -62,26 +62,14 @@
         }
     };
 
-    window.addEventListener(
-        "unload",
-        (event) =>
-        {
-            console.log('Hub connection stoping...\n' + event.type);
-            isWindowUnloaded = true;
-
-            connection.stop();
-        }
-    );
-
-    if (mo.getIsLoggedIn()) startConnection();
+    startConnection();
 
 
-    mo.sendLogout = async () =>
+    mo.sendLogout = () =>
     {
         mo.removeIsLoggedIn();
-        console.log("sending logout");
-        const result = await connection.invoke("UserUserLogoutAsync");
-        console.log("sendLogout: " + JSON.stringify(result));
+
+        connection.invoke("UserUserLogoutAsync");
     }
 
 })();
