@@ -102,7 +102,8 @@
 
 			navLogout.addEventListener('click', async function ()
 			{
-				await mo.fetchApiJson('user/logout');
+				// await mo.fetchApiJson('user/logout');
+				await mo.sendLogout();
 
 				mo.removeIsLoggedIn();
 
