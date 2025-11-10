@@ -1,13 +1,14 @@
 (async () =>
 {
+    const signalRPromise = import('https://cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
+
     import('/js/loading.js');
 
-    await Promise.all([
-        import('https://cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js'),
-        import('/js/envConfig.js')
-    ]);
+    await import('/js/envConfig.js');
 
     await import('/js/storage.js');
+
+    await signalRPromise;
 
     import('/js/hub.js');
 
