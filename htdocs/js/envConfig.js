@@ -1,4 +1,4 @@
-(function ()
+(() =>
 {
     const apiUriPrefix = '//api.local.masjidonline.org:7271/';
     const environment = 'L';

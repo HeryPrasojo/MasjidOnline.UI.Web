@@ -1,6 +1,6 @@
 (async () =>
 {
-    const signalRPromise = import('https://cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
+    const signalRPromise = import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
 
     import('/js/loading.js');
 

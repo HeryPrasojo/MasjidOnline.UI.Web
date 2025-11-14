@@ -38,12 +38,11 @@
                 },
                 withCredentials: false,
             })
-        .configureLogging(signalR.LogLevel.Information)
+        .configureLogging(signalR.LogLevel.Warning)
         .build();
 
     connection.onclose(async () =>
     {
-        console.log('Hub connection closed');
         if (mo.getIsLoggedIn()) startConnection();
     });
 
@@ -51,8 +50,9 @@
     {
         try
         {
-            console.log('Hub connection starting...');
+            console.log('Connecting...');
             await connection.start();
+            console.log('Connected');
         }
         catch (err)
         {
@@ -71,5 +71,4 @@
 
         connection.invoke("UserUserLogoutAsync");
     }
-
 })();
