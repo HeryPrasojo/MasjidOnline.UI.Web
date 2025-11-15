@@ -1,4 +1,4 @@
-(async function ()
+(async () =>
 {
 	const sessionIdHeaderName = 'Mo-Sess';
 

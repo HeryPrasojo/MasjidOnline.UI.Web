@@ -1,12 +1,16 @@
 (async () =>
 {
-    const signalRPromise = import('://cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
+    const signalRPromise = import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
 
     import('/js/loading.js');
 
     await import('/js/envConfig.js');
 
     await import('/js/storage.js');
+
+    await import('/js/authorization.js');
+
+    mo.authorizeUser();
 
     await signalRPromise;
 
@@ -45,7 +49,10 @@
         infaqNextButton.addEventListener('click', submitNext);
         infaqLastButton.addEventListener('click', submitLast);
 
-        await submitFirst();
+        mo.onHubStarted = async () =>
+        {
+            await submitFirst();
+        }
 
         async function submitFirst()
         {
@@ -101,14 +108,9 @@
             infaqNextButton.disabled = true;
             infaqLastButton.disabled = true;
 
-            var json = await mo.fetchApiJson(
-                'infaq/infaq/getMany',
-                {
-                    body:
-                    {
-                        page: pageNumber,
-                    },
-                });
+            var json = await mo.receiveUserList({
+                page: pageNumber,
+            });
 
 
             const data = json.data;

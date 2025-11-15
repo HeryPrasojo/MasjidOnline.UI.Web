@@ -43,8 +43,29 @@
 
     connection.onclose(async () =>
     {
+        console.log('closed');
         if (mo.getIsLoggedIn()) startConnection();
     });
+
+    mo.receiveUserList = (request) =>
+    {
+        return invoke("UserInternalList", request);
+    }
+
+    mo.sendLogout = () =>
+    {
+        mo.removeIsLoggedIn();
+
+        invoke("UserUserLogout");
+    }
+
+    startConnection();
+
+
+    function invoke(methodName, ...requests)
+    {
+        return connection.invoke(methodName, ...requests);
+    }
 
     async function startConnection()
     {
@@ -60,15 +81,7 @@
 
             setTimeout(startConnection, 4000);
         }
+
+        if (mo.onHubStarted) mo.onHubStarted();
     };
-
-    startConnection();
-
-
-    mo.sendLogout = () =>
-    {
-        mo.removeIsLoggedIn();
-
-        connection.invoke("UserUserLogoutAsync");
-    }
 })();

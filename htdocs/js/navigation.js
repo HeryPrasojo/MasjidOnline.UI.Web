@@ -100,13 +100,11 @@
 		{
 			const navLogout = getElementById(selector);
 
-			navLogout.addEventListener('click', function ()
+			navLogout.addEventListener('click', () =>
 			{
-				// await mo.fetchApiJson('user/logout');
+				console.log('Logging out...');
 				mo.sendLogout();
-
-				mo.removeIsLoggedIn();
-
+				console.log('Logged out');
 				location.href = '/';
 			});
 		}
@@ -115,7 +113,7 @@
 		{
 			if (isLoggedIn)
 			{
-				element.querySelectorAll('.loggedIn').forEach(function (element2)
+				element.querySelectorAll('.loggedIn').forEach((element2) =>
 				{
 					element2.classList.remove('loggedIn');
 				});

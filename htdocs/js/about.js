@@ -5,7 +5,6 @@
     import('/js/loading.js');
 
     await import('/js/envConfig.js');
-
     await import('/js/storage.js');
 
     await signalRPromise;

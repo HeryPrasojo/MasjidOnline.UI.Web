@@ -3,11 +3,13 @@
     import('/js/loading.js');
 
     await import('/js/envConfig.js');
-
     await import('/js/storage.js');
+    await import('/js/authorization.js');
 
     import('/js/fetch.js');
     import('/js/geolocation.js');
+
+    mo.authorizeAnonymous();
 
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
@@ -64,7 +66,9 @@
 
             messageElement.textContent = 'Success, redirecting...';
 
-            location.href = '/';
+            const urlSearchParams = new URLSearchParams(location.search);
+
+            location.href = urlSearchParams.get('r') ?? '/';
         }
 
         function getElementById(id)
