@@ -21,50 +21,48 @@
                     <div id='navigationLandscapeLoading' class='loading'>Loading...</div>
                 </nav>
                 <div id='contentLayout'>
-                    <h1>Internal User</h1>
+                    <h1>Internal User List</h1>
                     <div class='tableContainer'>
-                        <table id='infaqTable'>
-                            <caption>Infaq List</caption>
+                        <table id='internalUserTable'>
+                            <caption>Internal User List</caption>
                             <colgroup>
-                                <col class='infaqId' />
+                                <col class='internalUserId' />
                                 <col class='date' />
-                                <col class='munfiqName' />
-                                <col class='payment' />
-                                <col class='amount' />
+                                <col class='email' />
+                                <col class='userId' />
                                 <col class='status' />
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th>Infaq ID</th>
+                                    <th>Id</th>
                                     <th>Date Time</th>
-                                    <th>Munfiq Name</th>
-                                    <th>Payment</th>
-                                    <th>Amount</th>
+                                    <th>Email</th>
+                                    <th>User Id</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="infaqRowHolder">
+                            <tbody id="internalUserRowHolder">
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="6">Page <span id='infaqPageCurrent'></span> of <span id='infaqPageTotal'></span></td>
+                                    <td colspan="5">Page <span id='internalUserPageCurrent'></span> of <span id='internalUserPageTotal'></span></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6">
-                                        <p id='infaqErrorMessage'></p>
+                                    <td colspan="5">
+                                        <p id='internalUserErrorMessage'></p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6">
-                                        <form id='formInfaqPage'>
-                                            <button type='button' id='infaqFirstButton' disabled>First</button>
-                                            <button type='button' id='infaqPrevButton' disabled>Previous</button>
+                                    <td colspan="5">
+                                        <form id='formInternalUserPage'>
+                                            <button type='button' id='internalUserFirstButton' disabled>First</button>
+                                            <button type='button' id='internalUserPrevButton' disabled>Previous</button>
 
-                                            <input type='number' id='infaqPageInput' value='1' min='1' required />
-                                            <button type='button' id='infaqGoButton'>Go</button>
+                                            <input type='number' id='internalUserPageInput' value='1' min='1' required />
+                                            <button type='button' id='internalUserGoButton'>Go</button>
 
-                                            <button type='button' id='infaqNextButton' disabled>Next</button>
-                                            <button type='button' id='infaqLastButton' disabled>Last</button>
+                                            <button type='button' id='internalUserNextButton' disabled>Next</button>
+                                            <button type='button' id='internalUserLastButton' disabled>Last</button>
                                         </form>
                                     </td>
                                 </tr>
