@@ -41,25 +41,25 @@
                 {
                     body:
                     {
-                        captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix }),
-                        emailAddress: email,
-                        password,
-                        userAgent: navigator.userAgent,
-                        client: 'Web',
-                        locationLatitude: mo.locationLatitude,
-                        locationLongitude: mo.locationLongitude,
-                        locationPrecision: mo.locationPrecision,
-                        locationAltitude: mo.locationAltitude,
-                        locationAltitudePrecision: mo.locationAltitudePrecision,
+                        CaptchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'login' + mo.recaptchaActionAffix }),
+                        EmailAddress: email,
+                        Password: password,
+                        UserAgent: navigator.userAgent,
+                        Client: 1, // Web
+                        LocationLatitude: mo.locationLatitude,
+                        LocationLongitude: mo.locationLongitude,
+                        LocationPrecision: mo.locationPrecision,
+                        LocationAltitude: mo.locationAltitude,
+                        LocationAltitudePrecision: mo.locationAltitudePrecision,
                     },
                 });
 
-            if (json.resultCode)
+            if (json.ResultCode)
             {
                 submitElement.classList.toggle("loading");
                 submitElement.disabled = false;
 
-                return messageElement.textContent = json.resultMessage;
+                return messageElement.textContent = json.ResultMessage;
             }
 
             mo.setLoggedIn();

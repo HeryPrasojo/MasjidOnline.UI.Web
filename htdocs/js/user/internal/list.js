@@ -28,26 +28,26 @@
 
     async function onDOMContentLoaded()
     {
-        const infaqRowHolder = getElementById('infaqRowHolder');
-        const infaqPageCurrent = getElementById('infaqPageCurrent');
-        const infaqPageTotal = getElementById('infaqPageTotal');
-        const infaqErrorMessage = getElementById('infaqErrorMessage');
-        // const formInfaqPage = getElementById('formInfaqPage');
-        const infaqFirstButton = getElementById('infaqFirstButton');
-        const infaqPrevButton = getElementById('infaqPrevButton');
-        const infaqPageInput = getElementById('infaqPageInput');
-        const infaqGoButton = getElementById('infaqGoButton');
-        const infaqNextButton = getElementById('infaqNextButton');
-        const infaqLastButton = getElementById('infaqLastButton');
+        const internalUserRowHolder = getElementById('internalUserRowHolder');
+        const internalUserPageCurrent = getElementById('internalUserPageCurrent');
+        const internalUserPageTotal = getElementById('internalUserPageTotal');
+        const internalUserErrorMessage = getElementById('internalUserErrorMessage');
+        // const forminternalUserPage = getElementById('forminternalUserPage');
+        const internalUserFirstButton = getElementById('internalUserFirstButton');
+        const internalUserPrevButton = getElementById('internalUserPrevButton');
+        const internalUserPageInput = getElementById('internalUserPageInput');
+        const internalUserGoButton = getElementById('internalUserGoButton');
+        const internalUserNextButton = getElementById('internalUserNextButton');
+        const internalUserLastButton = getElementById('internalUserLastButton');
 
         var currentPage = 1;
         var totalPage = 0;
 
-        infaqFirstButton.addEventListener('click', submitFirst);
-        infaqPrevButton.addEventListener('click', submitPrev);
-        infaqGoButton.addEventListener('click', submitNumber);
-        infaqNextButton.addEventListener('click', submitNext);
-        infaqLastButton.addEventListener('click', submitLast);
+        internalUserFirstButton.addEventListener('click', submitFirst);
+        internalUserPrevButton.addEventListener('click', submitPrev);
+        internalUserGoButton.addEventListener('click', submitNumber);
+        internalUserNextButton.addEventListener('click', submitNext);
+        internalUserLastButton.addEventListener('click', submitLast);
 
         mo.onHubStarted = async () =>
         {
@@ -66,13 +66,13 @@
 
         async function submitNumber()
         {
-            const pageNumber = parseInt(infaqPageInput.value, 10);
+            const pageNumber = parseInt(internalUserPageInput.value, 10);
 
             if (isNaN(pageNumber) || pageNumber < 1)
             {
                 const text = 'Invalid page number. Page number must be a positive integer.';
 
-                infaqErrorMessage.innerHTML = text;
+                internalUserErrorMessage.innerHTML = text;
 
                 throw Error(text);
             }
@@ -94,19 +94,19 @@
         {
             if (isNaN(pageNumber) || pageNumber < 1)
             {
-                infaqErrorMessage.innerHTML = 'Invalid page number. Page number must be a positive integer.';
+                internalUserErrorMessage.innerHTML = 'Invalid page number. Page number must be a positive integer.';
 
                 return;
             }
 
-            infaqRowHolder.innerHTML = '';
-            infaqErrorMessage.innerHTML = '';
+            internalUserRowHolder.innerHTML = '';
+            internalUserErrorMessage.innerHTML = '';
 
-            infaqFirstButton.disabled = true;
-            infaqPrevButton.disabled = true;
-            infaqGoButton.disabled = true;
-            infaqNextButton.disabled = true;
-            infaqLastButton.disabled = true;
+            internalUserFirstButton.disabled = true;
+            internalUserPrevButton.disabled = true;
+            internalUserGoButton.disabled = true;
+            internalUserNextButton.disabled = true;
+            internalUserLastButton.disabled = true;
 
             var json = await mo.receiveUserList({
                 page: pageNumber,
@@ -128,7 +128,7 @@
                 const paymentStatusTextNode = record.paymentStatus;
 
                 const itemA = document.createElement('a');
-                itemA.href = 'infaq?id=' + record.id;
+                itemA.href = 'internal?id=' + record.id;
                 itemA.append(idTextNode);
 
                 const idTd = document.createElement('td');
@@ -151,26 +151,26 @@
 
                 tr.append(idTd, dateTimeTd, munfiqNameTd, paymentTypeTd, amountTd, paymentStatusTd);
 
-                infaqRowHolder.append(tr);
+                internalUserRowHolder.append(tr);
             }
 
 
-            infaqPageCurrent.innerText = currentPage;
-            infaqPageTotal.innerText = totalPage;
+            internalUserPageCurrent.innerText = currentPage;
+            internalUserPageTotal.innerText = totalPage;
 
             if (currentPage > 1)
             {
-                infaqFirstButton.disabled = false;
-                infaqPrevButton.disabled = false;
+                internalUserFirstButton.disabled = false;
+                internalUserPrevButton.disabled = false;
             }
 
-            infaqPageInput.value = currentPage;
-            infaqGoButton.disabled = false;
+            internalUserPageInput.value = currentPage;
+            internalUserGoButton.disabled = false;
 
             if (currentPage < data.pageCount)
             {
-                infaqNextButton.disabled = false;
-                infaqLastButton.disabled = false;
+                internalUserNextButton.disabled = false;
+                internalUserLastButton.disabled = false;
             }
         }
     }

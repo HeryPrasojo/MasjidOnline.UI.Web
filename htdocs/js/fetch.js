@@ -66,9 +66,9 @@
 		{
 			const json = await response.clone().json();
 
-			resultCode = json.resultCode;
+			resultCode = json.ResultCode;
 
-			// if (json.resultCode) throw Error(json.resultCode + ' ' + json.resultMessage);
+			// if (json.ResultCode) throw Error(json.ResultCode + ' ' + json.ResultMessage);
 		}
 		else
 		{
@@ -108,13 +108,13 @@
 				{
 					body:
 					{
-						captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
+						CaptchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
 					},
 				});
 
-			if (json.resultCode) return;
+			if (json.ResultCode) return;
 
-			sessionId = json.data;
+			sessionId = json.Data;
 
 			mo.setSession(sessionId);
 		}
