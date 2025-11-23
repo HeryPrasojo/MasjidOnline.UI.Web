@@ -111,24 +111,24 @@
             var json = await mo.receiveUserList({
                 page: pageNumber,
             });
+            console.log(json);
 
-
-            const data = json.data;
+            const data = json.Data;
             currentPage = pageNumber;
-            totalPage = data.pageCount;
+            totalPage = data.PageCount;
 
 
-            for (const record of data.records)
+            for (const record of data.Records)
             {
-                const idTextNode = document.createTextNode(record.id);
-                const dateTimeTextNode = record.dateTime;
-                const munfiqName = record.munfiqName;
-                const paymentType = record.paymentType;
-                const amountTextNode = record.amount;
-                const paymentStatusTextNode = record.paymentStatus;
+                const idTextNode = document.createTextNode(record.Id);
+                const dateTimeTextNode = record.DateTime;
+                const munfiqName = record.MunfiqName;
+                const paymentType = record.PaymentType;
+                const amountTextNode = record.Amount;
+                const paymentStatusTextNode = record.PaymentStatus;
 
                 const itemA = document.createElement('a');
-                itemA.href = 'internal?id=' + record.id;
+                itemA.href = 'internal?id=' + record.Id;
                 itemA.append(idTextNode);
 
                 const idTd = document.createElement('td');
@@ -167,7 +167,7 @@
             internalUserPageInput.value = currentPage;
             internalUserGoButton.disabled = false;
 
-            if (currentPage < data.pageCount)
+            if (currentPage < totalPage)
             {
                 internalUserNextButton.disabled = false;
                 internalUserLastButton.disabled = false;
