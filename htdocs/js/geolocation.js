@@ -8,7 +8,7 @@
 
     if (navigator.geolocation)
     {
-        navigator.geolocation.getCurrentPosition(onGetCurrentPositionSuccess, onGetCurrentPositionError, { enableHighAccuracy: false, });
+        navigator.geolocation.getCurrentPosition(onGetCurrentPositionSuccess, onGetCurrentPositionError, { enableHighAccuracy: true, });
     }
 
     function onGetCurrentPositionSuccess(position)

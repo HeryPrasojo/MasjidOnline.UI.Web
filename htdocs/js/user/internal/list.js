@@ -28,6 +28,8 @@
 
     async function onDOMContentLoaded()
     {
+        const internalUserAddButton = getElementById('internalUserAddButton');
+
         const internalUserRowHolder = getElementById('internalUserRowHolder');
         const internalUserPageCurrent = getElementById('internalUserPageCurrent');
         const internalUserPageTotal = getElementById('internalUserPageTotal');
@@ -39,6 +41,18 @@
         const internalUserGoButton = getElementById('internalUserGoButton');
         const internalUserNextButton = getElementById('internalUserNextButton');
         const internalUserLastButton = getElementById('internalUserLastButton');
+
+
+        const permission = mo.getPermission();
+
+        if (permission.UserInternalAdd)
+        {
+            internalUserAddButton.classList.remove('display-none');
+        }
+
+
+        internalUserAddButton.addEventListener('click', showInternalUserAddDialog);
+
 
         var currentPage = 1;
         var totalPage = 0;
@@ -172,6 +186,13 @@
                 internalUserNextButton.disabled = false;
                 internalUserLastButton.disabled = false;
             }
+        }
+
+        function showInternalUserAddDialog()
+        {
+            internalUserAddButton.disabled = true;
+            internalUserAddButton.classList.toggle("loading");
+
         }
     }
 

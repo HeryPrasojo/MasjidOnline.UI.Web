@@ -28,66 +28,59 @@
 
 			const recommendationNoteStorageKey = 'recommendationNote';
 
-			try
+			instructionButton.disabled = true;
+			instructionButton.classList.toggle("loading");
+
+			instructionDialog = getElementById('manualBankTransferInstructionDialog');
+
+			var recommendationNoteElement;
+
+			const confirmationButtonId = 'manualBankTransferConfirmationButton';
+			confirmationButton = getElementById(confirmationButtonId);
+
+			if (!confirmationButton)
 			{
-				instructionButton.disabled = true;
-				instructionButton.classList.toggle("loading");
+				const text = await mo.fetchText('/html/infaq/manualBankTransferInstruction.html');
 
-				instructionDialog = getElementById('manualBankTransferInstructionDialog');
+				instructionDialog.innerHTML = text;
 
-				var recommendationNoteElement;
 
-				const confirmationButtonId = 'manualBankTransferConfirmationButton';
 				confirmationButton = getElementById(confirmationButtonId);
 
-				if (!confirmationButton)
-				{
-					const text = await mo.fetchText('/html/infaq/manualBankTransferInstruction.html');
-
-					instructionDialog.innerHTML = text;
-
-
-					confirmationButton = getElementById(confirmationButtonId);
-
-					confirmationButton.addEventListener('click', showConfirmation);
-				}
-
-
-				var recommendationNote = localStorage.getItem(recommendationNoteStorageKey);
-
-				if (!recommendationNote)
-				{
-					const json = await mo.fetchApiJson(
-						'payment/manual/getRecommendationNote',
-						{
-							body:
-							{
-								captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
-							},
-						});
-
-					if (json.resultCode)
-						return mo.showDialog('Error: ' + json.resultMessage);
-
-					recommendationNote = json.data;
-
-					setLocalStorage(recommendationNoteStorageKey, recommendationNote);
-				}
-
-				recommendationNoteElement = getElementById('recommendationNote');
-
-				recommendationNoteElement.innerHTML = recommendationNote;
-
-
-				instructionDialog.showModal();
-
-				instructionButton.disabled = false;
-				instructionButton.classList.toggle("loading");
+				confirmationButton.addEventListener('click', showConfirmation);
 			}
-			catch (error)
+
+
+			var recommendationNote = localStorage.getItem(recommendationNoteStorageKey);
+
+			if (!recommendationNote)
 			{
-				console.error((new Date()).toISOString() + ' Error loading manual bank transfer instruction: ', error);
+				const json = await mo.fetchApiJson(
+					'payment/manual/getRecommendationNote',
+					{
+						body:
+						{
+							captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
+						},
+					});
+
+				if (json.resultCode)
+					return mo.showDialog('Error: ' + json.resultMessage);
+
+				recommendationNote = json.data;
+
+				setLocalStorage(recommendationNoteStorageKey, recommendationNote);
 			}
+
+			recommendationNoteElement = getElementById('recommendationNote');
+
+			recommendationNoteElement.innerHTML = recommendationNote;
+
+
+			instructionDialog.showModal();
+
+			instructionButton.disabled = false;
+			instructionButton.classList.toggle("loading");
 
 			async function showConfirmation()
 			{

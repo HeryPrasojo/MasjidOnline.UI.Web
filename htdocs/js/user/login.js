@@ -64,6 +64,8 @@
 
             mo.setLoggedIn();
 
+            mo.setPermission(json.Data.Permission);
+
             messageElement.textContent = 'Success, redirecting...';
 
             const urlSearchParams = new URLSearchParams(location.search);
