@@ -1,7 +1,5 @@
-(async function ()
+(() =>
 {
-    const fetchPremise = import('/js/fetch.js');
-
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
     else
@@ -9,8 +7,6 @@
 
     async function onDOMContentLoaded()
     {
-        await fetchPremise;
-
         const messageElementId = 'generalDialogMessage';
 
         const dialogElement = getElementById('generalDialog');

@@ -63,6 +63,10 @@
         internalUserNextButton.addEventListener('click', submitNext);
         internalUserLastButton.addEventListener('click', submitLast);
 
+        const internalUserAddDialog = getElementById('internalUserAddDialog');
+
+        var internalUserAddAddButton;
+
         mo.onHubStarted = async () =>
         {
             await submitFirst();
@@ -188,10 +192,32 @@
             }
         }
 
-        function showInternalUserAddDialog()
+        async function showInternalUserAddDialog()
         {
             internalUserAddButton.disabled = true;
             internalUserAddButton.classList.toggle("loading");
+
+            const internalUserAddAddId = 'internalUserAddAddButton';
+            internalUserAddAddButton = getElementById(internalUserAddAddId);
+
+            if (!internalUserAddAddButton)
+            {
+                const text = await mo.fetchText('/html/user/internal/add.html');
+
+                internalUserAddDialog.innerHTML = text;
+
+
+                internalUserAddAddButton = getElementById(internalUserAddAddId);
+
+                internalUserAddAddButton.addEventListener('click', addInternalUser);
+
+                function addInternalUser()
+                {
+
+                }
+            }
+
+            internalUserAddDialog.showModal();
 
         }
     }

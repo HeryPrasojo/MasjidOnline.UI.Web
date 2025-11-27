@@ -1,16 +1,25 @@
-(function ()
+(async () =>
 {
-	const fetchPremise = import('/js/fetch.js');
+	import('/js/loading.js');
+
+	await import('/js/envConfig.js');
+
+	await import('/js/storage.js');
+
+	await import('/js/fetch.js');
+
+	import('/js/navigation.js');
+
+	import('/js/dialog.js');
+
 
 	if (document.readyState == 'loading')
 		document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
 	else
 		onDOMContentLoaded();
 
-	async function onDOMContentLoaded()
+	function onDOMContentLoaded()
 	{
-		await fetchPremise;
-
 		loadManualBankTransfer();
 	}
 
@@ -64,10 +73,10 @@
 						},
 					});
 
-				if (json.resultCode)
-					return mo.showDialog('Error: ' + json.resultMessage);
+				if (json.ResultCode)
+					return mo.showDialog('Error: ' + json.ResultMessage);
 
-				recommendationNote = json.data;
+				recommendationNote = json.Data;
 
 				setLocalStorage(recommendationNoteStorageKey, recommendationNote);
 			}
@@ -163,8 +172,8 @@
 								body: formData,
 							});
 
-						if (json.resultCode)
-							return mo.showDialog('Error: ' + json.resultMessage);
+						if (json.ResultCode)
+							return mo.showDialog('Error: ' + json.ResultMessage);
 
 						localStorage.removeItem(recommendationNoteStorageKey);
 
