@@ -1,29 +1,29 @@
-.infaqId
+#infaqTable .infaqId
 {
     min-width: 6em;
 }
 
-.date
+#infaqTable .date
 {
     min-width: 10em;
 }
 
-.munfiqName
+#infaqTable .munfiqName
 {
     min-width: 11em;
 }
 
-.payment
+#infaqTable .payment
 {
     min-width: 11em;
 }
 
-.amount
+#infaqTable .amount
 {
     min-width: 6em;
 }
 
-.status
+#infaqTable .status
 {
     min-width: 5em;
 }

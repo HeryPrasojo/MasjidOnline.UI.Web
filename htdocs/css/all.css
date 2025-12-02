@@ -35,6 +35,11 @@ input[type='file']::file-selector-button
     text-decoration: underline;
 }
 
+.spacer-top
+{
+    margin-top: 1em;
+}
+
 .textAlign-end
 {
     text-align: end;

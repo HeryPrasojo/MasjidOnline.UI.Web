@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="/css/all.css" />
 		<link rel="stylesheet" href="/css/layout.css" />
 		<link rel="stylesheet" href="/css/form.css" />
+		<link rel="stylesheet" href="/css/user/login.css" />
 		<script src='/js/user/login.js' async></script>
 		<script src="//www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
 	</head>
@@ -21,25 +22,25 @@
 					<h1>Login</h1>
 					<form id='loginForm' class='form'>
 						<div class='field'>
-							<div class='label'><label class='required' for='emailInput'>Email:</label></div>
+							<div class='label'><label class='required' for='emailInput'>Email</label></div>
 							<div>
-								<input type='email' id='emailInput' placeholder='Email' required autofocus />
+								<input type='email' id='emailInput' minlength='5' placeholder='Email' required autofocus />
 							</div>
 						</div>
 						<div class='field spacer-top'>
-							<div class='label'><label class='required' for='passwordInput'>password:</label></div>
+							<div class='label'><label class='required' for='passwordInput'>Password</label></div>
 							<div>
-								<input type='password' id='passwordInput' placeholder='Password' required />
+								<input type='password' id='passwordInput' minlength='8' maxlength='64' placeholder='Password' required />
 							</div>
 						</div>
-						<div class='spacer-top'>
-							<p class='inputMargin formMessage' id='loginMessage'>&nbsp;</p>
+						<div class='message spacer-top'>
+							<div id='loginMessage'>&nbsp;</div>
 						</div>
-						<div class='spacer-top'>
-							<button class='inputMargin' type='submit' id='submitButton'>Login</button>
+						<div class='button spacer-top'>
+							<button type='button' id='submitButton'>Login</button>
 						</div>
 					</form>
-					<div>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>
+					<div class='spacer-top'>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>
 				</div>
 			</div>
 			<div id='footerLayout'>

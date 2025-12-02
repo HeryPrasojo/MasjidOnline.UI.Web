@@ -8,37 +8,25 @@
         flex-direction: column;
     }
 
-    .field
+    .form .field
     {
         display: flex;
-        gap: 1em;
+        gap: 0.5em;
     }
 
-    .label
+    .field .label
     {
         text-align: end;
-        min-width: 10em;
+        min-width: 1em;
     }
+}
 
-    .inputMargin
-    {
-        margin-left: 11em;
-    }
+label::after
+{
+    content: ':';
 }
 
 label.required::after
 {
-    content: '*';
-    color: red;
-}
-
-.spacer-top
-{
-    margin-top: 1em;
-}
-
-.formMessage
-{
-    margin-top: 0;
-    margin-bottom: 0;
+    content: '* :';
 }

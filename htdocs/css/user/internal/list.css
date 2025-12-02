@@ -1,4 +1,4 @@
-.infaqId
+#internalUserTable .internalUserId
 {
     min-width: 6em;
 }
@@ -8,22 +8,31 @@
     min-width: 10em;
 }
 
-.munfiqName
+.email
 {
     min-width: 11em;
 }
 
-.payment
+.userId
 {
     min-width: 11em;
-}
-
-.amount
-{
-    min-width: 6em;
 }
 
 .status
 {
     min-width: 5em;
+}
+
+@media (orientation: landscape)
+{
+    .field .label
+    {
+        min-width: 4em;
+    }
+
+    .form .button,
+    .form .message
+    {
+        margin-left: 4.5em;
+    }
 }

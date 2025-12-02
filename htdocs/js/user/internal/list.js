@@ -63,13 +63,22 @@
         internalUserNextButton.addEventListener('click', submitNext);
         internalUserLastButton.addEventListener('click', submitLast);
 
-        const internalUserAddDialog = getElementById('internalUserAddDialog');
-
-        var internalUserAddAddButton;
-
         mo.onHubStarted = async () =>
         {
             await submitFirst();
+        }
+
+
+        const internalUserAddDialog = getElementById('internalUserAddDialog');
+
+        internalUserAddDialog.addEventListener('close', finishAddInternalUser);
+
+        var internalUserAddAddButton;
+
+
+        function finishAddInternalUser()
+        {
+            internalUserAddButton.disabled = false;
         }
 
         async function submitFirst()
@@ -129,7 +138,6 @@
             var json = await mo.receiveUserList({
                 page: pageNumber,
             });
-            console.log(json);
 
             const data = json.Data;
             currentPage = pageNumber;
@@ -219,6 +227,7 @@
 
             internalUserAddDialog.showModal();
 
+            internalUserAddButton.classList.toggle("loading");
         }
     }
 
