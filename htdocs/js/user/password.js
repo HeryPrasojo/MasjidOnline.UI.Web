@@ -74,8 +74,9 @@
         {
             validatePassword();
             validatePassword2();
-
+            console.log('1');
             if (!passwordFormElement.reportValidity()) return;
+            console.log('2');
 
 
             const password = passwordElement.value;

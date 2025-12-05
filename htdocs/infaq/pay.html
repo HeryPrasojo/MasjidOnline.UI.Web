@@ -1,13 +1,12 @@
 <!doctype html>
 <html>
 	<head>
-		<title>MasjidOnline Infaq</title>
+		<title>MasjidOnline Infaq Payment</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="/css/all.css" />
 		<link rel="stylesheet" href="/css/layout.css" />
 		<script src='/js/infaq/pay.js' async></script>
-		<script src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
 	</head>
 	<body>
 		<div id='pageLoading' class='loading'>Loading...</div>
@@ -20,24 +19,18 @@
 					<div id='navigationLandscapeLoading' class='loading'>Loading...</div>
 				</nav>
 				<div id='contentLayout'>
-					<h1>Pay Infaq</h1>
+					<h1>Infaq Payment</h1>
 					<div id='introduction'>
-						<p>Currently, we support infaq using manual bank transfer only.</p>
+						<p>Currently, we support infaq using bank transfer only.</p>
 					</div>
 					<div id='method'>
 						<h2>Payment Method</h2>
 						<ul id='methodList'>
-							<li id='methodManualBankTransfer'>
-								<h3>Manual Bank Transfer</h3>
-								<div>
-									<button type="button" id="manualBankTransferInstructionButton">Instruction</button>
-								</div>
+							<li>
+								<a href='/infaq/payment/bankTransfer'>Bank Transfer</a>
 							</li>
 						</ul>
 					</div>
-					<div>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>
-					<div>content</div>
-					<div>content last</div>
 				</div>
 			</div>
 			<nav id='navigationPortraitLayout'>
@@ -47,8 +40,5 @@
 				<div id='footerTitle'>MasjidOnline</div>
 			</div>
 		</div>
-		<dialog id='generalDialog'></dialog>
-		<dialog id="manualBankTransferInstructionDialog"></dialog>
-		<dialog id="manualBankTransferConfirmationDialog"></dialog>
 	</body>
 </html>
