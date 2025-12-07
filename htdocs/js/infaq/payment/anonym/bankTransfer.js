@@ -6,11 +6,12 @@
     await import('/js/common.js');
     await import('/js/storage.js');
     await import('/js/authorization.js');
+
+    mo.authorizeAnonymous();
+
     await import('/js/fetch.js');
 
     import('/js/dialog.js');
-
-    mo.authorizeAnonymous();
 
     grecaptcha.enterprise.ready(() =>
     {
