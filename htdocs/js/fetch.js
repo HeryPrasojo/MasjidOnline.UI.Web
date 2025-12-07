@@ -2,7 +2,7 @@
 {
 	const sessionIdHeaderName = 'Mo-Sess';
 
-	mo.fetch = async function (url, options)
+	mo.fetch = async (url, options) =>
 	{
 		// url = url.replace(/^\|+|\|+$/g, '');
 
@@ -13,14 +13,14 @@
 		return response;
 	};
 
-	mo.fetchText = async function (url, options)
+	mo.fetchText = async (url, options) =>
 	{
 		const response = await mo.fetch(url, options);
 
 		return await response.text();
 	};
 
-	mo.fetchApi = async function (url, options)
+	mo.fetchApi = async (url, options) =>
 	{
 		options ??= {};
 		options.method = 'POST';
@@ -89,11 +89,40 @@
 		return response;
 	};
 
-	mo.fetchApiJson = async function (url, options)
+	mo.fetchApiJson = async (url, options) =>
 	{
 		const response = await mo.fetchApi(url, options);
 
 		return await response.json();
+	};
+
+
+	mo.fetchAnonymInfaqBankTransfer = async (formData) =>
+	{
+		const captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix });
+
+		formData.append('captchaToken', captchaToken);
+
+		return await mo.fetchApiJson('infaq/infaq/add/anonym', { body: formData });
+	};
+
+	mo.fetchInfaqList = async (body) =>
+	{
+		return await mo.fetchApiJson('infaq/infaq/getMany', { body });
+	};
+
+	mo.fetchLogin = async (body) =>
+	{
+		body.CaptchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'login' + mo.recaptchaActionAffix });
+
+		return await mo.fetchApiJson('user/login', { body });
+	};
+
+	mo.fetchSetPassword = async (body) =>
+	{
+		body.CaptchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'setPassword' + mo.recaptchaActionAffix });
+
+		return await mo.fetchApiJson('user/setPassword', { body });
 	};
 
 

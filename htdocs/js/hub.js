@@ -71,9 +71,7 @@
     {
         try
         {
-            console.log('Connecting...');
             await connection.start();
-            console.log('Connected');
         }
         catch (err)
         {

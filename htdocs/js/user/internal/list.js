@@ -5,9 +5,8 @@
     import('/js/loading.js');
 
     await import('/js/envConfig.js');
-
+    await import('/js/common.js');
     await import('/js/storage.js');
-
     await import('/js/authorization.js');
 
     mo.authorizeUser();
@@ -28,19 +27,18 @@
 
     async function onDOMContentLoaded()
     {
-        const internalUserAddButton = getElementById('internalUserAddButton');
+        const internalUserAddButton = mo.getElementById('internalUserAddButton');
 
-        const internalUserRowHolder = getElementById('internalUserRowHolder');
-        const internalUserPageCurrent = getElementById('internalUserPageCurrent');
-        const internalUserPageTotal = getElementById('internalUserPageTotal');
-        const internalUserErrorMessage = getElementById('internalUserErrorMessage');
-        // const forminternalUserPage = getElementById('forminternalUserPage');
-        const internalUserFirstButton = getElementById('internalUserFirstButton');
-        const internalUserPrevButton = getElementById('internalUserPrevButton');
-        const internalUserPageInput = getElementById('internalUserPageInput');
-        const internalUserGoButton = getElementById('internalUserGoButton');
-        const internalUserNextButton = getElementById('internalUserNextButton');
-        const internalUserLastButton = getElementById('internalUserLastButton');
+        const internalUserRowHolder = mo.getElementById('internalUserRowHolder');
+        const internalUserPageCurrent = mo.getElementById('internalUserPageCurrent');
+        const internalUserPageTotal = mo.getElementById('internalUserPageTotal');
+        const internalUserErrorMessage = mo.getElementById('internalUserErrorMessage');
+        const internalUserFirstButton = mo.getElementById('internalUserFirstButton');
+        const internalUserPrevButton = mo.getElementById('internalUserPrevButton');
+        const internalUserPageInput = mo.getElementById('internalUserPageInput');
+        const internalUserGoButton = mo.getElementById('internalUserGoButton');
+        const internalUserNextButton = mo.getElementById('internalUserNextButton');
+        const internalUserLastButton = mo.getElementById('internalUserLastButton');
 
 
         const permission = mo.getPermission();
@@ -51,11 +49,10 @@
         }
 
 
-        internalUserAddButton.addEventListener('click', showInternalUserAddDialog);
-
-
         var currentPage = 1;
         var totalPage = 0;
+
+        internalUserAddButton.addEventListener('click', () => location.href = '/user/internal/add');
 
         internalUserFirstButton.addEventListener('click', submitFirst);
         internalUserPrevButton.addEventListener('click', submitPrev);
@@ -67,13 +64,6 @@
         {
             await submitFirst();
         }
-
-
-        const internalUserAddDialog = getElementById('internalUserAddDialog');
-
-        internalUserAddDialog.addEventListener('close', finishAddInternalUser);
-
-        var internalUserAddAddButton;
 
 
         function finishAddInternalUser()
@@ -199,40 +189,6 @@
                 internalUserLastButton.disabled = false;
             }
         }
-
-        async function showInternalUserAddDialog()
-        {
-            internalUserAddButton.disabled = true;
-            internalUserAddButton.classList.toggle("loading");
-
-            const internalUserAddAddId = 'internalUserAddAddButton';
-            internalUserAddAddButton = getElementById(internalUserAddAddId);
-
-            if (!internalUserAddAddButton)
-            {
-                const text = await mo.fetchText('/html/user/internal/add.html');
-
-                internalUserAddDialog.innerHTML = text;
-
-
-                internalUserAddAddButton = getElementById(internalUserAddAddId);
-
-                internalUserAddAddButton.addEventListener('click', addInternalUser);
-
-                function addInternalUser()
-                {
-
-                }
-            }
-
-            internalUserAddDialog.showModal();
-
-            internalUserAddButton.classList.toggle("loading");
-        }
     }
 
-    function getElementById(id)
-    {
-        return document.getElementById(id);
-    }
 })();

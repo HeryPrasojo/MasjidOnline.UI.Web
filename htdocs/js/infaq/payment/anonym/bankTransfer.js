@@ -81,11 +81,8 @@
 
             try
             {
-                var captchaToken = await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix });
-
                 const formData = new FormData();
 
-                formData.append('captchaToken', captchaToken);
                 formData.append('munfiqName', bankTransferMunfiqNameElement.value.trim());
                 formData.append('amount', bankTransferAmountElement.value);
                 formData.append('manualDateTime', date.toISOString());
@@ -95,11 +92,7 @@
                 for (const file of bankTransferFilesElement.files)
                     formData.append('files[]', file);
 
-                const json = await mo.fetchApiJson(
-                    'infaq/infaq/add/anonym',
-                    {
-                        body: formData,
-                    });
+                const json = await mo.fetchAnonymInfaqBankTransfer(formData);
 
                 if (json.ResultCode) return showError(json.ResultMessage);
 

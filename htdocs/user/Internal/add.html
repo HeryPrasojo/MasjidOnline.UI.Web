@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <title>MasjidOnline Internal User Add</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/css/all.css" />
+        <link rel="stylesheet" href="/css/layout.css" />
+        <link rel="stylesheet" href="/css/form.css" />
+        <link rel="stylesheet" href="/css/user/internal/add.css" />
+        <script src='/js/user/internal/add.js' async></script>
+    </head>
+    <body>
+        <div id='pageLoading' class='loading'>Loading...</div>
+        <div id='layout'>
+            <div id='headerLayout'>
+                <div id='title'>MasjidOnline</div>
+            </div>
+            <div id='flexLayout'>
+                <div id='contentLayout'>
+                    <h1>Internal User Add</h1>
+                    <form id='addForm' class='form'>
+                        <div class='field'>
+                            <div class='label'><label class='required' for='emailInput'>Email</label></div>
+                            <div>
+                                <input type='email' id='emailInput' placeholder='Email' minlength='5' maxlength='254' required autofocus />
+                            </div>
+                        </div>
+                        <div class='field spacer-top'>
+                            <div class='label'><label class='required' for='nameInput'>Name</label></div>
+                            <div>
+                                <input type='text' id='nameInput' placeholder='Full Name' maxlength='255' required />
+                            </div>
+                        </div>
+                        <div class='message spacer-top'>
+                            <div id='addMessage'>&nbsp;</div>
+                        </div>
+                        <div class='button spacer-top'>
+                            <button type='button' id='addButton'>Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div id='footerLayout'>
+                <div id='footerTitle'>MasjidOnline</div>
+            </div>
+        </div>
+    </body>
+</html>

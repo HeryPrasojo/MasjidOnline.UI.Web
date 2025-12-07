@@ -102,9 +102,8 @@
 
 			navLogout.addEventListener('click', () =>
 			{
-				console.log('Logging out...');
 				mo.sendLogout();
-				console.log('Logged out');
+
 				location.href = '/';
 			});
 		}

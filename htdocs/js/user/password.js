@@ -74,9 +74,8 @@
         {
             validatePassword();
             validatePassword2();
-            console.log('1');
+
             if (!passwordFormElement.reportValidity()) return;
-            console.log('2');
 
 
             const password = passwordElement.value;
@@ -90,17 +89,11 @@
 
             try
             {
-                const json = await mo.fetchApiJson(
-                    'user/setPassword',
-                    {
-                        body:
-                        {
-                            captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'infaq' + mo.recaptchaActionAffix }),
-                            passwordCode,
-                            password,
-                            password2,
-                        },
-                    });
+                const json = await mo.fetchSetPassword({
+                    PasswordCode: passwordCode,
+                    Password: password,
+                    Password2: password2,
+                });
 
                 if (json.ResultCode) return showError(json.ResultMessage);
 

@@ -5,12 +5,7 @@
     await import('/js/envConfig.js');
     await import('/js/common.js');
     await import('/js/storage.js');
-    await import('/js/authorization.js');
-
-    import('/js/fetch.js');
-    import('/js/geolocation.js');
-
-    mo.authorizeAnonymous();
+    await import('/js/fetch.js');
 
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
@@ -19,11 +14,11 @@
 
     function onDOMContentLoaded()
     {
-        const loginFormElement = mo.getElementById('loginForm');
+        const formElement = mo.getElementById('addForm');
         const emailElement = mo.getElementById('emailInput');
-        const passwordElement = mo.getElementById('passwordInput');
-        const messageElement = mo.getElementById('loginMessage');
-        const submitElement = mo.getElementById('submitButton');
+        const nameElement = mo.getElementById('nameInput');
+        const messageElement = mo.getElementById('addMessage');
+        const submitElement = mo.getElementById('addButton');
 
         const messageColor = messageElement.style.color;
 
@@ -31,7 +26,12 @@
 
         async function submitForm()
         {
-            if (!loginFormElement.reportValidity()) return;
+            if (!formElement.reportValidity()) return;
+
+            const body = {};
+
+            body.email = emailElement.value;
+            body.name = nameElement.value;
 
             messageElement.textContent = '\u00A0\u00A0\u00A0\u00A0';
             messageElement.style.color = messageColor;
@@ -39,37 +39,19 @@
             submitElement.disabled = true;
             submitElement.classList.toggle("loading");
 
-            const email = emailElement.value;
-            const password = passwordElement.value;
-
             try
             {
-                const json = await mo.fetchLogin({
-                    EmailAddress: email,
-                    Password: password,
-                    UserAgent: navigator.userAgent,
-                    Client: 1, // Web
-                    LocationLatitude: mo.locationLatitude,
-                    LocationLongitude: mo.locationLongitude,
-                    LocationPrecision: mo.locationPrecision,
-                    LocationAltitude: mo.locationAltitude,
-                    LocationAltitudePrecision: mo.locationAltitudePrecision,
-
-                });
+                const json = await mo.send ? ('user/setPassword', { body });
 
                 if (json.ResultCode) return showError(json.ResultMessage);
 
 
-                mo.setLoggedIn();
-
-                mo.setPermission(json.Data.Permission);
-
                 messageElement.textContent = 'Success, redirecting...';
                 messageElement.classList.toggle("loading");
 
-                const urlSearchParams = new URLSearchParams(location.search);
+                submitElement.classList.toggle("loading");
 
-                location.href = urlSearchParams.get('r') ?? '/';
+                location.href = '/';
             }
             catch (err)
             {
