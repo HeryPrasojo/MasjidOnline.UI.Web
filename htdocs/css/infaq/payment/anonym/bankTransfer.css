@@ -2,12 +2,12 @@
 {
     .field .label
     {
-        min-width: 6em;
+        min-width: 12em;
     }
 
     .form .button,
     .form .message
     {
-        margin-left: 6.5em;
+        margin-left: 12.5em;
     }
 }

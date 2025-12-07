@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+	<head>
+		<title>MasjidOnline Infaq Bank Transfer</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/css/all.css" />
+		<link rel="stylesheet" href="/css/layout.css" />
+		<link rel="stylesheet" href="/css/form.css" />
+		<link rel="stylesheet" href="/css/infaq/payment/anonym/bankTransfer.css" />
+		<script src="//www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
+		<script src='/js/infaq/payment/anonym/bankTransfer.js' async></script>
+	</head>
+	<body>
+		<div id='pageLoading' class='loading'>Loading...</div>
+		<div id='layout'>
+			<div id='headerLayout'>
+				<div id='title'>MasjidOnline</div>
+			</div>
+			<div id='flexLayout'>
+				<div id='contentLayout'>
+					<h1>Infaq Bank Transfer</h1>
+					<h2>Instruction</h2>
+					<p>Please transfer your infaq to the following bank account:</p>
+					<ul>
+						<li><strong>Bank BCA Syariah</strong></li>
+						<li>Bank Code: <strong>536</strong></li>
+						<li>Account Number: <strong>1234567890</strong></li>
+						<li>Account Name: <strong>MasjidOnline</strong></li>
+						<li>Recommended Notes: <strong id='bankTransferRecommendationNote'>MO Infaq [infaqNotesId]</strong></li>
+					</ul>
+					<p>Please at least include <code><strong>infaq</strong></code> word in the notes.</p>
+					<p>And finally, please confirm your infaq using the confirmation form below.</p>
+					<h2>Confirmation</h2>
+					<form id='bankTransferForm' class='form'>
+						<div class='field'>
+							<div class='label'>
+								<label id='bankTransferMunfiqNameLabel' for='bankTransferMunfiqNameInput'>Munfiq Name</label>
+							</div>
+							<div id='bankTransferMunfiqNameInputHolder'>
+								<input type='text' id='bankTransferMunfiqNameInput' maxlength='255' required autofocus />
+							</div>
+						</div>
+						<div class='field spacer-top'>
+							<div class='label'>
+								<label id='bankTransferAmountLabel' for='bankTransferAmountInput'>Amount</label>
+							</div>
+							<div id='bankTransferAmountInputHolder'>
+								<input type='number' id='bankTransferAmountInput' min='1' required />
+							</div>
+						</div>
+						<div class='field spacer-top'>
+							<div class='label'>
+								<div>
+									<label id='bankTransferDateTimeLabel' for='bankTransferDateTimeInput'>Transfer local date time</label>
+								</div>
+								<div>as close as possible</div>
+							</div>
+							<div id='bankTransferDateTimeInputHolder'>
+								<input type='datetime-local' id='bankTransferDateTimeInput' required />
+							</div>
+						</div>
+						<div class='field spacer-top'>
+							<div class='label'>
+								<div>
+									<label id='bankTransferNotesLabel' for='bankTransferNotesInput'>Notes</label>
+								</div>
+								<div>e.g. source account</div>
+							</div>
+							<div id='bankTransferNotesInputHolder'>
+								<textarea id='bankTransferNotesInput' maxlength='255'></textarea>
+							</div>
+						</div>
+						<div class='field spacer-top'>
+							<div class='label'>
+								<label id='bankTransferFilesLabel' for='bankTransferFilesInput'>Files</label>
+							</div>
+							<div id='bankTransferFilesInputHolder'>
+								<input id='bankTransferFilesInput' type='file' accept='image/*' multiple />
+							</div>
+						</div>
+						<div class='message spacer-top'>
+							<div id='bankTransferMessage'>&nbsp;</div>
+						</div>
+						<div class='button spacer-top'>
+							<button type='button' id='bankTransferSubmitButton'>Submit</button>
+						</div>
+					</form>
+					<div class='spacer-top'>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>
+				</div>
+			</div>
+			<div id='footerLayout'>
+				<div id='footerTitle'>MasjidOnline</div>
+			</div>
+		</div>
+		<dialog id='generalDialog'></dialog>
+	</body>
+</html>

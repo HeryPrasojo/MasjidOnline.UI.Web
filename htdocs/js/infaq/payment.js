@@ -20,12 +20,12 @@
 
 	function onDOMContentLoaded()
 	{
-		loadManualBankTransfer();
+		loadbankTransfer();
 	}
 
-	async function loadManualBankTransfer()
+	async function loadbankTransfer()
 	{
-		const instructionButton = getElementById('manualBankTransferInstructionButton');
+		const instructionButton = getElementById('bankTransferInstructionButton');
 
 		instructionButton.addEventListener('click', showInstruction);
 
@@ -40,16 +40,16 @@
 			instructionButton.disabled = true;
 			instructionButton.classList.toggle("loading");
 
-			instructionDialog = getElementById('manualBankTransferInstructionDialog');
+			instructionDialog = getElementById('bankTransferInstructionDialog');
 
 			var recommendationNoteElement;
 
-			const confirmationButtonId = 'manualBankTransferConfirmationButton';
+			const confirmationButtonId = 'bankTransferConfirmationButton';
 			confirmationButton = getElementById(confirmationButtonId);
 
 			if (!confirmationButton)
 			{
-				const text = await mo.fetchText('/html/infaq/manualBankTransferInstruction.html');
+				const text = await mo.fetchText('/html/infaq/bankTransferInstruction.html');
 
 				instructionDialog.innerHTML = text;
 
@@ -69,7 +69,7 @@
 					{
 						body:
 						{
-							captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'session' + mo.recaptchaActionAffix }),
+							captchaToken: await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: 'recommendationNotes' + mo.recaptchaActionAffix }),
 						},
 					});
 
@@ -96,33 +96,33 @@
 				confirmationButton.disabled = true;
 				confirmationButton.classList.toggle("loading");
 
-				const confirmationDialog = getElementById('manualBankTransferConfirmationDialog');
+				const confirmationDialog = getElementById('bankTransferConfirmationDialog');
 
-				const manualBankTransferFormId = 'manualBankTransferForm';
+				const bankTransferFormId = 'bankTransferForm';
 
-				var manualBankTransferForm = getElementById(manualBankTransferFormId);
+				var bankTransferForm = getElementById(bankTransferFormId);
 
-				if (!manualBankTransferForm)
+				if (!bankTransferForm)
 				{
-					const text = await mo.fetchText('/html/infaq/manualBankTransferConfirmation.html');
+					const text = await mo.fetchText('/html/infaq/bankTransferConfirmation.html');
 
 					confirmationDialog.innerHTML = text;
 
-					manualBankTransferForm = getElementById(manualBankTransferFormId);
+					bankTransferForm = getElementById(bankTransferFormId);
 
-					const munfiqNameInput = getElementById('manualBankTransferMunfiqNameInput');
-					const amountInput = getElementById('manualBankTransferAmountInput');
-					const dateTimeInput = getElementById('manualBankTransferDateTimeInput');
-					notesInput = getElementById('manualBankTransferNotesInput');
-					const filesInput = getElementById('manualBankTransferFilesInput');
-					const submitButton = getElementById('manualBankTransferSubmitButton');
-					const closeButton = getElementById('manualBankTransferConfirmationCloseButton');
+					const munfiqNameInput = getElementById('bankTransferMunfiqNameInput');
+					const amountInput = getElementById('bankTransferAmountInput');
+					const dateTimeInput = getElementById('bankTransferDateTimeInput');
+					notesInput = getElementById('bankTransferNotesInput');
+					const filesInput = getElementById('bankTransferFilesInput');
+					const submitButton = getElementById('bankTransferSubmitButton');
+					const closeButton = getElementById('bankTransferConfirmationCloseButton');
 
 					resetForm();
 
 					filesInput.addEventListener('change', validateFiles);
 
-					manualBankTransferForm.addEventListener('submit', submitForm);
+					bankTransferForm.addEventListener('submit', submitForm);
 
 					closeButton.addEventListener('click', closeConfirmation);
 
@@ -133,7 +133,7 @@
 
 					function resetForm()
 					{
-						manualBankTransferForm.reset();
+						bankTransferForm.reset();
 
 						const now = new Date();
 						now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
@@ -196,9 +196,9 @@
 							{
 								filesInput.value = null;
 
-								const manualBankTransferFilesDesccription = getElementById('manualBankTransferFilesDesccription');
+								const bankTransferFilesDesccription = getElementById('bankTransferFilesDesccription');
 
-								manualBankTransferFilesDesccription.innerHTML = 'File size too large: ' + file.name;
+								bankTransferFilesDesccription.innerHTML = 'File size too large: ' + file.name;
 
 								break;
 							}

@@ -1,23 +1,24 @@
-(function ()
+(() =>
 {
-    const sessionIdStorageKey = 'sessionId';
     const isLoggedInStorageKey = 'isLoggedIn';
     const permissionStorageKey = 'permission'
+    const recommendationNoteStorageKey = 'recommendationNote';
+    const sessionIdStorageKey = 'sessionId';
 
 
-    mo.getPermission = function ()
+    mo.getPermission = () =>
     {
         const stringValue = localStorage.getItem(permissionStorageKey);
 
         return JSON.parse(stringValue);
     };
 
-    mo.removePermission = function ()
+    mo.removePermission = () =>
     {
         localStorage.removeItem(permissionStorageKey);
     };
 
-    mo.setPermission = function (value)
+    mo.setPermission = (value) =>
     {
         const stringValue = JSON.stringify(value);
 
@@ -25,12 +26,12 @@
     }
 
 
-    mo.getSession = function ()
+    mo.getSession = () =>
     {
         return localStorage.getItem(sessionIdStorageKey);
     };
 
-    mo.removeSession = function ()
+    mo.removeSession = () =>
     {
         localStorage.removeItem(sessionIdStorageKey);
 
@@ -39,24 +40,40 @@
         mo.removePermission();
     };
 
-    mo.setSession = function (id)
+    mo.setSession = (id) =>
     {
         localStorage.setItem(sessionIdStorageKey, id);
     }
 
 
-    mo.removeIsLoggedIn = function ()
+    mo.removeIsLoggedIn = () =>
     {
         localStorage.removeItem(isLoggedInStorageKey);
     };
 
-    mo.getIsLoggedIn = function ()
+    mo.getIsLoggedIn = () =>
     {
         return localStorage.getItem(isLoggedInStorageKey);
     }
 
-    mo.setLoggedIn = function ()
+    mo.setLoggedIn = () =>
     {
         localStorage.setItem(isLoggedInStorageKey, true);
+    }
+
+
+    mo.removeRecommendationNote = () =>
+    {
+        localStorage.removeItem(recommendationNoteStorageKey);
+    };
+
+    mo.getRecommendationNote = () =>
+    {
+        return localStorage.getItem(recommendationNoteStorageKey);
+    }
+
+    mo.setRecommendationNote = (note) =>
+    {
+        localStorage.setItem(recommendationNoteStorageKey, note);
     }
 })();

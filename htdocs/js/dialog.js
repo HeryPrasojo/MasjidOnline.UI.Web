@@ -7,30 +7,42 @@
 
     async function onDOMContentLoaded()
     {
+        const dialogElement = mo.getElementById('generalDialog');
+
         const messageElementId = 'generalDialogMessage';
 
-        const dialogElement = getElementById('generalDialog');
-        var messageElement = getElementById(messageElementId);
+        var messageElement = mo.getElementById(messageElementId);
 
         if (!messageElement)
         {
-            const text = await mo.fetchText('/html/dialog.html');
+            try
+            {
+                const text = await mo.fetchText('/html/dialog.html');
 
-            dialogElement.innerHTML = text;
+                dialogElement.innerHTML = text;
 
-            messageElement = getElementById(messageElementId);
+                messageElement = mo.getElementById(messageElementId);
+            }
+            catch (err)
+            {
+                alert(err);
+            }
         }
 
-        mo.showDialog = function (message)
+        mo.showDialog = (message, onClose) =>
         {
+            if (!messageElement)
+            {
+                alert(message);
+
+                return;
+            }
+
             messageElement.innerHTML = message;
 
             dialogElement.showModal();
-        };
 
-        function getElementById(id)
-        {
-            return document.getElementById(id);
-        }
+            if (onClose) dialogElement.addEventListener('close', onClose, { once: true });
+        };
     }
 })();
