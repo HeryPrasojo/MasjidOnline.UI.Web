@@ -28,6 +28,7 @@
     const sessionId = mo.getSession();
 
     const connection = new signalR.HubConnectionBuilder()
+        .withServerTimeout(64000)
         .withUrl(
             mo.hubUri,
             {
@@ -47,6 +48,7 @@
         if (mo.getIsLoggedIn()) startConnection();
     });
 
+
     mo.receiveUserList = (request) =>
     {
         return invoke("UserInternalList", request);
@@ -58,6 +60,12 @@
 
         invoke("UserUserLogout");
     }
+
+    mo.sendUserInternalAdd = (request) =>
+    {
+        return invoke("UserInternalAdd", request);
+    }
+
 
     startConnection();
 
@@ -75,12 +83,15 @@
         }
         catch (err)
         {
-            console.log(err.name);
-            console.log(err.message);
+            if (!err.message == 'Failed to complete negotiation with the server: TypeError: Failed to fetch')
+            {
+                console.log(err.name + ': ' + err.message);
+            }
 
             setTimeout(startConnection, 4000);
         }
 
         if (mo.onHubStarted) mo.onHubStarted();
     };
+
 })();

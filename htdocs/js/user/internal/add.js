@@ -1,11 +1,19 @@
 (async () =>
 {
-    import('/js/loading.js');
+    const signalRPromise = import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
 
     await import('/js/envConfig.js');
     await import('/js/common.js');
     await import('/js/storage.js');
-    await import('/js/fetch.js');
+    await import('/js/authorization.js');
+
+    mo.authorizePermission({ UserInternalAdd: 1 }, true);
+
+    await signalRPromise;
+
+    import('/js/hub.js');
+    import('/js/loading.js');
+
 
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
@@ -28,10 +36,11 @@
         {
             if (!formElement.reportValidity()) return;
 
+
             const body = {};
 
-            body.email = emailElement.value;
-            body.name = nameElement.value;
+            body.EmailAddress = emailElement.value;
+            body.Name = nameElement.value;
 
             messageElement.textContent = '\u00A0\u00A0\u00A0\u00A0';
             messageElement.style.color = messageColor;
@@ -41,7 +50,7 @@
 
             try
             {
-                const json = await mo.send ? ('user/setPassword', { body });
+                const json = await mo.sendUserInternalAdd(body);
 
                 if (json.ResultCode) return showError(json.ResultMessage);
 
@@ -51,7 +60,7 @@
 
                 submitElement.classList.toggle("loading");
 
-                location.href = '/';
+                location.href = '/user/internal/list';
             }
             catch (err)
             {

@@ -2,14 +2,12 @@
 {
     const signalRPromise = import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
 
-    import('/js/loading.js');
-
     await import('/js/envConfig.js');
     await import('/js/common.js');
     await import('/js/storage.js');
     await import('/js/authorization.js');
 
-    mo.authorizeUser();
+    mo.authorizeInternal();
 
     await signalRPromise;
 
@@ -18,6 +16,7 @@
     await import('/js/fetch.js');
 
     import('/js/navigation.js');
+    import('/js/loading.js');
 
 
     if (document.readyState == 'loading')
@@ -41,9 +40,7 @@
         const internalUserLastButton = mo.getElementById('internalUserLastButton');
 
 
-        const permission = mo.getPermission();
-
-        if (permission.UserInternalAdd)
+        if (mo.authorizePermission({ UserInternalAdd: 1 }))
         {
             internalUserAddButton.classList.remove('display-none');
         }
@@ -65,11 +62,6 @@
             await submitFirst();
         }
 
-
-        function finishAddInternalUser()
-        {
-            internalUserAddButton.disabled = false;
-        }
 
         async function submitFirst()
         {
@@ -126,7 +118,7 @@
             internalUserLastButton.disabled = true;
 
             var json = await mo.receiveUserList({
-                page: pageNumber,
+                Page: pageNumber,
             });
 
             const data = json.Data;

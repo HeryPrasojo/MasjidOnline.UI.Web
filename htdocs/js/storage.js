@@ -4,6 +4,23 @@
     const permissionStorageKey = 'permission'
     const recommendationNoteStorageKey = 'recommendationNote';
     const sessionIdStorageKey = 'sessionId';
+    const userTypeStorageKey = 'userType';
+
+
+    mo.removeIsLoggedIn = () =>
+    {
+        localStorage.removeItem(isLoggedInStorageKey);
+    };
+
+    mo.getIsLoggedIn = () =>
+    {
+        return localStorage.getItem(isLoggedInStorageKey);
+    }
+
+    mo.setLoggedIn = () =>
+    {
+        localStorage.setItem(isLoggedInStorageKey, true);
+    }
 
 
     mo.getPermission = () =>
@@ -26,42 +43,6 @@
     }
 
 
-    mo.getSession = () =>
-    {
-        return localStorage.getItem(sessionIdStorageKey);
-    };
-
-    mo.removeSession = () =>
-    {
-        localStorage.removeItem(sessionIdStorageKey);
-
-        mo.removeIsLoggedIn();
-
-        mo.removePermission();
-    };
-
-    mo.setSession = (id) =>
-    {
-        localStorage.setItem(sessionIdStorageKey, id);
-    }
-
-
-    mo.removeIsLoggedIn = () =>
-    {
-        localStorage.removeItem(isLoggedInStorageKey);
-    };
-
-    mo.getIsLoggedIn = () =>
-    {
-        return localStorage.getItem(isLoggedInStorageKey);
-    }
-
-    mo.setLoggedIn = () =>
-    {
-        localStorage.setItem(isLoggedInStorageKey, true);
-    }
-
-
     mo.removeRecommendationNote = () =>
     {
         localStorage.removeItem(recommendationNoteStorageKey);
@@ -76,4 +57,43 @@
     {
         localStorage.setItem(recommendationNoteStorageKey, note);
     }
+
+
+    mo.getSession = () =>
+    {
+        return localStorage.getItem(sessionIdStorageKey);
+    };
+
+    mo.removeSession = () =>
+    {
+        localStorage.removeItem(sessionIdStorageKey);
+
+        mo.removeIsLoggedIn();
+
+        mo.removePermission();
+
+        mo.removeUserType();
+    };
+
+    mo.setSession = (id) =>
+    {
+        localStorage.setItem(sessionIdStorageKey, id);
+    }
+
+
+    mo.getUserType = () =>
+    {
+        return localStorage.getItem(userTypeStorageKey);
+    }
+
+    mo.removeUserType = () =>
+    {
+        localStorage.removeItem(userTypeStorageKey);
+    };
+
+    mo.setUserType = (type) =>
+    {
+        localStorage.setItem(userTypeStorageKey, type);
+    }
+
 })();

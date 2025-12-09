@@ -62,7 +62,10 @@
 
                 mo.setLoggedIn();
 
-                mo.setPermission(json.Data.Permission);
+                const data = json.Data;
+
+                mo.setPermission(data.Permission);
+                mo.setUserType(data.UserType)
 
                 messageElement.textContent = 'Success, redirecting...';
                 messageElement.classList.toggle("loading");
