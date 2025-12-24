@@ -22,6 +22,7 @@
     function onDOMContentLoaded()
     {
         const passwordFormElement = mo.getElementById('passwordForm');
+        const emailElement = mo.getElementById('emailInput');
         const passwordElement = mo.getElementById('passwordInput');
         const password2Element = mo.getElementById('password2Input');
         const messageElement = mo.getElementById('messageElement');
@@ -78,6 +79,7 @@
             if (!passwordFormElement.reportValidity()) return;
 
 
+            const email = emailElement.value;
             const password = passwordElement.value;
             const password2 = password2Element.value;
 
@@ -90,6 +92,8 @@
             try
             {
                 const json = await mo.fetchSetPassword({
+                    Contact: email,
+                    ContactType: 1,
                     PasswordCode: passwordCode,
                     Password: password,
                     Password2: password2,
