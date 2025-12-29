@@ -2,9 +2,9 @@
 {
     const urlSearchParams = new URLSearchParams(window.location.search);
 
-    const passwordCode = urlSearchParams.get('c');
+    const registerCode = urlSearchParams.get('c');
 
-    if (!passwordCode) location.href = '/';
+    if (!registerCode) location.href = '/';
 
 
     import('/js/loading.js');
@@ -103,7 +103,7 @@
                     Contact: email,
                     ContactType: 1, // email
                     IsAcceptAgreement: ageementElement.checked,
-                    PasswordCode: passwordCode,
+                    RegisterCode: registerCode,
                     Password: password,
                     Password2: password2,
                     LocationLatitude: mo.locationLatitude,
@@ -118,13 +118,6 @@
 
 
                 mo.setLoggedIn();
-
-                const data = json.Data;
-
-                mo.setPermission(data.Permission);
-                mo.setUserType(data.UserType);
-
-                if (data.ApplicationCulture) mo.setApplicationCulture(data.ApplicationCulture);
 
                 messageElement.textContent = 'Success, redirecting...';
                 messageElement.classList.toggle("loading");

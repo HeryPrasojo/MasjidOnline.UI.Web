@@ -47,8 +47,8 @@
             {
                 const json = await mo.fetchLogin({
                     Client: 1, // Web
+                    Contact: email,
                     ContactType: 1, // Email
-                    EmailAddress: email,
                     LocationLatitude: mo.locationLatitude,
                     LocationLongitude: mo.locationLongitude,
                     LocationPrecision: mo.locationPrecision,

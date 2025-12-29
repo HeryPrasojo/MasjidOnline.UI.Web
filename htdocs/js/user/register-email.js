@@ -42,27 +42,16 @@
 
             try
             {
-                const json = await mo.fetchSetPassword({
+                const json = await mo.fetchRegister({
                     Contact: email,
                     ContactType: 1,
                 });
 
                 if (json.ResultCode) return showError(json.ResultMessage);
 
+                messageElement.textContent = 'We have sent verification link to the email address. Please follow the link to continue signing up. The link will be expired within 16 minutes.';
 
-                mo.setLoggedIn();
-
-                const data = json.Data;
-
-                mo.setPermission(data.Permission);
-                mo.setUserType(data.UserType);
-
-                if (data.ApplicationCulture) mo.setApplicationCulture(data.ApplicationCulture);
-
-                messageElement.textContent = 'Success, redirecting...';
-                messageElement.classList.toggle("loading");
-
-                location.href = '/';
+                submitElement.classList.toggle("loading");
             }
             catch (err)
             {

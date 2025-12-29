@@ -116,6 +116,13 @@
 		return await mo.fetchApiJson('user/login', { body });
 	};
 
+	mo.fetchRegister = async (body) =>
+	{
+		await addRequestCaptchaToken(body, 'register');
+
+		return await mo.fetchApiJson('user/register', { body });
+	};
+
 	mo.fetchSetPassword = async (body) =>
 	{
 		await addRequestCaptchaToken(body, 'verifySetPassword');
