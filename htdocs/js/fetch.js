@@ -118,9 +118,16 @@
 
 	mo.fetchSetPassword = async (body) =>
 	{
-		await addRequestCaptchaToken(body, 'setPassword');
+		await addRequestCaptchaToken(body, 'verifySetPassword');
 
-		return await mo.fetchApiJson('user/setPassword', { body });
+		return await mo.fetchApiJson('user/verifySetPassword', { body });
+	};
+
+	mo.fetchVerifyRegister = async (body) =>
+	{
+		await addRequestCaptchaToken(body, 'verifyRegister');
+
+		return await mo.fetchApiJson('user/verifyRegister', { body });
 	};
 
 
@@ -156,6 +163,7 @@
 				{
 					body:
 					{
+						ApplicationCulture: 1, // english
 						CaptchaToken: await getCaptchaToken('session'),
 					},
 				});

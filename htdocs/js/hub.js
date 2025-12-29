@@ -56,7 +56,7 @@
 
     mo.sendLogout = () =>
     {
-        mo.removeSession();
+        mo.removeIsLoggedIn();
 
         invoke("UserUserLogout");
     }

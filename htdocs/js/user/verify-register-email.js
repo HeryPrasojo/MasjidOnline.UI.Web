@@ -10,8 +10,12 @@
     import('/js/loading.js');
 
     await import('/js/envConfig.js');
-    await import('/js/common.js');
     await import('/js/storage.js');
+    await import('/js/authorization.js');
+
+    mo.authorizeAnonymous();
+
+    await import('/js/common.js');
     await import('/js/fetch.js');
 
     import('/js/geolocation.js');
@@ -23,10 +27,11 @@
 
     function onDOMContentLoaded()
     {
-        const passwordFormElement = mo.getElementById('passwordForm');
+        const formElement = mo.getElementById('registerForm');
         const emailElement = mo.getElementById('emailInput');
         const passwordElement = mo.getElementById('passwordInput');
         const password2Element = mo.getElementById('password2Input');
+        const ageementElement = mo.getElementById('ageementInput');
         const messageElement = mo.getElementById('messageElement');
         const submitElement = mo.getElementById('submitButton');
 
@@ -78,7 +83,7 @@
             validatePassword();
             validatePassword2();
 
-            if (!passwordFormElement.reportValidity()) return;
+            if (!formElement.reportValidity()) return;
 
 
             const email = emailElement.value;
@@ -93,10 +98,11 @@
 
             try
             {
-                const json = await mo.fetchSetPassword({
+                const json = await mo.fetchVerifyRegister({
                     Client: 1, // Web
                     Contact: email,
                     ContactType: 1, // email
+                    IsAcceptAgreement: ageementElement.checked,
                     PasswordCode: passwordCode,
                     Password: password,
                     Password2: password2,

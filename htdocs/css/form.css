@@ -21,12 +21,12 @@
     }
 }
 
-label::after
+label:not(.noContent)::after
 {
     content: ':';
 }
 
-label.required::after
+label.required:not(.noContent)::after
 {
     content: '* :';
 }

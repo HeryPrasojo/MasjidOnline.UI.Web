@@ -1,5 +1,6 @@
 (() =>
 {
+    const applicationCultureStorageKey = 'applicationCulture';
     const isLoggedInStorageKey = 'isLoggedIn';
     const permissionStorageKey = 'permission'
     const recommendationNoteStorageKey = 'recommendationNote';
@@ -7,9 +8,24 @@
     const userTypeStorageKey = 'userType';
 
 
+    mo.getApplicationCulture = () =>
+    {
+        return localStorage.getItem(applicationCultureStorageKey);
+    }
+
+    mo.setApplicationCulture = (value) =>
+    {
+        localStorage.setItem(applicationCultureStorageKey, value);
+    }
+
+
     mo.removeIsLoggedIn = () =>
     {
         localStorage.removeItem(isLoggedInStorageKey);
+
+        mo.removePermission();
+
+        mo.removeUserType();
     };
 
     mo.getIsLoggedIn = () =>
@@ -69,10 +85,6 @@
         localStorage.removeItem(sessionIdStorageKey);
 
         mo.removeIsLoggedIn();
-
-        mo.removePermission();
-
-        mo.removeUserType();
     };
 
     mo.setSession = (id) =>

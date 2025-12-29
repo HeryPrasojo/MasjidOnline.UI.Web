@@ -1,14 +1,14 @@
 <!doctype html>
 <html>
     <head>
-        <title>MasjidOnline Password</title>
+        <title>MasjidOnline Signup Verification</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="/css/all.css" />
         <link rel="stylesheet" href="/css/layout.css" />
         <link rel="stylesheet" href="/css/form.css" />
-        <link rel="stylesheet" href="/css/user/password-email.css" />
-        <script src='/js/user/password-email.js' async></script>
+        <link rel="stylesheet" href="/css/user/verify-register-email.css" />
+        <script src='/js/user/verify-register-email.js' async></script>
         <script src="https://www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R"></script>
     </head>
     <body>
@@ -19,9 +19,9 @@
             </div>
             <div id='flexLayout'>
                 <div id='contentLayout'>
-                    <h1>Password</h1>
-                    <p>Please verify your email address and set your password.</p>
-                    <form id='passwordForm' class='form'>
+                    <h1>Signup Verification</h1>
+                    <p>Please verify your email address, set your password, and read and agree the agreement to finish signup.</p>
+                    <form id='registerForm' class='form'>
                         <div class='field'>
                             <div class='label'><label class='required' for='emailInput'>Email Address</label></div>
                             <div>
@@ -56,11 +56,20 @@
                                 <input type='password' id='password2Input' placeholder='Confirm password here' minlength='8' maxlength='64' required />
                             </div>
                         </div>
+                        <div class='field spacer-top'>
+                            <div class='label'>
+                                <label class='required' for='ageementInput'>Agreement</label>
+                            </div>
+                            <div>
+                                <input type='checkbox' id='ageementInput' required />
+                                <label for='ageementInput' class='noContent'>I agree to the <a href="/terms">Terms of Service</a></label>
+                            </div>
+                        </div>
                         <div class='message spacer-top'>
                             <div id='messageElement'>&nbsp;</div>
                         </div>
                         <div class='button spacer-top'>
-                            <button type='button' id='submitButton'>Set Password</button>
+                            <button type='button' id='submitButton'>Finish</button>
                         </div>
                     </form>
                     <div class='spacer-top'>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>

@@ -11,8 +11,6 @@
     await import('/js/common.js');
     await import('/js/fetch.js');
 
-    import('/js/geolocation.js');
-
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
     else
@@ -20,10 +18,9 @@
 
     function onDOMContentLoaded()
     {
-        const loginFormElement = mo.getElementById('loginForm');
+        const formElement = mo.getElementById('registerForm');
         const emailElement = mo.getElementById('emailInput');
-        const passwordElement = mo.getElementById('passwordInput');
-        const messageElement = mo.getElementById('loginMessage');
+        const messageElement = mo.getElementById('messageElement');
         const submitElement = mo.getElementById('submitButton');
 
         const messageColor = messageElement.style.color;
@@ -32,7 +29,10 @@
 
         async function submitForm()
         {
-            if (!loginFormElement.reportValidity()) return;
+            if (!formElement.reportValidity()) return;
+
+
+            const email = emailElement.value;
 
             messageElement.textContent = '\u00A0\u00A0\u00A0\u00A0';
             messageElement.style.color = messageColor;
@@ -40,22 +40,11 @@
             submitElement.disabled = true;
             submitElement.classList.toggle("loading");
 
-            const email = emailElement.value;
-            const password = passwordElement.value;
-
             try
             {
-                const json = await mo.fetchLogin({
-                    Client: 1, // Web
-                    ContactType: 1, // Email
-                    EmailAddress: email,
-                    LocationLatitude: mo.locationLatitude,
-                    LocationLongitude: mo.locationLongitude,
-                    LocationPrecision: mo.locationPrecision,
-                    LocationAltitude: mo.locationAltitude,
-                    LocationAltitudePrecision: mo.locationAltitudePrecision,
-                    Password: password,
-                    UserAgent: navigator.userAgent,
+                const json = await mo.fetchSetPassword({
+                    Contact: email,
+                    ContactType: 1,
                 });
 
                 if (json.ResultCode) return showError(json.ResultMessage);
@@ -68,12 +57,12 @@
                 mo.setPermission(data.Permission);
                 mo.setUserType(data.UserType);
 
+                if (data.ApplicationCulture) mo.setApplicationCulture(data.ApplicationCulture);
+
                 messageElement.textContent = 'Success, redirecting...';
                 messageElement.classList.toggle("loading");
 
-                const urlSearchParams = new URLSearchParams(location.search);
-
-                location.href = urlSearchParams.get('r') ?? '/';
+                location.href = '/';
             }
             catch (err)
             {
