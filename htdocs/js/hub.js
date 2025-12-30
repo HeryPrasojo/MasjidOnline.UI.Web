@@ -33,10 +33,6 @@
             mo.hubUri,
             {
                 accessTokenFactory: () => sessionId,
-                headers:
-                {
-                    "Mo-Sess": sessionId,
-                },
                 withCredentials: false,
             })
         .configureLogging(signalR.LogLevel.Warning)
@@ -48,6 +44,14 @@
         if (mo.getIsLoggedIn()) startConnection();
     });
 
+    connection.on('logout', () =>
+    {
+        console.log('logout');
+        mo.removeIsLoggedIn();
+
+        location.href = '/';
+    });
+
 
     mo.receiveUserList = (request) =>
     {
@@ -56,10 +60,22 @@
 
     mo.sendLogout = () =>
     {
-        mo.removeIsLoggedIn();
-
         invoke("UserUserLogout");
     }
+
+    // mo.sendLogout = async () =>
+    // {
+    //     try
+    //     {
+    //         await invoke("UserUserLogout");
+    //     }
+    //     catch (err)
+    //     {
+    //         console.log(err.name + ': ' + err.message);
+    //     }
+
+    //     mo.removeIsLoggedIn();
+    // }
 
     mo.sendUserInternalAdd = (request) =>
     {

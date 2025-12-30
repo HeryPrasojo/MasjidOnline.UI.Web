@@ -99,8 +99,6 @@
 			navLogout.addEventListener('click', () =>
 			{
 				mo.sendLogout();
-
-				location.href = '/';
 			});
 		}
 
