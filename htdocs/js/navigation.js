@@ -6,8 +6,6 @@
 	var isNavigationLandscapeLayoutLoaded = false;
 	var isNavigationPortraitLayoutLoaded = false;
 
-	var isLoggedIn = false;
-
 	if (document.readyState == 'loading')
 		document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
 	else
@@ -19,8 +17,6 @@
 	{
 		navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
 		navigationPortraitLayout = getElementById('navigationPortraitLayout');
-
-		isLoggedIn = mo.getIsLoggedIn();
 
 		await loadNavigation();
 	}
@@ -110,12 +106,26 @@
 
 		function removeLoggedInClass(element)
 		{
+			const isLoggedIn = mo.getIsLoggedIn();
+
 			if (isLoggedIn)
 			{
 				element.querySelectorAll('.loggedIn').forEach((element2) =>
 				{
 					element2.classList.remove('loggedIn');
 				});
+
+
+				const userType = mo.getUserType();
+
+				// internal
+				if (userType == 5)
+				{
+					element.querySelectorAll('.internal').forEach((element2) =>
+					{
+						element2.classList.remove('internal');
+					});
+				}
 			}
 			else
 			{

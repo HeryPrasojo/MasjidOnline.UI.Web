@@ -80,6 +80,16 @@
         try
         {
             await connection.start();
+
+            if (!mo.isHubStarted)
+            {
+                mo.isHubStarted = true;
+
+
+                const onHubStartedEvent = new Event("hubStarted");
+
+                document.dispatchEvent(onHubStartedEvent);
+            }
         }
         catch (err)
         {
@@ -90,8 +100,6 @@
 
             setTimeout(startConnection, 4000);
         }
-
-        if (mo.onHubStarted) mo.onHubStarted();
     };
 
 })();

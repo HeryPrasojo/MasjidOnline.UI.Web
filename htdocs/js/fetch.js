@@ -29,7 +29,9 @@
 
 		if (typeof options.body != 'undefined' && !(options.body instanceof FormData))
 		{
-			options.headers.append("Content-Type", "application/json");
+			const hasContentType = options.headers.has("Content-Type");
+
+			if (!hasContentType) options.headers.append("Content-Type", "application/json");
 
 			options.body = JSON.stringify(options.body);
 		}
@@ -77,7 +79,7 @@
 			// if (resultCode) throw Error(resultCode + ' ' + response.headers.get("Mo-Result-Message"));
 		}
 
-		if (resultCode == "SessionExpire")
+		if (resultCode == 5)
 		{
 			mo.removeSession();
 

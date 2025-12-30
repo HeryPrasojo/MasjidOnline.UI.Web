@@ -23,8 +23,7 @@
     function onDOMContentLoaded()
     {
         const formElement = mo.getElementById('addForm');
-        const emailElement = mo.getElementById('emailInput');
-        const nameElement = mo.getElementById('nameInput');
+        const contactElement = mo.getElementById('contactInput');
         const messageElement = mo.getElementById('addMessage');
         const submitElement = mo.getElementById('addButton');
 
@@ -37,11 +36,6 @@
             if (!formElement.reportValidity()) return;
 
 
-            const body = {};
-
-            body.EmailAddress = emailElement.value;
-            body.Name = nameElement.value;
-
             messageElement.textContent = '\u00A0\u00A0\u00A0\u00A0';
             messageElement.style.color = messageColor;
 
@@ -50,7 +44,7 @@
 
             try
             {
-                const json = await mo.sendUserInternalAdd(body);
+                const json = await mo.sendUserInternalAdd({ Contact: contactElement.value });
 
                 if (json.ResultCode) return showError(json.ResultMessage);
 

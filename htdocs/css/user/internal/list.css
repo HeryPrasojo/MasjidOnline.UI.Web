@@ -3,17 +3,12 @@
     min-width: 6em;
 }
 
-.date
+.dateTime
 {
     min-width: 10em;
 }
 
-.email
-{
-    min-width: 11em;
-}
-
-.userId
+.name
 {
     min-width: 11em;
 }
@@ -23,16 +18,7 @@
     min-width: 5em;
 }
 
-@media (orientation: landscape)
+.addName
 {
-    .field .label
-    {
-        min-width: 4em;
-    }
-
-    .form .button,
-    .form .message
-    {
-        margin-left: 4.5em;
-    }
+    min-width: 11em;
 }

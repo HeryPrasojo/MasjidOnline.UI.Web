@@ -57,10 +57,20 @@
         internalUserNextButton.addEventListener('click', submitNext);
         internalUserLastButton.addEventListener('click', submitLast);
 
-        mo.onHubStarted = async () =>
+
+        var isFirstPageLoaded = false;
+
+        if (mo.isHubStarted) await submitFirst();
+
+        else document.addEventListener('hubStarted', async () =>
         {
-            await submitFirst();
-        }
+            if (!isFirstPageLoaded)
+            {
+                isFirstPageLoaded = true;
+
+                await submitFirst();
+            }
+        });
 
 
         async function submitFirst()
@@ -130,10 +140,9 @@
             {
                 const idTextNode = document.createTextNode(record.Id);
                 const dateTimeTextNode = record.DateTime;
-                const munfiqName = record.MunfiqName;
-                const paymentType = record.PaymentType;
-                const amountTextNode = record.Amount;
-                const paymentStatusTextNode = record.PaymentStatus;
+                const name = record.PersonName;
+                const statusTextNode = record.Status;
+                const addName = record.AddPersonName ?? '';
 
                 const itemA = document.createElement('a');
                 itemA.href = 'internal?id=' + record.Id;
@@ -141,23 +150,19 @@
 
                 const idTd = document.createElement('td');
                 const dateTimeTd = document.createElement('td');
-                const munfiqNameTd = document.createElement('td');
-                const paymentTypeTd = document.createElement('td');
-                const amountTd = document.createElement('td');
-                const paymentStatusTd = document.createElement('td');
-
-                amountTd.className = 'textAlign-end';
+                const nameTd = document.createElement('td');
+                const statusTd = document.createElement('td');
+                const addNameTd = document.createElement('td');
 
                 idTd.append(itemA);
                 dateTimeTd.append(document.createTextNode(dateTimeTextNode));
-                munfiqNameTd.append(document.createTextNode(munfiqName));
-                paymentTypeTd.append(document.createTextNode(paymentType));
-                amountTd.append(document.createTextNode(amountTextNode));
-                paymentStatusTd.append(document.createTextNode(paymentStatusTextNode));
+                nameTd.append(document.createTextNode(name));
+                statusTd.append(document.createTextNode(statusTextNode));
+                addNameTd.append(document.createTextNode(addName));
 
                 const tr = document.createElement('tr');
 
-                tr.append(idTd, dateTimeTd, munfiqNameTd, paymentTypeTd, amountTd, paymentStatusTd);
+                tr.append(idTd, dateTimeTd, nameTd, statusTd, addNameTd);
 
                 internalUserRowHolder.append(tr);
             }
