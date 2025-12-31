@@ -29,6 +29,7 @@
     {
         const formElement = mo.getElementById('registerForm');
         const emailElement = mo.getElementById('emailInput');
+        const nameElement = mo.getElementById('nameInput');
         const passwordElement = mo.getElementById('passwordInput');
         const password2Element = mo.getElementById('password2Input');
         const ageementElement = mo.getElementById('ageementInput');
@@ -87,6 +88,7 @@
 
 
             const email = emailElement.value;
+            const name = nameElement.value;
             const password = passwordElement.value;
             const password2 = password2Element.value;
 
@@ -103,6 +105,7 @@
                     Contact: email,
                     ContactType: 1, // email
                     IsAcceptAgreement: ageementElement.checked,
+                    Name: name,
                     RegisterCode: registerCode,
                     Password: password,
                     Password2: password2,
@@ -118,6 +121,7 @@
 
 
                 mo.setLoggedIn();
+                mo.setUserType(3); // external
 
                 messageElement.textContent = 'Success, redirecting...';
                 messageElement.classList.toggle("loading");
