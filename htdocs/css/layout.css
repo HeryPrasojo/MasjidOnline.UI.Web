@@ -10,6 +10,8 @@ body
     z-index: 9;
     width: 100%;
     text-align: center;
+    background-color: #eee;
+    color: #111;
 }
 
 .anonymous

@@ -9,9 +9,11 @@
 
     mo.authorizePermission({ UserInternalAdd: 1 }, true);
 
+    await import('/js/fetch.js');
     await signalRPromise;
 
     import('/js/hub.js');
+    import('/js/navigation.js');
     import('/js/loading.js');
 
 

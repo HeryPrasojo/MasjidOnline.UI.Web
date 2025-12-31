@@ -20,7 +20,7 @@
 		return await response.text();
 	};
 
-	mo.fetchApi = async (url, options) =>
+	mo.fetchApi = async (url, options, skipStringify) =>
 	{
 		options ??= {};
 		options.method = 'POST';
@@ -33,7 +33,7 @@
 
 			if (!hasContentType) options.headers.append("Content-Type", "application/json");
 
-			options.body = JSON.stringify(options.body);
+			if (!skipStringify) options.body = JSON.stringify(options.body);
 		}
 
 
@@ -85,7 +85,7 @@
 
 			options.headers.delete(sessionIdHeaderName);
 
-			return mo.fetchApi(url, options);
+			return mo.fetchApi(url, options, true);
 		}
 
 		return response;
