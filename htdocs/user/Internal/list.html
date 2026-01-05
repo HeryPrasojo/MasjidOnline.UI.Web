@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="/css/table.css" />
         <link rel="stylesheet" href="/css/form.css" />
         <link rel="stylesheet" href="/css/user/internal/list.css" />
+        <script src="//www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R" async></script>
         <script src='/js/user/internal/list.js' async></script>
     </head>
     <body>
@@ -23,7 +24,9 @@
                 </nav>
                 <div id='contentLayout'>
                     <h1>Internal User List</h1>
-                    <button type='button' class='display-none' id='internalUserAddButton'>Add</button>
+                    <div>
+                        <button type='button' id='internalUserAddButton' class='internalPermission'>Add</button>
+                    </div>
                     <div class='tableContainer'>
                         <table id='internalUserTable'>
                             <caption>Internal User List</caption>
@@ -51,7 +54,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="5">
-                                        <p id='internalUserErrorMessage'></p>
+                                        <div id='internalUserErrorMessage'>&nbsp;</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -71,6 +74,7 @@
                             </tfoot>
                         </table>
                     </div>
+                    <div class='spacer-top'>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>
                 </div>
             </div>
             <nav id='navigationPortraitLayout'>

@@ -15,8 +15,8 @@
 
 	async function onDOMContentLoaded()
 	{
-		navigationLandscapeLayout = getElementById('navigationLandscapeLayout');
-		navigationPortraitLayout = getElementById('navigationPortraitLayout');
+		navigationLandscapeLayout = mo.getElementById('navigationLandscapeLayout');
+		navigationPortraitLayout = mo.getElementById('navigationPortraitLayout');
 
 		await loadNavigation();
 	}
@@ -46,9 +46,9 @@
 
 				addLogoutListener('navPortraitLogout');
 
-				const navigationPortraitTheRestButton = getElementById('navigationPortraitTheRestButton');
-				const navigationPortraitTheRest = getElementById('navigationPortraitTheRest');
-				const navigationPortraitTheRestSubItemParentInfaqButton = getElementById('navigationPortraitTheRestSubItemParentInfaqButton');
+				const navigationPortraitTheRestButton = mo.getElementById('navigationPortraitTheRestButton');
+				const navigationPortraitTheRest = mo.getElementById('navigationPortraitTheRest');
+				const navigationPortraitTheRestSubItemParentInfaqButton = mo.getElementById('navigationPortraitTheRestSubItemParentInfaqButton');
 
 				navigationPortraitTheRestButton.addEventListener("click", onClick);
 
@@ -94,7 +94,7 @@
 
 		function addLogoutListener(selector)
 		{
-			const navLogout = getElementById(selector);
+			const navLogout = mo.getElementById(selector);
 
 			navLogout.addEventListener('click', () =>
 			{
@@ -102,6 +102,7 @@
 			});
 		}
 
+		// TODO move to authorization.js
 		function removeLoggedInClass(element)
 		{
 			const isLoggedIn = mo.getIsLoggedIn();
@@ -135,8 +136,4 @@
 		}
 	}
 
-	function getElementById(id)
-	{
-		return document.getElementById(id);
-	}
 })();

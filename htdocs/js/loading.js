@@ -7,7 +7,7 @@
 
     function onLoaded()
     {
-        const pageLoading = document.getElementById('pageLoading');
+        const pageLoading = mo.getElementById('pageLoading');
 
         pageLoading.remove();
     }

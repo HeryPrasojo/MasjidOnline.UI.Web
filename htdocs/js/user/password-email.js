@@ -1,20 +1,25 @@
 (async () =>
 {
+    await import('/js/envConfig.js');
+
+    await Promise.all([
+        import('/js/common.js'),
+        import('/js/form.js'),
+        import('/js/storage.js'),
+    ]);
+
+    import('/js/loading.js');
+    import('/js/geolocation.js');
+
+    await import('/js/fetch.js');
+
+
     const urlSearchParams = new URLSearchParams(window.location.search);
 
     const passwordCode = urlSearchParams.get('c');
 
     if (!passwordCode) location.href = '/';
 
-
-    import('/js/loading.js');
-
-    await import('/js/envConfig.js');
-    await import('/js/common.js');
-    await import('/js/storage.js');
-    await import('/js/fetch.js');
-
-    import('/js/geolocation.js');
 
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);

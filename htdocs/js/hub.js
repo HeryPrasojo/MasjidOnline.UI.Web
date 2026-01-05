@@ -53,9 +53,14 @@
     });
 
 
-    mo.receiveUserList = (request) =>
+    mo.receiveUserInternalList = (request) =>
     {
-        return invoke("UserInternalList", request);
+        return invoke("UserInternalGetMany", request);
+    }
+
+    mo.receiveUserInternalView = (request) =>
+    {
+        return invoke("UserInternalGetOne", request);
     }
 
     mo.sendLogout = () =>
@@ -63,28 +68,45 @@
         invoke("UserUserLogout");
     }
 
-    // mo.sendLogout = async () =>
-    // {
-    //     try
-    //     {
-    //         await invoke("UserUserLogout");
-    //     }
-    //     catch (err)
-    //     {
-    //         console.log(err.name + ': ' + err.message);
-    //     }
-
-    //     mo.removeIsLoggedIn();
-    // }
-
-    mo.sendUserInternalAdd = (request) =>
+    mo.sendUserInternalAdd = async (request) =>
     {
+        await addRequestCaptchaToken(request, 'addInternalUser');
+
         return invoke("UserInternalAdd", request);
     }
 
 
     startConnection();
 
+
+    // TODO move to captcha.js
+
+    async function addRequestCaptchaToken(body, action)
+    {
+        if (body instanceof FormData)
+        {
+            if (!body.has('CaptchaToken'))
+            {
+                const captchaToken = await getCaptchaToken(action);
+
+                body.append('CaptchaToken', captchaToken);
+            }
+        }
+        else
+        {
+            if (!body.CaptchaToken)
+            {
+                const captchaToken = await getCaptchaToken(action);
+
+                body.CaptchaToken = captchaToken;
+            }
+        }
+    }
+
+    async function getCaptchaToken(action)
+    {
+        return await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: action + mo.recaptchaActionAffix });
+    }
 
     function invoke(methodName, ...requests)
     {

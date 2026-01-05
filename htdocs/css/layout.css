@@ -3,45 +3,6 @@ body
     margin: 0;
 }
 
-#pageLoading
-{
-    position: fixed;
-    top: 0;
-    z-index: 9;
-    width: 100%;
-    text-align: center;
-    background-color: #eee;
-    color: #111;
-}
-
-.anonymous
-{
-    display: none;
-}
-
-.internal
-{
-    display: none;
-}
-
-.loading
-{
-    animation: loading 1s infinite;
-}
-
-.loggedIn
-{
-    display: none;
-}
-
-@keyframes loading
-{
-    50%
-    {
-        opacity: 0.1;
-    }
-}
-
 #layout
 {}
 
@@ -80,6 +41,7 @@ body
     #navigationLandscapeLayout
     {
         flex: 1 0 0;
+        overflow-y: auto;
     }
 
     #navigationLandscapeLoading
@@ -96,6 +58,7 @@ body
     #contentLayout
     {
         flex: 3 0 0;
+        overflow-y: auto;
     }
 
     #navigationPortraitLayout

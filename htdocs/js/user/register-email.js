@@ -1,15 +1,21 @@
 (async () =>
 {
+    await import('/js/envConfig.js');
+
+    await Promise.all([
+        import('/js/common.js'),
+        import('/js/storage.js'),
+    ]);
+
     import('/js/loading.js');
 
-    await import('/js/envConfig.js');
-    await import('/js/storage.js');
-    await import('/js/authorization.js');
+    await Promise.all([
+        import('/js/authorization.js'),
+        import('/js/fetch.js'),
+    ]);
+
 
     mo.authorizeAnonymous();
-
-    await import('/js/common.js');
-    await import('/js/fetch.js');
 
     if (document.readyState == 'loading')
         document.addEventListener("DOMContentLoaded", onDOMContentLoaded);

@@ -2,11 +2,11 @@
 
 @media (orientation: landscape)
 {
-    .form
+    /* .form
     {
         display: flex;
         flex-direction: column;
-    }
+    } */
 
     .form .field
     {

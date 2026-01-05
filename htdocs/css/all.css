@@ -29,6 +29,55 @@ input[type='file']::file-selector-button
     display: none;
 }
 
+
+#pageLoading
+{
+    position: fixed;
+    top: 0;
+    z-index: 9;
+    width: 100%;
+    text-align: center;
+    background-color: #eee;
+    color: #111;
+}
+
+.loading
+{
+    animation: loading 1s infinite;
+}
+
+@keyframes loading
+{
+    50%
+    {
+        opacity: 0.1;
+    }
+}
+
+
+.anonymous
+{
+    display: none;
+}
+
+.internal
+{
+    display: none;
+}
+
+.internalPermission
+{
+    visibility: hidden;
+}
+
+.loggedIn
+{
+    display: none;
+}
+
+.nonInternalPermission
+{}
+
 .linkStyle
 {
     cursor: pointer;

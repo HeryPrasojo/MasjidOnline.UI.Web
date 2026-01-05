@@ -3,22 +3,27 @@
     min-width: 6em;
 }
 
-.dateTime
+#internalUserTable .dateTime
 {
     min-width: 10em;
 }
 
-.name
+#internalUserTable .name
 {
     min-width: 11em;
 }
 
-.status
+#internalUserTable .status
 {
     min-width: 5em;
 }
 
-.addName
+#internalUserTable .addName
 {
     min-width: 11em;
+}
+
+#internalUserTable th
+{
+    text-align: start;
 }

@@ -43,6 +43,8 @@
     {
         const stringValue = localStorage.getItem(permissionStorageKey);
 
+        if (!stringValue) return;
+
         return JSON.parse(stringValue);
     };
 
@@ -53,6 +55,8 @@
 
     mo.setPermission = (value) =>
     {
+        if (!value) return;
+
         const stringValue = JSON.stringify(value);
 
         localStorage.setItem(permissionStorageKey, stringValue);

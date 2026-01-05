@@ -1,20 +1,25 @@
 (async () =>
 {
-    const signalRPromise = import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
+    await Promise.all([
+        import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js'),
+        import('/js/envConfig.js'),
+    ]);
 
-    await import('/js/envConfig.js');
-    await import('/js/common.js');
-    await import('/js/storage.js');
-    await import('/js/authorization.js');
+    await Promise.all([
+        import('/js/common.js'),
+        import('/js/storage.js'),
+    ]);
 
-    mo.authorizePermission({ UserInternalAdd: 1 }, true);
-
-    await import('/js/fetch.js');
-    await signalRPromise;
-
+    import('/js/layout.js')
     import('/js/hub.js');
-    import('/js/navigation.js');
     import('/js/loading.js');
+
+    await Promise.all([
+        import('/js/authorization.js'),
+        import('/js/fetch.js'),
+    ]);
+
+    import('/js/navigation.js');
 
 
     if (document.readyState == 'loading')
@@ -24,6 +29,9 @@
 
     function onDOMContentLoaded()
     {
+        mo.authorizePermission({ UserInternalAdd: 1 });
+
+
         const formElement = mo.getElementById('addForm');
         const contactElement = mo.getElementById('contactInput');
         const messageElement = mo.getElementById('addMessage');

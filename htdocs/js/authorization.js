@@ -17,12 +17,14 @@
         if (mo.getUserType() != 5) location.href = '/';
     };
 
-    mo.authorizePermission = (r, i) =>
+    mo.authorizePermission = (r) =>
     {
-        if (i) mo.authorizeInternal();
+        mo.authorizeInternal();
 
 
         const p = mo.getPermission();
+
+        if (!p) return false;
 
         for (var ri in r)
         {
@@ -33,3 +35,58 @@
     }
 
 })();
+
+globalThis.moAuthorization =
+{
+    removeNonInternalPermission: () => 
+    {
+        const userType = mo.getUserType();
+
+        // internal
+        if (userType == 5)
+        {
+            document.querySelectorAll('.nonInternalPermission').forEach((element) =>
+            {
+                element.classList.add('display-none');
+            });
+        }
+    },
+    showInternal: () =>
+    {
+        const isLoggedIn = mo.getIsLoggedIn();
+
+        if (isLoggedIn)
+        {
+            const userType = mo.getUserType();
+
+            // internal
+            if (userType == 5)
+            {
+                document.querySelectorAll('.internal').forEach((element) =>
+                {
+                    element.classList.remove('internal');
+                });
+            }
+        }
+    },
+    showInternalPermission: (permission) =>
+    {
+        const p = mo.getPermission();
+
+        if (!p) return;
+
+        for (const pi in permission)
+        {
+            if (p[pi]) 
+            {
+                for (const s of permission[pi])
+                {
+                    document.querySelectorAll(s).forEach((element) =>
+                    {
+                        element.classList.remove('internalPermission');
+                    });
+                }
+            }
+        }
+    },
+};

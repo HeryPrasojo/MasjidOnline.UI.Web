@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>MasjidOnline Internal User View</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="/css/all.css" />
+        <link rel="stylesheet" href="/css/layout.css" />
+        <link rel="stylesheet" href="/css/user/internal/view.css" />
+        <script src="//www.google.com/recaptcha/enterprise.js?render=6LdSD_oqAAAAAOS497xVyGNjp5AAN-TpvCxk8b5R" async></script>
+        <script src='/js/user/internal/view.js' async></script>
+    </head>
+    <body>
+        <div id='pageLoading' class='loading'>Loading...</div>
+        <div id='layout'>
+            <div id='headerLayout'>
+                <div id='title'>MasjidOnline</div>
+            </div>
+            <div id='flexLayout'>
+                <nav id='navigationLandscapeLayout'>
+                    <div id='navigationLandscapeLoading' class='loading'>Loading...</div>
+                </nav>
+                <div id='contentLayout'>
+                    <h1>Internal User View</h1>
+                    <div id='internalUserMessage' class='loading'>Loading ...</div>
+                    <div class='view spacer-top'>
+                        <div class='field'>
+                            <div class='label'>Id</div>
+                            <div id='internalUserIdField'><span class='loading'>Loading...</span>
+                            </div>
+                        </div>
+                        <div class='field'>
+                            <div class='label'>Name</div>
+                            <div>
+                                <span id='nameField'><span class='loading'>Loading...</span></span>
+                            </div>
+                        </div>
+                        <div class='field internal'>
+                            <div class='label'>Contact</div>
+                            <div>
+                                <span id='contactField'><span class='loading'>Loading...</span></span>
+                            </div>
+                        </div>
+                        <div class='field'>
+                            <div class='label'>Request date time</div>
+                            <div>
+                                <span id='dateTimeField'><span class='loading'>Loading...</span></span>
+                            </div>
+                        </div>
+                        <div class='field'>
+                            <div class='label'>Request by</div>
+                            <div>
+                                <span id='addNameField'><span class='loading'>Loading...</span></span>
+                            </div>
+                        </div>
+                        <div class='field'>
+                            <div class='label'>Status</div>
+                            <div>
+                                <span id='statusField'><span class='loading'>Loading...</span></span>
+                            </div>
+                        </div>
+                        <div class='spacer-top'></div>
+                        <div class='field nonInternalPermission nonNew' id='editNameRow'>
+                            <div class='label'>Update by</div>
+                            <div>
+                                <span id='editNameField'><span class='loading'>Loading...</span></span>
+                            </div>
+                        </div>
+                        <div class='field nonInternalPermission nonNew' id='editDateTimeRow'>
+                            <div class='label'>Update date time</div>
+                            <div>
+                                <span id='editDateTimeField'><span class='loading'>Loading...</span></span>
+                            </div>
+                        </div>
+                        <div class='field internalPermission' id='descriptionRow'>
+                            <div class='label'>Description</div>
+                            <div class='nonInternalPermission'>
+                                <span id='descriptionField'><span class='loading'>Loading...</span></span>
+                            </div>
+                            <div id='descriptionParent' class='internalPermission'>
+                                <textarea id='descriptionInput'></textarea>
+                            </div>
+                        </div>
+                        <div class='message spacer-top internalPermission' id='messageRow'>
+                            <div id='viewMessage'>&nbsp;</div>
+                        </div>
+                        <div class='button spacer-top internalPermission' id='buttonRow'>
+                            <button type='button' class='internalPermission' id='cancelButton'>Cancel</button>
+                            <button type='button' class='internalPermission' id='approveButton'>Approve</button>
+                            <button type='button' class='internalPermission' id='rejectButton'>Reject</button>
+                        </div>
+                    </div>
+                    <div class='spacer-top'>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>
+                </div>
+            </div>
+            <nav id='navigationPortraitLayout'>
+                <div id='navigationPortraitLoading' class='loading'>Loading...</div>
+            </nav>
+            <div id='footerLayout'>
+                <div id='footerTitle'>MasjidOnline</div>
+            </div>
+        </div>
+    </body>
+</html>

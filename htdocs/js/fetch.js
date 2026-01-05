@@ -132,6 +132,16 @@
 		return await mo.fetchApiJson('user/verifySetPassword', { body });
 	};
 
+	mo.fetchUserInternalList = async (body) =>
+	{
+		return await mo.fetchApiJson('user/internal/getMany', { body });
+	};
+
+	mo.fetchUserInternalView = async (body) =>
+	{
+		return await mo.fetchApiJson('user/internal/getOne', { body });
+	};
+
 	mo.fetchVerifyRegister = async (body) =>
 	{
 		await addRequestCaptchaToken(body, 'verifyRegister');
@@ -140,24 +150,34 @@
 	};
 
 
+	// TODO move to captcha.js
+
 	async function addRequestCaptchaToken(body, action)
 	{
-		const captchaToken = await getCaptchaToken(action);
-
 		if (body instanceof FormData)
 		{
 			if (!body.has('CaptchaToken'))
+			{
+				const captchaToken = await getCaptchaToken(action);
+
 				body.append('CaptchaToken', captchaToken);
+			}
 		}
 		else
 		{
 			if (!body.CaptchaToken)
+			{
+				const captchaToken = await getCaptchaToken(action);
+
 				body.CaptchaToken = captchaToken;
+			}
 		}
 	}
 
 	async function getCaptchaToken(action)
 	{
+		if (typeof grecaptcha === 'undefined') throw new Error('Captcha is not ready. Please try again.');
+
 		return await grecaptcha.enterprise.execute(mo.recaptchaSiteKey, { action: action + mo.recaptchaActionAffix });
 	}
 

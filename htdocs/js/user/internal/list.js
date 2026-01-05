@@ -1,22 +1,25 @@
 (async () =>
 {
-    const signalRPromise = import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js');
+    await Promise.all([
+        import('//cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js'),
+        import('/js/envConfig.js'),
+    ]);
 
-    await import('/js/envConfig.js');
-    await import('/js/common.js');
-    await import('/js/storage.js');
-    await import('/js/authorization.js');
+    await Promise.all([
+        import('/js/common.js'),
+        import('/js/storage.js'),
+    ]);
 
-    mo.authorizeInternal();
-
-    await signalRPromise;
-
+    import('/js/layout.js')
     import('/js/hub.js');
+    import('/js/loading.js');
 
-    await import('/js/fetch.js');
+    await Promise.all([
+        import('/js/authorization.js'),
+        import('/js/fetch.js'),
+    ]);
 
     import('/js/navigation.js');
-    import('/js/loading.js');
 
 
     if (document.readyState == 'loading')
@@ -24,11 +27,15 @@
     else
         onDOMContentLoaded();
 
-    async function onDOMContentLoaded()
+    function onDOMContentLoaded()
     {
+        moAuthorization.showInternalPermission({ UserInternalAdd: ['#internalUserAddButton'] });
+
+
         const internalUserAddButton = mo.getElementById('internalUserAddButton');
 
         const internalUserRowHolder = mo.getElementById('internalUserRowHolder');
+        const internalUserPageForm = mo.getElementById('formInternalUserPage');
         const internalUserPageCurrent = mo.getElementById('internalUserPageCurrent');
         const internalUserPageTotal = mo.getElementById('internalUserPageTotal');
         const internalUserErrorMessage = mo.getElementById('internalUserErrorMessage');
@@ -40,11 +47,7 @@
         const internalUserLastButton = mo.getElementById('internalUserLastButton');
 
 
-        if (mo.authorizePermission({ UserInternalAdd: 1 }))
-        {
-            internalUserAddButton.classList.remove('display-none');
-        }
-
+        const messageColor = internalUserErrorMessage.style.color;
 
         var currentPage = 1;
         var totalPage = 0;
@@ -58,19 +61,9 @@
         internalUserLastButton.addEventListener('click', submitLast);
 
 
-        var isFirstPageLoaded = false;
+        if (!mo.getIsLoggedIn() || mo.isHubStarted) submitFirst();
 
-        if (mo.isHubStarted) await submitFirst();
-
-        else document.addEventListener('hubStarted', async () =>
-        {
-            if (!isFirstPageLoaded)
-            {
-                isFirstPageLoaded = true;
-
-                await submitFirst();
-            }
-        });
+        else document.addEventListener('hubStarted', submitFirst);
 
 
         async function submitFirst()
@@ -85,16 +78,10 @@
 
         async function submitNumber()
         {
+            if (!internalUserPageForm.reportValidity()) return;
+
+
             const pageNumber = parseInt(internalUserPageInput.value, 10);
-
-            if (isNaN(pageNumber) || pageNumber < 1)
-            {
-                const text = 'Invalid page number. Page number must be a positive integer.';
-
-                internalUserErrorMessage.innerHTML = text;
-
-                throw Error(text);
-            }
 
             await submitForm(pageNumber);
         }
@@ -111,15 +98,10 @@
 
         async function submitForm(pageNumber)
         {
-            if (isNaN(pageNumber) || pageNumber < 1)
-            {
-                internalUserErrorMessage.innerHTML = 'Invalid page number. Page number must be a positive integer.';
-
-                return;
-            }
-
             internalUserRowHolder.innerHTML = '';
-            internalUserErrorMessage.innerHTML = '';
+            internalUserErrorMessage.textContent = 'Loading ...';
+            internalUserErrorMessage.style.color = messageColor;
+            internalUserErrorMessage.classList.toggle("loading");
 
             internalUserFirstButton.disabled = true;
             internalUserPrevButton.disabled = true;
@@ -127,25 +109,38 @@
             internalUserNextButton.disabled = true;
             internalUserLastButton.disabled = true;
 
-            var json = await mo.receiveUserList({
+            const body = {
                 Page: pageNumber,
-            });
+            };
+
+            const json = mo.getIsLoggedIn()
+                ? await mo.receiveUserInternalList(body)
+                : await mo.fetchUserInternalList(body);
+
+            if (json.ResultCode)
+            {
+                internalUserErrorMessage.classList.toggle("loading");
+
+                enableButton();
+
+                return showError(json.ResultMessage);
+            }
+
 
             const data = json.Data;
             currentPage = pageNumber;
             totalPage = data.PageCount;
 
-
             for (const record of data.Records)
             {
                 const idTextNode = document.createTextNode(record.Id);
                 const dateTimeTextNode = record.DateTime;
-                const name = record.PersonName;
+                const name = record.PersonName ?? '';
                 const statusTextNode = record.Status;
                 const addName = record.AddPersonName ?? '';
 
                 const itemA = document.createElement('a');
-                itemA.href = 'internal?id=' + record.Id;
+                itemA.href = 'view?i=' + record.Id;
                 itemA.append(idTextNode);
 
                 const idTd = document.createElement('td');
@@ -167,23 +162,37 @@
                 internalUserRowHolder.append(tr);
             }
 
+            internalUserErrorMessage.textContent = '\u00A0\u00A0\u00A0\u00A0';
+            internalUserErrorMessage.classList.toggle("loading");
 
             internalUserPageCurrent.innerText = currentPage;
             internalUserPageTotal.innerText = totalPage;
 
-            if (currentPage > 1)
-            {
-                internalUserFirstButton.disabled = false;
-                internalUserPrevButton.disabled = false;
-            }
-
             internalUserPageInput.value = currentPage;
             internalUserGoButton.disabled = false;
 
-            if (currentPage < totalPage)
+            enableButton();
+
+
+            function enableButton()
             {
-                internalUserNextButton.disabled = false;
-                internalUserLastButton.disabled = false;
+                if (currentPage > 1)
+                {
+                    internalUserFirstButton.disabled = false;
+                    internalUserPrevButton.disabled = false;
+                }
+
+                if (currentPage < totalPage)
+                {
+                    internalUserNextButton.disabled = false;
+                    internalUserLastButton.disabled = false;
+                }
+            }
+
+            function showError(e)
+            {
+                internalUserErrorMessage.textContent = e;
+                internalUserErrorMessage.style.color = 'red';
             }
         }
     }
