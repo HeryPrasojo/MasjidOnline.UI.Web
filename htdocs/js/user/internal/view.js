@@ -52,8 +52,14 @@
         const editNameElement = mo.getElementById('editNameField');
         const editDateTimeElement = mo.getElementById('editDateTimeField');
         const buttonRowElement = mo.getElementById('buttonRow');
+        const cancelButton = mo.getElementById('cancelButton');
 
         internalUserIdElement.textContent = internalUserId;
+
+
+        const permission = mo.getPermission();
+
+        if (permission && permission.UserInternalAdd) cancelButton.addEventListener('click', cancel);
 
 
         if (!mo.getIsLoggedIn() || mo.isHubStarted) receiveUserInternalView();
@@ -85,14 +91,12 @@
             if (data.Status == 1)
             {
                 moAuthorization.showInternalPermission({
-                    UserInternalAdd: ['#cancelButton'],
+                    UserInternalAdd: ['#descriptionRow', '#descriptionInputParent', '#cancelButton'],
                     UserInternalApprove: ['#descriptionRow', '#descriptionInputParent', '#approveButton', '#rejectButton'],
                 });
 
 
-                const p = mo.getPermission();
-
-                if (p && (p.UserInternalAdd || p.UserInternalApprove))
+                if (permission && (permission.UserInternalAdd || permission.UserInternalApprove))
                 {
                     buttonRowElement.classList.remove('internalPermission');
                 }
@@ -133,6 +137,11 @@
                 internalUserMessage.textContent = e;
                 internalUserMessage.style.color = 'red';
             }
+        }
+
+        function cancel()
+        {
+
         }
     }
 })();

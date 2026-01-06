@@ -23,7 +23,7 @@
                 <div id='contentLayout'>
                     <h1>Internal User View</h1>
                     <div id='internalUserMessage' class='loading'>Loading ...</div>
-                    <div class='view spacer-top'>
+                    <form class='view spacer-top'>
                         <div class='field'>
                             <div class='label'>Id</div>
                             <div id='internalUserIdField'><span class='loading'>Loading...</span>
@@ -60,13 +60,13 @@
                             </div>
                         </div>
                         <div class='spacer-top'></div>
-                        <div class='field nonInternalPermission nonNew' id='editNameRow'>
+                        <div class='field nonNew' id='editNameRow'>
                             <div class='label'>Update by</div>
                             <div>
                                 <span id='editNameField'><span class='loading'>Loading...</span></span>
                             </div>
                         </div>
-                        <div class='field nonInternalPermission nonNew' id='editDateTimeRow'>
+                        <div class='field nonNew' id='editDateTimeRow'>
                             <div class='label'>Update date time</div>
                             <div>
                                 <span id='editDateTimeField'><span class='loading'>Loading...</span></span>
@@ -74,11 +74,11 @@
                         </div>
                         <div class='field internalPermission' id='descriptionRow'>
                             <div class='label'>Description</div>
-                            <div class='nonInternalPermission'>
+                            <div>
                                 <span id='descriptionField'><span class='loading'>Loading...</span></span>
                             </div>
                             <div id='descriptionInputParent' class='internalPermission'>
-                                <textarea id='descriptionInput'></textarea>
+                                <textarea id='descriptionInput' maxlength='255'></textarea>
                             </div>
                         </div>
                         <div class='message spacer-top internalPermission' id='messageRow'>
@@ -89,7 +89,7 @@
                             <button type='button' class='internalPermission' id='approveButton'>Approve</button>
                             <button type='button' class='internalPermission' id='rejectButton'>Reject</button>
                         </div>
-                    </div>
+                    </form>
                     <div class='spacer-top'>This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</div>
                 </div>
             </div>

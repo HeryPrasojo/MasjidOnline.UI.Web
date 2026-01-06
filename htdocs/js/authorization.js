@@ -38,19 +38,6 @@
 
 globalThis.moAuthorization =
 {
-    removeNonInternalPermission: () => 
-    {
-        const userType = mo.getUserType();
-
-        // internal
-        if (userType == 5)
-        {
-            document.querySelectorAll('.nonInternalPermission').forEach((element) =>
-            {
-                element.classList.add('display-none');
-            });
-        }
-    },
     showInternal: () =>
     {
         const isLoggedIn = mo.getIsLoggedIn();
