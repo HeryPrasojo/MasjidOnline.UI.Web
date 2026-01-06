@@ -39,10 +39,6 @@
     async function onDOMContentLoaded()
     {
         moAuthorization.showInternal();
-        // moAuthorization.showInternalPermission({
-        //     UserInternalAdd: ['#cancelButton'],
-        //     UserInternalApprove: ['#descriptionParent', '#approveButton', '#rejectButton'],
-        // });
 
 
         const internalUserMessage = mo.getElementById('internalUserMessage');
@@ -55,6 +51,7 @@
         const addNameElement = mo.getElementById('addNameField');
         const editNameElement = mo.getElementById('editNameField');
         const editDateTimeElement = mo.getElementById('editDateTimeField');
+        const buttonRowElement = mo.getElementById('buttonRow');
 
         internalUserIdElement.textContent = internalUserId;
 
@@ -85,7 +82,22 @@
 
             const data = json.Data;
 
-            if (data.Status != 1)
+            if (data.Status == 1)
+            {
+                moAuthorization.showInternalPermission({
+                    UserInternalAdd: ['#cancelButton'],
+                    UserInternalApprove: ['#descriptionRow', '#descriptionInputParent', '#approveButton', '#rejectButton'],
+                });
+
+
+                const p = mo.getPermission();
+
+                if (p && (p.UserInternalAdd || p.UserInternalApprove))
+                {
+                    buttonRowElement.classList.remove('internalPermission');
+                }
+            }
+            else
             {
                 document.querySelectorAll('.nonNew').forEach((element) =>
                 {
@@ -93,12 +105,6 @@
                 });
             }
 
-            //     const p = mo.getPermission();
-
-            //     if (!p || !p.UserInternalAdd)
-            //     {
-            //     }
-            // }
 
             dateTimeElement.textContent = data.DateTime;
             descriptionElement.textContent = data.Description;
