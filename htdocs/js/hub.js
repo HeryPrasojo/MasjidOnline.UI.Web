@@ -75,6 +75,13 @@
         return invoke("UserInternalAdd", request);
     }
 
+    globalThis.moHub =
+    {
+        sendUserInternalCancel: (request) =>
+        {
+            return invoke("UserInternalCancel", request);
+        }
+    }
 
     startConnection();
 

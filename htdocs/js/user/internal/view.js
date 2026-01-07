@@ -42,17 +42,24 @@
 
 
         const internalUserMessage = mo.getElementById('internalUserMessage');
+        const viewForm = mo.getElementById('internalUserViewForm');
         const internalUserIdElement = mo.getElementById('internalUserIdField');
         const dateTimeElement = mo.getElementById('dateTimeField');
         const contactElement = mo.getElementById('contactField');
-        const descriptionElement = mo.getElementById('descriptionField');
         const nameElement = mo.getElementById('nameField');
         const statusElement = mo.getElementById('statusField');
         const addNameElement = mo.getElementById('addNameField');
         const editNameElement = mo.getElementById('editNameField');
         const editDateTimeElement = mo.getElementById('editDateTimeField');
+        const descriptionRowElement = mo.getElementById('descriptionRow');
+        const descriptionElement = mo.getElementById('descriptionField');
+        const descriptionInputElement = mo.getElementById('descriptionInput');
         const buttonRowElement = mo.getElementById('buttonRow');
         const cancelButton = mo.getElementById('cancelButton');
+        const approveButton = mo.getElementById('approveButton');
+        const rejectButton = mo.getElementById('rejectButton');
+
+        const messageColor = internalUserMessage.style.color;
 
         internalUserIdElement.textContent = internalUserId;
 
@@ -60,6 +67,12 @@
         const permission = mo.getPermission();
 
         if (permission && permission.UserInternalAdd) cancelButton.addEventListener('click', cancel);
+
+        if (permission && permission.UserInternalApprove)
+        {
+            approveButton.addEventListener('click', approve);
+            rejectButton.addEventListener('click', reject);
+        }
 
 
         if (!mo.getIsLoggedIn() || mo.isHubStarted) receiveUserInternalView();
@@ -79,7 +92,6 @@
 
             if (json.ResultCode)
             {
-                internalUserMessage.textContent = '\u00A0\u00A0\u00A0\u00A0';
                 internalUserMessage.classList.toggle("loading");
 
                 return showError(json.ResultMessage);
@@ -103,6 +115,8 @@
             }
             else
             {
+                descriptionRowElement.classList.remove('internalPermission');
+
                 document.querySelectorAll('.nonNew').forEach((element) =>
                 {
                     element.classList.remove('nonNew');
@@ -130,18 +144,60 @@
 
             internalUserMessage.textContent = '\u00A0\u00A0\u00A0\u00A0';
             internalUserMessage.classList.toggle("loading");
+        }
 
+        function approve()
+        {
 
-            function showError(e)
+        }
+
+        async function cancel()
+        {
+            descriptionInputElement.required = true;
+
+            if (!viewForm.reportValidity()) return;
+
+            cancelButton.disabled = true;
+            approveButton.disabled = true;
+            rejectButton.disabled = true;
+
+            internalUserMessage.textContent = '\u00A0\u00A0\u00A0\u00A0';
+
+            cancelButton.classList.toggle("loading");
+
+            try
             {
-                internalUserMessage.textContent = e;
-                internalUserMessage.style.color = 'red';
+                const json = await moHub.sendUserInternalCancel({
+                    Description: descriptionInputElement.value,
+                    Id: internalUserId,
+                });
+
+                if (json.ResultCode) return showError(json.ResultMessage);
+
+                internalUserMessage.style.color = messageColor;
+                internalUserMessage.textContent = 'Success. Reloading ...';
+                internalUserMessage.classList.toggle("loading");
+
+                location.reload();
+            }
+            catch (e)
+            {
+                showError(e.message);
             }
         }
 
-        function cancel()
+        function reject()
         {
+            descriptionInputElement.required = true;
 
+            if (!viewForm.reportValidity()) return;
+
+        }
+
+        function showError(e)
+        {
+            internalUserMessage.textContent = e;
+            internalUserMessage.style.color = 'red';
         }
     }
 })();
