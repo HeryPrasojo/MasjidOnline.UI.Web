@@ -77,10 +77,18 @@
 
     globalThis.moHub =
     {
+        sendUserInternalApprove: (request) =>
+        {
+            return invoke("UserInternalApprove", request);
+        },
         sendUserInternalCancel: (request) =>
         {
             return invoke("UserInternalCancel", request);
-        }
+        },
+        sendUserInternalReject: (request) =>
+        {
+            return invoke("UserInternalReject", request);
+        },
     }
 
     startConnection();

@@ -86,6 +86,11 @@ input[type='file']::file-selector-button
     margin-top: 1em;
 }
 
+.spacer-top-half
+{
+    margin-top: 0.5em;
+}
+
 .textAlign-end
 {
     text-align: end;

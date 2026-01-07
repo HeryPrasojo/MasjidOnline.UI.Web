@@ -115,7 +115,7 @@
             }
             else
             {
-                descriptionRowElement.classList.remove('internalPermission');
+                if (data.Status != 4) descriptionRowElement.classList.remove('internalPermission');
 
                 document.querySelectorAll('.nonNew').forEach((element) =>
                 {
@@ -146,9 +146,39 @@
             internalUserMessage.classList.toggle("loading");
         }
 
-        function approve()
+        async function approve()
         {
+            descriptionInputElement.required = false;
 
+            if (!viewForm.reportValidity()) return;
+
+            cancelButton.disabled = true;
+            approveButton.disabled = true;
+            rejectButton.disabled = true;
+
+            internalUserMessage.textContent = '\u00A0\u00A0\u00A0\u00A0';
+
+            approveButton.classList.toggle("loading");
+
+            try
+            {
+                const json = await moHub.sendUserInternalApprove({
+                    Description: descriptionInputElement.value,
+                    Id: internalUserId,
+                });
+
+                if (json.ResultCode) return showError(json.ResultMessage);
+
+                internalUserMessage.style.color = messageColor;
+                internalUserMessage.textContent = 'Success. Reloading ...';
+                internalUserMessage.classList.toggle("loading");
+
+                location.reload();
+            }
+            catch (e)
+            {
+                showError(e.message);
+            }
         }
 
         async function cancel()
@@ -186,12 +216,39 @@
             }
         }
 
-        function reject()
+        async function reject()
         {
             descriptionInputElement.required = true;
 
             if (!viewForm.reportValidity()) return;
 
+            cancelButton.disabled = true;
+            approveButton.disabled = true;
+            rejectButton.disabled = true;
+
+            internalUserMessage.textContent = '\u00A0\u00A0\u00A0\u00A0';
+
+            rejectButton.classList.toggle("loading");
+
+            try
+            {
+                const json = await moHub.sendUserInternalReject({
+                    Description: descriptionInputElement.value,
+                    Id: internalUserId,
+                });
+
+                if (json.ResultCode) return showError(json.ResultMessage);
+
+                internalUserMessage.style.color = messageColor;
+                internalUserMessage.textContent = 'Success. Reloading ...';
+                internalUserMessage.classList.toggle("loading");
+
+                location.reload();
+            }
+            catch (e)
+            {
+                showError(e.message);
+            }
         }
 
         function showError(e)
